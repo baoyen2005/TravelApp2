@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TravelApp</string>
+    <string name="login_with"><font color='#656F77'>Login with</font> </string>
+    <string name="forget_password"><font color='#656F77'>Quên mật khẩu</font></string>
+    <string name="create_acc"><font color='#656F77'>Bạn chưa có tài khoản</font> </string>
+    <string name="facebook_app_id">507083160975898</string>
+    <string name="fb_login_protocol_scheme">fb507083160975898</string>
+
+</resources>
