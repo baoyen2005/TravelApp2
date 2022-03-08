@@ -22,7 +22,7 @@
             android:name=".view.signup.CreateAccActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="false" />
@@ -30,7 +30,7 @@
             android:name=".view.login.LoginActivity"
             android:exported="true"
             android:fitsSystemWindows="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

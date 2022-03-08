@@ -30,6 +30,7 @@ import com.example.travelapp.controller.createaccount.CreateAccController;
 import com.example.travelapp.view.home.HomeActivity;
 import com.example.travelapp.view.login.InterfaceLoginView;
 import com.example.travelapp.view.login.LoginActivity;
+import com.facebook.login.Login;
 
 import java.io.IOException;
 
@@ -37,6 +38,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     private ImageView imgChooseImageAvt;
     private Uri filePath;
     private Button  btnCreateAcc;
+    private ImageView imgBack;
     private ImageView imgAvatar;
     private final int PICK_IMAGE_REQUEST = 22;
     private EditText edtUserNameCreateAcc, edtPasswordCreateAcc, edtPassAgainCreateAcc, edtAddressCreateAcc, edtPhoneCreateAcc;
@@ -69,6 +71,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
         edtPasswordCreateAcc = findViewById(R.id.edtUserPasswordCreateAcc);
         edtPassAgainCreateAcc = findViewById(R.id.edtUserAgainPasswordCreateAcc);
         btnCreateAcc = findViewById(R.id.btnCreateAcc);
+        imgBack = findViewById(R.id.iconBackCreateAcc);
     }
 
     @Override
@@ -78,42 +81,24 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
 
     @Override
     protected void initEvent() {
-        imgChooseImageAvt.setOnClickListener(new View.OnClickListener() {
+       chooseAvatarImage();
+
+       createAccount();
+       backToLoginActivity();
+    }
+
+    private void backToLoginActivity() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Build.VERSION.SDK_INT >= 23){
-                    if(ContextCompat.checkSelfPermission(CreateAccActivity.this, READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-                        chooseImageFromLocal();
-                    }
-                    else{
-                        ActivityCompat.requestPermissions(CreateAccActivity.this, new String[]{READ_EXTERNAL_STORAGE},PICK_IMAGE_REQUEST);
-                      //  Toast.makeText(this, "Please give permission to choose image! ", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                else {
-                    chooseImageFromLocal();
-                }
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(
-//                        Intent.createChooser(
-//                                intent,
-//                                "Select Image from here..."),
-//                        PICK_IMAGE_REQUEST);
+                Intent intent = new Intent(CreateAccActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
-        if (filePath == null) {
-            filePath = new Uri.Builder()
-                    .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                    .authority(CreateAccActivity.this.getResources().getResourcePackageName(R.drawable.useravatar))
-                    .appendPath(CreateAccActivity.this.getResources().getResourceTypeName(R.drawable.useravatar))
-                    .appendPath(CreateAccActivity.this.getResources().getResourceEntryName(R.drawable.useravatar))
-                    .build();
+    }
 
-            Log.d("user",filePath.toString());
-        }
-
+    private void createAccount() {
         btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +112,36 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
                         loadingBar);
             }
         });
+    }
+
+    private void chooseAvatarImage() {
+        imgChooseImageAvt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Build.VERSION.SDK_INT >= 23){
+                    if(ContextCompat.checkSelfPermission(CreateAccActivity.this, READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+                        chooseImageFromLocal();
+                    }
+                    else{
+                        ActivityCompat.requestPermissions(CreateAccActivity.this, new String[]{READ_EXTERNAL_STORAGE},PICK_IMAGE_REQUEST);
+                        //  Toast.makeText(this, "Please give permission to choose image! ", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else {
+                    chooseImageFromLocal();
+                }
+            }
+        });
+        if (filePath == null) {
+            filePath = new Uri.Builder()
+                    .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                    .authority(CreateAccActivity.this.getResources().getResourcePackageName(R.drawable.useravatar))
+                    .appendPath(CreateAccActivity.this.getResources().getResourceTypeName(R.drawable.useravatar))
+                    .appendPath(CreateAccActivity.this.getResources().getResourceEntryName(R.drawable.useravatar))
+                    .build();
+
+            Log.d("user",filePath.toString());
+        }
     }
 
     private void chooseImageFromLocal() {

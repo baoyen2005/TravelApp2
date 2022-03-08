@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".view.signup.CreateAccActivity">
    <androidx.constraintlayout.widget.ConstraintLayout
-       android:overScrollMode="never"
+       android:overScrollMode="ifContentScrolls"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
        <LinearLayout
