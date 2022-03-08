@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.travelapp.R;
@@ -44,7 +45,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     private EditText edtUserNameCreateAcc, edtPasswordCreateAcc, edtPassAgainCreateAcc, edtAddressCreateAcc, edtPhoneCreateAcc;
     private CreateAccController createAccController;
     private ProgressDialog loadingBar;
-
+    private TextView tvBackCreateAcc;
     @Override
     public void setAdjustScreen() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -72,6 +73,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
         edtPassAgainCreateAcc = findViewById(R.id.edtUserAgainPasswordCreateAcc);
         btnCreateAcc = findViewById(R.id.btnCreateAcc);
         imgBack = findViewById(R.id.iconBackCreateAcc);
+        tvBackCreateAcc=  findViewById(R.id.tvBackCreateAcc);
     }
 
     @Override
@@ -89,6 +91,14 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
 
     private void backToLoginActivity() {
         imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateAccActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        tvBackCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CreateAccActivity.this, LoginActivity.class);

@@ -30,6 +30,7 @@
                android:layout_width="24dp"
                android:layout_height="24dp"/>
            <TextView
+               android:id="@+id/tvBackCreateAcc"
                android:text="Back"
                android:textSize="20sp"
                android:layout_marginLeft="20dp"
