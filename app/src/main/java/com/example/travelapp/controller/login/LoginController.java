@@ -2,6 +2,7 @@ package com.example.travelapp.controller.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,10 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.travelapp.model.User;
+import com.example.travelapp.view.home.HomeActivity;
 import com.example.travelapp.view.login.InterfaceLoginView;
 import com.example.travelapp.view.login.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -22,22 +26,18 @@ import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class LoginController implements ILoginController {
+public class LoginController implements ILoginController,  GoogleApiClient.OnConnectionFailedListener{
     private InterfaceLoginView iLoginView;
     private static final String TAG = "FacebookLogin";
     private static final int RC_SIGN_IN = 12345;
     private Activity activity;
-
+    ProgressDialog progressDialog;
 
     public LoginController() {
     }
@@ -45,6 +45,8 @@ public class LoginController implements ILoginController {
     public LoginController(InterfaceLoginView loginView, Activity activity) {
         this.iLoginView = loginView;
         this.activity = activity;
+        progressDialog = new ProgressDialog(activity);
+
     }
 
 
@@ -87,6 +89,8 @@ public class LoginController implements ILoginController {
     @Override
     public void handleFacebookAccessToken(@NonNull AccessToken token, FirebaseAuth mAuth) {
         Log.d("FacebookLogin", "handleFacebookAccessToken:" + token);
+        progressDialog.setMessage("Facebook Sign in...");
+        progressDialog.show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
@@ -97,13 +101,51 @@ public class LoginController implements ILoginController {
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user)
                             iLoginView.OnLoginSuccess("Authentication Succeeded.");
+                            progressDialog.dismiss();
                         }
                         else {
+                            progressDialog.dismiss();
                             Log.w("FacebookLogin", "signInWithCredential:failure", task.getException());
                             iLoginView.OnLoginError("Authentication failed.");
                         }
                     }
 
                 });
+    }
+
+    @Override
+    public void handleGoogleLoginFirebase(String idToken, FirebaseAuth mAuth) {
+        progressDialog.setMessage("Google Sign In...");
+        progressDialog.show();
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "signInWithCredential: success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                           // updateUI(user) ;
+                            iLoginView.OnLoginSuccess("Authentication successfully");
+                            progressDialog.dismiss();
+                        }
+                        else{
+                            progressDialog.dismiss();
+                            Log.d(TAG, "signInWithCredential: failed");
+                            iLoginView.OnLoginError("Authentication failed");
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        Intent intent = new Intent(activity , HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

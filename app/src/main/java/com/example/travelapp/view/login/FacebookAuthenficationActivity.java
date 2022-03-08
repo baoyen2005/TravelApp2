@@ -1,16 +1,12 @@
-package com.example.travelapp.controller.login;
+package com.example.travelapp.view.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.example.travelapp.model.User;
-import com.example.travelapp.view.login.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -31,7 +27,7 @@ public class FacebookAuthenficationActivity extends LoginActivity {
     private CallbackManager mCallbackManager;
     private AccessTokenTracker accessTokenTracker;
     private FirebaseAuth mAuth;
-
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

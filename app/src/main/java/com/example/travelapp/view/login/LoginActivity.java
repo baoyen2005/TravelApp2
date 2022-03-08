@@ -3,7 +3,6 @@ package com.example.travelapp.view.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -11,28 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.base.ILog;
-import com.example.travelapp.controller.login.FacebookAuthenficationActivity;
 import com.example.travelapp.controller.login.LoginController;
-import com.example.travelapp.model.User;
 import com.example.travelapp.view.home.HomeActivity;
 import com.example.travelapp.view.signup.CreateAccActivity;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 public class LoginActivity extends BaseActivity implements InterfaceLoginView {
@@ -147,7 +131,8 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     @Override
     public void OnLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this , HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

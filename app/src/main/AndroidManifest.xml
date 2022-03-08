@@ -16,7 +16,7 @@
             android:name=".view.login.GoogleAuthLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.login.FacebookAuthenficationActivity"
+            android:name=".view.login.FacebookAuthenficationActivity"
             android:exported="false" />
         <activity
             android:name=".view.signup.CreateAccActivity"
