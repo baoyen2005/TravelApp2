@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -29,9 +28,8 @@ import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.controller.createaccount.CreateAccController;
 import com.example.travelapp.view.home.HomeActivity;
-import com.example.travelapp.view.login.InterfaceLoginView;
-import com.example.travelapp.view.login.LoginActivity;
-import com.facebook.login.Login;
+import com.example.travelapp.view.login.interface_login.InterfaceLoginView;
+import com.example.travelapp.view.login.activity_login.LoginActivity;
 
 import java.io.IOException;
 

@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.login.FacebookAuthenficationActivity">
+    tools:context=".view.login.activity_login.FacebookAuthenficationActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

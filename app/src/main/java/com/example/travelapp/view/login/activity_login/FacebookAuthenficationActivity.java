@@ -1,4 +1,4 @@
-package com.example.travelapp.view.login;
+package com.example.travelapp.view.login.activity_login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.travelapp.view.login.activity_login.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;

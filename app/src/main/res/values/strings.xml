@@ -5,5 +5,4 @@
     <string name="create_acc"><font color='#656F77'>Bạn chưa có tài khoản</font> </string>
     <string name="facebook_app_id">507083160975898</string>
     <string name="fb_login_protocol_scheme">fb507083160975898</string>
-
 </resources>
