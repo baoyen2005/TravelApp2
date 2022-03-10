@@ -116,15 +116,13 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
                             @Override
                             public void onSuccess(boolean isCheck, String userid) {
                                 if (!isCheck || userid == null) {
-                                    Log.d("tag", "onSuccess 1: userid" + userid);
                                     Toast.makeText(LoginActivity.this, "User is wrong or not exits. Please check again", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
                                 } else {
-                                    Log.d("tag", "onSuccess 2: userid" + userid);
 
                                     edtNewPassword.setVisibility(View.VISIBLE);
                                     btnConfirmUserName.setText("Update");
-                                    if (edtNewPassword != null) {
+                                    if (edtNewPassword != null && edtNewPassword.length()>6) {
                                         loginController.updateNewPassword(edtUserNameResetPass.getText().toString(),
                                                 edtNewPassword.getText().toString(), userid,
                                                 new IOnLoadUpdateInfoLogin() {
@@ -147,6 +145,9 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
 
                                                     }
                                                 });
+                                    }
+                                    else{
+                                        Toast.makeText(LoginActivity.this, "Password is invalid", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
