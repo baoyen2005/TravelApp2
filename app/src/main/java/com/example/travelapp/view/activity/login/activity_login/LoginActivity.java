@@ -1,4 +1,4 @@
-package com.example.travelapp.view.login.activity_login;
+package com.example.travelapp.view.activity.login.activity_login;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,11 +20,11 @@ import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.base.ILog;
 import com.example.travelapp.controller.login.LoginController;
-import com.example.travelapp.view.home.HomeActivity;
-import com.example.travelapp.view.login.interface_login.IOnLoadUpdateInfoLogin;
-import com.example.travelapp.view.login.interface_login.InterfaceLoginView;
-import com.example.travelapp.view.login.interface_login.IOnLoadInfoListenerLogin;
-import com.example.travelapp.view.signup.CreateAccActivity;
+import com.example.travelapp.view.activity.home.MainActivity;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
+import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
+import com.example.travelapp.view.activity.signup.CreateAccActivity;
 import com.facebook.login.widget.LoginButton;
 
 
@@ -223,7 +222,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     @Override
     public void OnLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

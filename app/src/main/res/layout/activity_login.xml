@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.login.activity_login.LoginActivity">
+    tools:context=".view.activity.login.activity_login.LoginActivity">
     <ImageView
         android:id="@+id/helloimg"
         android:layout_width="match_parent"

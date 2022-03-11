@@ -8,9 +8,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.travelapp.model.User;
-import com.example.travelapp.view.login.interface_login.IOnLoadUpdateInfoLogin;
-import com.example.travelapp.view.login.interface_login.InterfaceLoginView;
-import com.example.travelapp.view.login.interface_login.IOnLoadInfoListenerLogin;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
+import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.facebook.AccessToken;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;

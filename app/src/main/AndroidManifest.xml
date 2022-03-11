@@ -13,21 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelApp">
         <activity
-            android:name=".view.login.activity_login.GoogleAuthLoginActivity"
+            android:name=".view.activity.login.activity_login.GoogleAuthLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.login.activity_login.FacebookAuthenficationActivity"
+            android:name=".view.activity.login.activity_login.FacebookAuthenficationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.signup.CreateAccActivity"
+            android:name=".view.activity.signup.CreateAccActivity"
             android:exported="false"
             android:fitsSystemWindows="true"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".view.home.HomeActivity"
+            android:name=".view.activity.home.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".view.login.activity_login.LoginActivity"
+            android:name=".view.activity.login.activity_login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

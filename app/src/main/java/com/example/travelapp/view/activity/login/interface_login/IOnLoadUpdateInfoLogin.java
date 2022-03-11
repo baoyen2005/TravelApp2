@@ -1,4 +1,4 @@
-package com.example.travelapp.view.login.interface_login;
+package com.example.travelapp.view.activity.login.interface_login;
 
 public interface IOnLoadUpdateInfoLogin {
     void onSuccess(boolean isCheck);

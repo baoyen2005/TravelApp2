@@ -1,4 +1,4 @@
-package com.example.travelapp.view.login.activity_login;
+package com.example.travelapp.view.activity.login.activity_login;
 
 
 import androidx.annotation.Nullable;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.travelapp.view.login.activity_login.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

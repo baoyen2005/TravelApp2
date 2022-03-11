@@ -2,8 +2,8 @@ package com.example.travelapp.controller.login;
 
 import android.app.ProgressDialog;
 
-import com.example.travelapp.view.login.interface_login.IOnLoadInfoListenerLogin;
-import com.example.travelapp.view.login.interface_login.IOnLoadUpdateInfoLogin;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
 import com.facebook.AccessToken;
 import com.google.firebase.auth.FirebaseAuth;
 

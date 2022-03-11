@@ -1,4 +1,4 @@
-package com.example.travelapp.view.signup;
+package com.example.travelapp.view.activity.signup;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
@@ -27,9 +27,9 @@ import android.widget.Toast;
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.controller.createaccount.CreateAccController;
-import com.example.travelapp.view.home.HomeActivity;
-import com.example.travelapp.view.login.interface_login.InterfaceLoginView;
-import com.example.travelapp.view.login.activity_login.LoginActivity;
+import com.example.travelapp.view.activity.home.MainActivity;
+import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
+import com.example.travelapp.view.activity.login.activity_login.LoginActivity;
 
 import java.io.IOException;
 
@@ -184,7 +184,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     @Override
     public void OnLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(CreateAccActivity.this, HomeActivity.class);
+        Intent intent = new Intent(CreateAccActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
