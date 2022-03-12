@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
          //menu = bottomNavigationView.getMenu();
     }
     private  void setFragmentForNavigation(){
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
