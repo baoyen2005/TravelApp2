@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelApp">
         <activity
+            android:name=".view.admin.MainActivityAdmin"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.login.activity_login.GoogleAuthLoginActivity"
             android:exported="false" />
         <activity
@@ -24,7 +27,7 @@
             android:fitsSystemWindows="true"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".view.activity.home.MainActivity"
+            android:name=".view.activity.home.MainActivityUser"
             android:exported="false" />
         <activity
             android:name=".view.activity.login.activity_login.LoginActivity"

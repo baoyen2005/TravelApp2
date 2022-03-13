@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.home.MainActivityUser">
+    tools:context=".view.admin.MainActivityAdmin">
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/viewPagerAdmin"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:overScrollMode="never"
@@ -15,10 +15,10 @@
         app:layout_constraintRight_toRightOf="parent"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavi"
+        android:id="@+id/bottomNaviAdmin"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:menu="@menu/bottom_navi_menu_user"
+        app:menu="@menu/bottom_navi_menu_admin"
         android:background="@drawable/bg_dialog"
         android:layout_marginBottom="25dp"
         app:itemIconSize="45dp"

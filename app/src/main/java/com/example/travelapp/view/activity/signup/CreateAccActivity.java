@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.controller.createaccount.CreateAccController;
-import com.example.travelapp.view.activity.home.MainActivity;
+import com.example.travelapp.view.activity.home.MainActivityUser;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
 import com.example.travelapp.view.activity.login.activity_login.LoginActivity;
 
@@ -182,15 +182,25 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     }
 
     @Override
-    public void OnLoginSuccess(String message) {
+    public void OnUserLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(CreateAccActivity.this, MainActivity.class);
+        Intent intent = new Intent(CreateAccActivity.this, MainActivityUser.class);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void OnLoginError(String message) {
+    public void OnUserLoginFail(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void OnAdminLoginSuccess(String message) {
+        Log.d("TAG", "OnAdminLoginSuccess: ");
+    }
+
+    @Override
+    public void OnAdminLoginFail(String message) {
+        Log.d("TAG", "OnAdminLoginFail: ");
     }
 }

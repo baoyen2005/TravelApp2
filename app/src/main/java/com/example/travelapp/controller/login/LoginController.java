@@ -54,10 +54,11 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
     @Override
     public void onLoginByUsername(String username, String password, ProgressDialog loadingBar) {
         if (TextUtils.isEmpty(username)) {
-            iLoginView.OnLoginError("Please enter your username...");
+            iLoginView.OnUserLoginFail("Please enter your username...");
         } else if (TextUtils.isEmpty(password)) {
-            iLoginView.OnLoginError("Please enter your password...");
-        } else {
+            iLoginView.OnUserLoginFail("Please enter your password...");
+        }
+        else if(username.equals("admin")){
             loadingBar.show();
             FirebaseFirestore.getInstance().collection("users")
                     .whereEqualTo("username", username)
@@ -70,14 +71,41 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                                 if (listUser.get(i) != null) {
                                     if (password.equals(listUser.get(i).getPassword())) {
                                         loadingBar.dismiss();
-                                        iLoginView.OnLoginSuccess("Login success, welcome to travel app");
+                                        iLoginView.OnAdminLoginSuccess("Admin login success, welcome to travel app");
                                     } else {
                                         loadingBar.dismiss();
-                                        iLoginView.OnLoginError("Password is wrong, please enter password again!");
+                                        iLoginView.OnAdminLoginFail("Admin's password is wrong, please enter password again!");
                                     }
                                 } else {
                                     loadingBar.dismiss();
-                                    iLoginView.OnLoginError("User with this password does not exist, please create account");
+                                    iLoginView.OnAdminLoginFail("Admin with this password does not exist, please check account again");
+                                }
+                            }
+
+                        }
+                    });
+        }
+        else {
+            loadingBar.show();
+            FirebaseFirestore.getInstance().collection("users")
+                    .whereEqualTo("username", username)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
+                            for (int i = 0; i < listUser.size(); i++) {
+                                if (listUser.get(i) != null) {
+                                    if (password.equals(listUser.get(i).getPassword())) {
+                                        loadingBar.dismiss();
+                                        iLoginView.OnUserLoginSuccess("User login success, welcome to travel app");
+                                    } else {
+                                        loadingBar.dismiss();
+                                        iLoginView.OnUserLoginFail("User's password is wrong, please enter password again!");
+                                    }
+                                } else {
+                                    loadingBar.dismiss();
+                                    iLoginView.OnUserLoginFail("User with this password does not exist, please create account");
                                 }
                             }
 
@@ -85,6 +113,8 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                     });
 
         }
+
+
     }
 
     @Override
@@ -101,12 +131,12 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                             Log.d("FacebookLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user)
-                            iLoginView.OnLoginSuccess("Authentication Succeeded.");
+                            iLoginView.OnUserLoginSuccess("Authentication Succeeded.");
                             progressDialog.dismiss();
                         } else {
                             progressDialog.dismiss();
                             Log.d("FacebookLogin", "signInWithCredential:failure", task.getException());
-                            iLoginView.OnLoginError("Authentication failed.");
+                            iLoginView.OnUserLoginFail("Authentication failed.");
                         }
                     }
 
@@ -126,12 +156,12 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                             Log.d(TAG, "signInWithCredential: success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             // updateUI(user) ;
-                            iLoginView.OnLoginSuccess("Authentication successfully");
+                            iLoginView.OnUserLoginSuccess("Authentication successfully");
                             progressDialog.dismiss();
                         } else {
                             progressDialog.dismiss();
                             Log.d(TAG, "signInWithCredential: failed");
-                            iLoginView.OnLoginError("Authentication failed");
+                            iLoginView.OnUserLoginFail("Authentication failed");
                         }
                     }
                 });

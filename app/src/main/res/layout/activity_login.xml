@@ -4,192 +4,218 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".view.activity.login.activity_login.LoginActivity">
-    <ImageView
-        android:id="@+id/helloimg"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/hellologin"
-        app:layout_constraintHeight_percent="0.35"
-        app:layout_constraintTop_toTopOf="parent" />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.65"
-        app:layout_constraintTop_toBottomOf="@+id/helloimg">
-
-        <TextView
-            android:id="@+id/tvLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/nunito"
-            android:text="Login"
-            android:textColor="@color/black"
-            android:textSize="32dp"
-            android:textStyle="normal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edtUserNameLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:background="@drawable/custom_login_edittext"
-            android:hint="Username"
-            android:inputType="text"
-            android:padding="12dp"
-            android:textColorHint="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/tvLogin"
-            tools:layout_editor_absoluteX="-155dp" />
-
-        <EditText
-            android:id="@+id/edtPasswordLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:background="@drawable/custom_login_edittext"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:textColorHint="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/edtUserNameLogin" />
-
-        <ImageView
-            android:id="@+id/imgLock"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/custom_login_edittext"
-            android:hint="Password"
-            android:src="@drawable/lock"
-            app:layout_constraintBottom_toBottomOf="@id/edtPasswordLogin"
-            app:layout_constraintRight_toRightOf="@id/edtPasswordLogin"
-            app:layout_constraintTop_toTopOf="@+id/edtPasswordLogin" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:background="@drawable/custom_btn_login"
-            android:fontFamily="@font/nunitoregular"
-            android:padding="12dp"
-            android:text="Login"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="normal"
-            app:layout_constraintTop_toBottomOf="@id/edtPasswordLogin" />
-        <LinearLayout
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/helloimg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:background="@color/white"
-                    android:text="Login With "
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunitoregular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvLoginByFacebook"
-                    android:text=" Facebook "
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunito"
-                    android:layout_width="wrap_content"
-                    android:textColor="#C0201E"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:background="@color/white"
-                    android:text="or "
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunitoregular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvLoginByGmail"
-                    android:text=" Google "
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunito"
-                    android:layout_width="wrap_content"
-                    android:textColor="#C0201E"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:background="@color/white"
-                    android:text="@string/forget_password"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunitoregular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvRecoverPass_Login"
-                    android:text=" Khôi phục"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunito"
-                    android:layout_width="wrap_content"
-                    android:textColor="#191D21"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:background="@color/white"
-                    android:text="@string/create_acc"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunitoregular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tvCreateAcc_Login"
-                    android:text=" Tạo tài khoản"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/nunito"
-                    android:layout_width="wrap_content"
-                    android:textColor="#191D21"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/hellologin"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/helloimg">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tvLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/nunito"
+                    android:text="Login"
+                    android:textColor="@color/black"
+                    android:textSize="32dp"
+                    android:textStyle="normal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/edtUserNameLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/custom_login_edittext"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="@color/black"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+                <EditText
+                    android:id="@+id/edtPasswordLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/custom_login_edittext"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textColorHint="@color/black"
+                    app:layout_constraintTop_toBottomOf="@+id/edtUserNameLogin" />
+
+                <ImageView
+                    android:id="@+id/imgLock"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/custom_login_edittext"
+                    android:hint="Password"
+                    android:src="@drawable/lock"
+                    app:layout_constraintBottom_toBottomOf="@id/edtPasswordLogin"
+                    app:layout_constraintRight_toRightOf="@id/edtPasswordLogin"
+                    app:layout_constraintTop_toTopOf="@+id/edtPasswordLogin" />
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/custom_btn_login"
+                    android:fontFamily="@font/nunitoregular"
+                    android:padding="12dp"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="normal"
+                    app:layout_constraintTop_toBottomOf="@id/edtPasswordLogin" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="24dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/btnLogin"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:fontFamily="@font/nunitoregular"
+                            android:gravity="center"
+                            android:text="Login With "
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvLoginByFacebook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito"
+                            android:gravity="center"
+                            android:text=" Facebook "
+                            android:textColor="#C0201E"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:fontFamily="@font/nunitoregular"
+                            android:gravity="center"
+                            android:text="or "
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvLoginByGmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito"
+                            android:gravity="center"
+                            android:text=" Google "
+                            android:textColor="#C0201E"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:fontFamily="@font/nunitoregular"
+                            android:text="@string/forget_password"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRecoverPass_Login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/nunito"
+                            android:text=" Khôi phục"
+                            android:textColor="#191D21"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:fontFamily="@font/nunitoregular"
+                            android:gravity="center"
+                            android:text="@string/create_acc"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvCreateAcc_Login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/nunito"
+                            android:text=" Tạo tài khoản"
+                            android:textColor="#191D21"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

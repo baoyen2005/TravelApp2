@@ -37,26 +37,30 @@ public class CreateAccController implements ICreateAccController {
     @Override
     public void onCreateAcc(String username, String phone, String address, String password, String passwordAgain, Uri url, ProgressDialog loadingBar) {
         if (TextUtils.isEmpty(username)) {
-            iLoginView.OnLoginError("Please enter your name");
+            iLoginView.OnUserLoginFail("Please enter your name");
         }  else if (TextUtils.isEmpty(phone)) {
-            iLoginView.OnLoginError("Please enter your phone");
+            iLoginView.OnUserLoginFail("Please enter your phone");
         } else if (TextUtils.isEmpty(address)) {
-            iLoginView.OnLoginError("Please enter your address");
+            iLoginView.OnUserLoginFail("Please enter your address");
         }
         else if (TextUtils.isEmpty(password)) {
-            iLoginView.OnLoginError("Please enter your password");
+            iLoginView.OnUserLoginFail("Please enter your password");
         } else if (TextUtils.isEmpty(passwordAgain)) {
-            iLoginView.OnLoginError("Please enter your password again");
+            iLoginView.OnUserLoginFail("Please enter your password again");
         }
         else if (!password.equals(passwordAgain)) {
-            iLoginView.OnLoginError("Password isn't match,Please enter your pass");
+            iLoginView.OnUserLoginFail("Password isn't match,Please enter your pass");
         }
         else if(password.length() <8){
-            iLoginView.OnLoginError("Password must be at least 6 characters");
+            iLoginView.OnUserLoginFail("Password must be at least 6 characters");
         }
         else if (url == null) {
-            iLoginView.OnLoginError("Avatar is error, please check again");
-        } else {
+            iLoginView.OnUserLoginFail("Avatar is error, please check again");
+        }
+        else if(username.contains("admin")){
+            iLoginView.OnUserLoginFail("Username can not contain admin");
+        }
+        else {
             loadingBar.show();
             FirebaseFirestore.getInstance().collection("users")
                     .whereEqualTo("username", username)
@@ -68,11 +72,11 @@ public class CreateAccController implements ICreateAccController {
                                 if (queryDocumentSnapshots.size() > 0) {
                                     //ddax ton tai
                                     Log.d("user", "acc da ton tai");
-                                    iLoginView.OnLoginError("Account is invalid, it is exits. Please choose another username");
+                                    iLoginView.OnUserLoginFail("Account is invalid, it is exits. Please choose another username");
                                     loadingBar.dismiss();
                                 } else {
                                     createAccount(username, phone, address, password, passwordAgain, url, loadingBar);
-                                    iLoginView.OnLoginSuccess("Create account successfully!");
+                                    iLoginView.OnUserLoginSuccess("Create account successfully!");
                                     Log.d("user", "create acc onSuccess: ");
                                 }
                             }
@@ -107,10 +111,10 @@ public class CreateAccController implements ICreateAccController {
                 }
                 if (task.isSuccessful()) {
                     upLoadPhoto(url, documentReference.getId(), loadingBar);
-                    iLoginView.OnLoginSuccess("Create account success!");
+                    iLoginView.OnUserLoginSuccess("Create account success!");
                     Log.d("user", "createAccount: thanh cong");
                 } else {
-                    iLoginView.OnLoginError("Create account fail. Try again");
+                    iLoginView.OnUserLoginFail("Create account fail. Try again");
                     Log.d("user", "createAccount:  loi");
                 }
             }
@@ -132,7 +136,7 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateInfo(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
-                iLoginView.OnLoginSuccess("Create account successfully");
+                iLoginView.OnUserLoginSuccess("Create account successfully");
             });
         });
         uploadTask.addOnFailureListener(e -> {
@@ -142,7 +146,7 @@ public class CreateAccController implements ICreateAccController {
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
                 Log.d("user", "upLoadPhoto: lỗi");
-                iLoginView.OnLoginError("Create account fail. Try again");
+                iLoginView.OnUserLoginFail("Create account fail. Try again");
             }
         });
         uploadTask.addOnCanceledListener(() -> {
@@ -151,7 +155,7 @@ public class CreateAccController implements ICreateAccController {
             }
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
-                iLoginView.OnLoginError("Create account fail. Try again");
+                iLoginView.OnUserLoginFail("Create account fail. Try again");
             }
         });
 
@@ -172,10 +176,10 @@ public class CreateAccController implements ICreateAccController {
                         }
                         if (task.isSuccessful()) {
                             Log.d("user", "update thanh cong info");
-                            iLoginView.OnLoginSuccess("Create account fail successfully");
+                            iLoginView.OnUserLoginSuccess("Create account fail successfully");
                         } else {
                             Log.d("user", "looixupdate info");
-                            iLoginView.OnLoginError("Create account fail. Try again");
+                            iLoginView.OnUserLoginFail("Create account fail. Try again");
                         }
                     }
                 });

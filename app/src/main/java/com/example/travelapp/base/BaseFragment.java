@@ -26,13 +26,13 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initController();
-        initView();
+        initView(view);
         initData();
         initEvent();
     }
     public abstract int getLayoutResId();
     public abstract void initController();
-    public abstract void initView();
+    public abstract void initView(View view);
     public abstract void initData();
     public abstract void initEvent();
 }
