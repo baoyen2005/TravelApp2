@@ -38,7 +38,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
     private static final int RC_SIGN_IN = 12345;
     private Activity activity;
     ProgressDialog progressDialog;
-    private boolean checkUpdate ;
+    private boolean checkUpdate;
 
     public LoginController() {
     }
@@ -52,67 +52,112 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
 
     @Override
-    public void onLoginByUsername(String username, String password, ProgressDialog loadingBar) {
-        if (TextUtils.isEmpty(username)) {
+    public void onLoginByEmail(String email, String password, ProgressDialog loadingBar) {
+        if (TextUtils.isEmpty(email)) {
             iLoginView.OnUserLoginFail("Please enter your username...");
         } else if (TextUtils.isEmpty(password)) {
             iLoginView.OnUserLoginFail("Please enter your password...");
-        }
-        else if(username.equals("admin")){
-            loadingBar.show();
-            FirebaseFirestore.getInstance().collection("users")
-                    .whereEqualTo("username", username)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
-                            for (int i = 0; i < listUser.size(); i++) {
-                                if (listUser.get(i) != null) {
-                                    if (password.equals(listUser.get(i).getPassword())) {
-                                        loadingBar.dismiss();
-                                        iLoginView.OnAdminLoginSuccess("Admin login success, welcome to travel app");
-                                    } else {
-                                        loadingBar.dismiss();
-                                        iLoginView.OnAdminLoginFail("Admin's password is wrong, please enter password again!");
-                                    }
-                                } else {
-                                    loadingBar.dismiss();
-                                    iLoginView.OnAdminLoginFail("Admin with this password does not exist, please check account again");
-                                }
-                            }
+        } else if (email.equals("admin@gmail.com")) {
 
+            loadingBar.show();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            loadingBar.dismiss();
+                            iLoginView.OnAdminLoginSuccess("Admin login success, welcome to travel app");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                         @Override
+                        public void onFailure(@NonNull Exception e) {
+                             loadingBar.dismiss();
+                             iLoginView.OnAdminLoginFail("Admin with this password does not exist, please check account again");
                         }
                     });
-        }
+
+            }
+
+
+//            FirebaseFirestore.getInstance().collection("users")
+//                    .whereEqualTo("username", email)
+//                    .get()
+//                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                            ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
+//                            for (int i = 0; i < listUser.size(); i++) {
+//                                if (listUser.get(i) != null) {
+//                                    if (password.equals(listUser.get(i).getPassword())) {
+//                                        loadingBar.dismiss();
+//                                        iLoginView.OnAdminLoginSuccess("Admin login success, welcome to travel app");
+//                                    } else {
+//                                        loadingBar.dismiss();
+//                                        iLoginView.OnAdminLoginFail("Admin's password is wrong, please enter password again!");
+//                                    }
+//                                } else {
+//                                    loadingBar.dismiss();
+//                                    iLoginView.OnAdminLoginFail("Admin with this password does not exist, please check account again");
+//                                }
+//                            }
+//
+//                        }
+//                    });
+//        }
         else {
-            loadingBar.show();
-            FirebaseFirestore.getInstance().collection("users")
-                    .whereEqualTo("username", username)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
-                            for (int i = 0; i < listUser.size(); i++) {
-                                if (listUser.get(i) != null) {
-                                    if (password.equals(listUser.get(i).getPassword())) {
-                                        loadingBar.dismiss();
-                                        iLoginView.OnUserLoginSuccess("User login success, welcome to travel app");
-                                    } else {
-                                        loadingBar.dismiss();
-                                        iLoginView.OnUserLoginFail("User's password is wrong, please enter password again!");
-                                    }
-                                } else {
-                                    loadingBar.dismiss();
-                                    iLoginView.OnUserLoginFail("User with this password does not exist, please create account");
-                                }
-                            }
 
+            loadingBar.show();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            loadingBar.dismiss();
+                            iLoginView.OnUserLoginSuccess("User login success, welcome to travel app");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            loadingBar.dismiss();
+                            iLoginView.OnUserLoginFail("User with this password does not exist, please create account");
                         }
                     });
 
         }
+
+
+
+//            loadingBar.show();
+//            FirebaseFirestore.getInstance().collection("users")
+//                    .whereEqualTo("username", username)
+//                    .get()
+//                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                            ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
+//                            for (int i = 0; i < listUser.size(); i++) {
+//                                if (listUser.get(i) != null) {
+//                                    if (password.equals(listUser.get(i).getPassword())) {
+//                                        loadingBar.dismiss();
+//                                        iLoginView.OnUserLoginSuccess("User login success, welcome to travel app");
+//                                    } else {
+//                                        loadingBar.dismiss();
+//                                        iLoginView.OnUserLoginFail("User's password is wrong, please enter password again!");
+//                                    }
+//                                } else {
+//                                    loadingBar.dismiss();
+//                                    iLoginView.OnUserLoginFail("User with this password does not exist, please create account");
+//                                }
+//                            }
+//
+//                        }
+//                    });
+
+        //}
 
 
     }
@@ -168,9 +213,6 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
     }
 
 
-
-
-
     @Override
     public void checkConfirmUserName(String userName, IOnLoadInfoListenerLogin listener) {
         FirebaseFirestore.getInstance().collection("users")
@@ -181,7 +223,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
                         listener.onSuccess(listUser.size() > 0 && listUser.get(0) != null && listUser.get(0).getUsername().equals(userName)
-                        , listUser.get(0).getUid());
+                                , listUser.get(0).getUid());
 
                     }
                 }).addOnFailureListener(e -> listener.onFailure());
@@ -212,11 +254,11 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                loadUpdateInfoLogin.onFailure();
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        loadUpdateInfoLogin.onFailure();
+                    }
+                });
 
     }
 

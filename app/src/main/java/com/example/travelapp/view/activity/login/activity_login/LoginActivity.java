@@ -29,7 +29,7 @@ import com.example.travelapp.view.admin.MainActivityAdmin;
 
 
 public class LoginActivity extends BaseActivity implements InterfaceLoginView {
-    private EditText edtUserName, edtPassword, edtUserNameResetPass, edtNewPassword;
+    private EditText edtUserNameEmailLogin, edtPassword, edtUserNameResetPass, edtNewPassword;
     private Button btnLogin, btnConfirmUserName, btnCancelDialogResetPass;
     private ProgressDialog loadingBar;
     public LoginController loginController;
@@ -38,6 +38,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     private TextView tvLoginByFacebook, tvRecoverPassLogin;
     private static final String TAG = "FacebookLogin";
     private static final int RC_SIGN_IN = 12345;
+
 
     public LoginActivity() {
         super();
@@ -61,7 +62,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
 
     @Override
     public void initview(Bundle savedInstanceState) {
-        edtUserName = findViewById(R.id.edtUserNameLogin);
+        edtUserNameEmailLogin = findViewById(R.id.edtUserNameEmailLogin);
         edtPassword = findViewById(R.id.edtPasswordLogin);
         btnLogin = findViewById(R.id.btnLogin);
         loadingBar = new ProgressDialog(this);
@@ -211,7 +212,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginController.onLoginByUsername(edtUserName.getText().toString(), edtPassword.getText().toString(), loadingBar);
+                loginController.onLoginByEmail(edtUserNameEmailLogin.getText().toString(), edtPassword.getText().toString(), loadingBar);
                 iLog.setTag("login");
                 iLog.setMes("success");
                 iLog.log();
@@ -246,4 +247,15 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     public void OnAdminLoginFail(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            Log.d(TAG, "onStart: ");
+//        } else {
+//            // No user is signed in
+//        }
+//    }
 }

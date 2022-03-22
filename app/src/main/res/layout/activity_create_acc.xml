@@ -186,11 +186,43 @@
                android:padding="8dp" />
        </LinearLayout>
 
+       <LinearLayout
+           android:id="@+id/linear11"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/linear3"
+           android:layout_marginLeft="24dp"
+           android:layout_marginTop="20dp"
+           android:orientation="horizontal"
+           android:background="@drawable/custom_login_edittext"
+           android:layout_marginRight="24dp"
+           android:padding="8dp"
+           >
+           <ImageView
+               android:id="@+id/iconEmail"
+               android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_marginLeft="10dp"
+               android:layout_gravity="center"
+               android:src="@drawable/iconemail"
+               app:layout_constraintLeft_toLeftOf="parent"
+               />
 
+           <EditText
+               android:id="@+id/edtUserEmailCreateAcc"
+               android:layout_width="match_parent"
+               android:layout_gravity="center"
+               android:layout_height="40dp"
+               android:layout_marginLeft="10dp"
+               android:background="@drawable/custom_edtext"
+               android:hint="Email"
+               android:padding="8dp" />
+       </LinearLayout>
        <LinearLayout
            android:id="@+id/linear4"
            app:layout_constraintLeft_toLeftOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/linear3"
+           app:layout_constraintTop_toBottomOf="@+id/linear11"
            android:layout_marginLeft="24dp"
            android:layout_marginTop="15dp"
            android:layout_marginRight="24dp"
