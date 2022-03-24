@@ -8,11 +8,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.travelapp.model.User;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -27,60 +31,62 @@ import java.util.Map;
 public class CreateAccController implements ICreateAccController {
     private InterfaceLoginView iLoginView;
     private Activity activity;
-
+    private FirebaseAuth firebaseAuth;
     public CreateAccController(InterfaceLoginView iLoginView, Activity activity) {
         this.iLoginView = iLoginView;
         this.activity = activity;
+
     }
 
 
     @Override
-    public void onCreateAcc(String username, String phone, String address, String password, String passwordAgain, Uri url, ProgressDialog loadingBar) {
+    public void onCreateAcc(String username, String phone, String address, String password, String passwordAgain,String email, Uri url, ProgressDialog loadingBar) {
         if (TextUtils.isEmpty(username)) {
-            iLoginView.OnLoginError("Please enter your name");
+            iLoginView.OnUserLoginFail("Please enter your name");
         }  else if (TextUtils.isEmpty(phone)) {
-            iLoginView.OnLoginError("Please enter your phone");
+            iLoginView.OnUserLoginFail("Please enter your phone");
         } else if (TextUtils.isEmpty(address)) {
-            iLoginView.OnLoginError("Please enter your address");
+            iLoginView.OnUserLoginFail("Please enter your address");
         }
         else if (TextUtils.isEmpty(password)) {
-            iLoginView.OnLoginError("Please enter your password");
+            iLoginView.OnUserLoginFail("Please enter your password");
         } else if (TextUtils.isEmpty(passwordAgain)) {
-            iLoginView.OnLoginError("Please enter your password again");
+            iLoginView.OnUserLoginFail("Please enter your password again");
         }
         else if (!password.equals(passwordAgain)) {
-            iLoginView.OnLoginError("Password isn't match,Please enter your pass");
+            iLoginView.OnUserLoginFail("Password isn't match,Please enter your pass");
+        }
+        else if (TextUtils.isEmpty(email)) {
+            iLoginView.OnUserLoginFail("Please enter your email again");
         }
         else if(password.length() <8){
-            iLoginView.OnLoginError("Password must be at least 6 characters");
+            iLoginView.OnUserLoginFail("Password must be at least 6 characters");
         }
         else if (url == null) {
-            iLoginView.OnLoginError("Avatar is error, please check again");
-        } else {
+            iLoginView.OnUserLoginFail("Avatar is error, please check again");
+        }
+        else if(username.contains("admin")){
+            iLoginView.OnUserLoginFail("Username can not contain admin");
+        }
+        else {
             loadingBar.show();
-            FirebaseFirestore.getInstance().collection("users")
-                    .whereEqualTo("username", username)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(
+                    new OnSuccessListener<AuthResult>() {
                         @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            if (queryDocumentSnapshots != null) {
-                                if (queryDocumentSnapshots.size() > 0) {
-                                    //ddax ton tai
-                                    Log.d("user", "acc da ton tai");
-                                    iLoginView.OnLoginError("Account is invalid, it is exits. Please choose another username");
-                                    loadingBar.dismiss();
-                                } else {
-                                    createAccount(username, phone, address, password, passwordAgain, url, loadingBar);
-                                    iLoginView.OnLoginSuccess("Create account successfully!");
-                                    Log.d("user", "create acc onSuccess: ");
-                                }
-                            }
+                        public void onSuccess(AuthResult authResult) {
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            String uid = user.getUid();
+
+                            createAccount(username,phone,address,password,email,url,uid,loadingBar);
+                            iLoginView.OnUserLoginSuccess("Create account success!");
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
+                    }
+            ).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("__tag", "onFailure: ");
+                    iLoginView.OnUserLoginFail("Create account fail. Try again");
+                    loadingBar.dismiss();
                 }
             });
         }
@@ -88,17 +94,19 @@ public class CreateAccController implements ICreateAccController {
 
     }
 
-    private void createAccount(String username, String phone, String address, String password, String passwordAgain, Uri url, ProgressDialog loadingBar) {
+    private void createAccount(String username, String phone, String address, String password,
+                               String email, Uri url, String uid, ProgressDialog loadingBar) {
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users")
-                .document();
+                .document(uid);
 
         Map<String, Object> values = new HashMap<>();
         values.put("username", username);
         values.put("phone", phone);
         values.put("address", address);
         values.put("password", password);
+        values.put("email",email);
         values.put("imageURL", "null");
-        values.put("uid", documentReference.getId());
+        values.put("uid", uid);
         documentReference.set(values, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -107,10 +115,10 @@ public class CreateAccController implements ICreateAccController {
                 }
                 if (task.isSuccessful()) {
                     upLoadPhoto(url, documentReference.getId(), loadingBar);
-                    iLoginView.OnLoginSuccess("Create account success!");
+                 //   iLoginView.OnUserLoginSuccess("Create account success!");
                     Log.d("user", "createAccount: thanh cong");
                 } else {
-                    iLoginView.OnLoginError("Create account fail. Try again");
+//                    iLoginView.OnUserLoginFail("Create account fail. Try again");
                     Log.d("user", "createAccount:  loi");
                 }
             }
@@ -132,7 +140,7 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateInfo(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
-                iLoginView.OnLoginSuccess("Create account successfully");
+                iLoginView.OnUserLoginSuccess("Create account successfully");
             });
         });
         uploadTask.addOnFailureListener(e -> {
@@ -142,7 +150,7 @@ public class CreateAccController implements ICreateAccController {
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
                 Log.d("user", "upLoadPhoto: lỗi");
-                iLoginView.OnLoginError("Create account fail. Try again");
+                iLoginView.OnUserLoginFail("Create account fail. Try again");
             }
         });
         uploadTask.addOnCanceledListener(() -> {
@@ -151,7 +159,7 @@ public class CreateAccController implements ICreateAccController {
             }
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
-                iLoginView.OnLoginError("Create account fail. Try again");
+                iLoginView.OnUserLoginFail("Create account fail. Try again");
             }
         });
 
@@ -172,10 +180,10 @@ public class CreateAccController implements ICreateAccController {
                         }
                         if (task.isSuccessful()) {
                             Log.d("user", "update thanh cong info");
-                            iLoginView.OnLoginSuccess("Create account fail successfully");
+                            iLoginView.OnUserLoginSuccess("Create account fail successfully");
                         } else {
                             Log.d("user", "looixupdate info");
-                            iLoginView.OnLoginError("Create account fail. Try again");
+                            iLoginView.OnUserLoginFail("Create account fail. Try again");
                         }
                     }
                 });

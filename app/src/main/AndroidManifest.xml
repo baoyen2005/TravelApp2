@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.travelapp">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelApp">
         <activity
-            android:name=".view.activity.chat.ChatActivity"
+            android:name=".view.admin.AdminHomeFragment"
+            android:exported="false" />
+        <activity
+            android:name=".view.admin.MainActivityAdmin"
             android:exported="false" />
         <activity
             android:name=".view.activity.login.activity_login.GoogleAuthLoginActivity"
@@ -27,7 +31,7 @@
             android:fitsSystemWindows="true"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".view.activity.home.MainActivity"
+            android:name=".view.activity.home.MainActivityUser"
             android:exported="false" />
         <activity
             android:name=".view.activity.login.activity_login.LoginActivity"

@@ -27,9 +27,10 @@ import android.widget.Toast;
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.controller.createaccount.CreateAccController;
-import com.example.travelapp.view.activity.home.MainActivity;
+import com.example.travelapp.view.activity.home.MainActivityUser;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
 import com.example.travelapp.view.activity.login.activity_login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
@@ -40,10 +41,14 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     private ImageView imgBack;
     private ImageView imgAvatar;
     private final int PICK_IMAGE_REQUEST = 22;
-    private EditText edtUserNameCreateAcc, edtPasswordCreateAcc, edtPassAgainCreateAcc, edtAddressCreateAcc, edtPhoneCreateAcc;
+    private EditText edtUserNameCreateAcc, edtUserEmailCreateAcc,
+            edtPasswordCreateAcc, edtPassAgainCreateAcc, edtAddressCreateAcc, edtPhoneCreateAcc;
     private CreateAccController createAccController;
     private ProgressDialog loadingBar;
     private TextView tvBackCreateAcc;
+
+    private FirebaseAuth firebaseAuth;
+
     @Override
     public void setAdjustScreen() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -69,6 +74,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
         edtAddressCreateAcc = findViewById(R.id.edtUserAddressCreateAcc);
         edtPasswordCreateAcc = findViewById(R.id.edtUserPasswordCreateAcc);
         edtPassAgainCreateAcc = findViewById(R.id.edtUserAgainPasswordCreateAcc);
+        edtUserEmailCreateAcc = findViewById(R.id.edtUserEmailCreateAcc);
         btnCreateAcc = findViewById(R.id.btnCreateAcc);
         imgBack = findViewById(R.id.iconBackCreateAcc);
         tvBackCreateAcc=  findViewById(R.id.tvBackCreateAcc);
@@ -77,6 +83,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     @Override
     protected void initData() {
         loadingBar = new ProgressDialog(this);
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -116,6 +123,7 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
                         edtAddressCreateAcc.getText().toString(),
                         edtPasswordCreateAcc.getText().toString(),
                         edtPassAgainCreateAcc.getText().toString(),
+                        edtUserEmailCreateAcc.getText().toString(),
                         filePath,
                         loadingBar);
             }
@@ -182,15 +190,36 @@ public class CreateAccActivity extends BaseActivity implements InterfaceLoginVie
     }
 
     @Override
-    public void OnLoginSuccess(String message) {
+    public void OnUserLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(CreateAccActivity.this, MainActivity.class);
+        Intent intent = new Intent(CreateAccActivity.this, MainActivityUser.class);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void OnLoginError(String message) {
+    public void OnUserLoginFail(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void OnAdminLoginSuccess(String message) {
+        Log.d("TAG", "OnAdminLoginSuccess: ");
+    }
+
+    @Override
+    public void OnAdminLoginFail(String message) {
+        Log.d("TAG", "OnAdminLoginFail: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(firebaseAuth.getCurrentUser() !=null){
+            Toast.makeText(this, "Account was saved", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(CreateAccActivity.this, MainActivityUser.class);
+//            startActivity(intent);
+//            finish();
+        }
     }
 }

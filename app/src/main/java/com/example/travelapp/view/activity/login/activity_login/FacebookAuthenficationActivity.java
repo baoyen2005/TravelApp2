@@ -46,12 +46,12 @@ public class FacebookAuthenficationActivity extends LoginActivity {
 
             @Override
             public void onCancel() {
-                OnLoginError("login cancel");
+                OnUserLoginFail("login cancel");
             }
 
             @Override
             public void onError(FacebookException error) {
-                OnLoginError("login error");
+                OnUserLoginFail("login error");
             }
         });
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -59,11 +59,11 @@ public class FacebookAuthenficationActivity extends LoginActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user !=null){
-                    OnLoginSuccess("User exits");
+                    OnUserLoginSuccess("User exits");
                 }
                 else{
 
-                    OnLoginError("user login fail");
+                    OnUserLoginFail("user login fail");
                 }
             }
         };

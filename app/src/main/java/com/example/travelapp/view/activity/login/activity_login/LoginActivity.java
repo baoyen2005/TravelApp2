@@ -20,25 +20,25 @@ import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.base.ILog;
 import com.example.travelapp.controller.login.LoginController;
-import com.example.travelapp.view.activity.home.MainActivity;
+import com.example.travelapp.view.activity.home.MainActivityUser;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.activity.signup.CreateAccActivity;
-import com.facebook.login.widget.LoginButton;
+import com.example.travelapp.view.admin.MainActivityAdmin;
 
 
 public class LoginActivity extends BaseActivity implements InterfaceLoginView {
-    private EditText edtUserName, edtPassword, edtUserNameResetPass, edtNewPassword;
+    private EditText edtUserNameEmailLogin, edtPassword, edtUserNameResetPass, edtNewPassword;
     private Button btnLogin, btnConfirmUserName, btnCancelDialogResetPass;
     private ProgressDialog loadingBar;
     public LoginController loginController;
     private ILog iLog;
     private TextView createAccountTv, tvLoginByGoogle;
-    private LoginButton btnLoginByFacebook;
     private TextView tvLoginByFacebook, tvRecoverPassLogin;
     private static final String TAG = "FacebookLogin";
     private static final int RC_SIGN_IN = 12345;
+
 
     public LoginActivity() {
         super();
@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
 
     @Override
     public void initview(Bundle savedInstanceState) {
-        edtUserName = findViewById(R.id.edtUserNameLogin);
+        edtUserNameEmailLogin = findViewById(R.id.edtUserNameEmailLogin);
         edtPassword = findViewById(R.id.edtPasswordLogin);
         btnLogin = findViewById(R.id.btnLogin);
         loadingBar = new ProgressDialog(this);
@@ -117,7 +117,8 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
                                 if (!isCheck || userid == null) {
                                     Toast.makeText(LoginActivity.this, "User is wrong or not exits. Please check again", Toast.LENGTH_SHORT).show();
                                     alertDialog.dismiss();
-                                } else {
+                                }
+                                else {
 
                                     edtNewPassword.setVisibility(View.VISIBLE);
                                     btnConfirmUserName.setText("Update");
@@ -211,7 +212,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginController.onLoginByUsername(edtUserName.getText().toString(), edtPassword.getText().toString(), loadingBar);
+                loginController.onLoginByEmail(edtUserNameEmailLogin.getText().toString(), edtPassword.getText().toString(), loadingBar);
                 iLog.setTag("login");
                 iLog.setMes("success");
                 iLog.log();
@@ -220,16 +221,41 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     }
 
     @Override
-    public void OnLoginSuccess(String message) {
+    public void OnUserLoginSuccess(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivityUser.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void OnLoginError(String message) {
+    public void OnUserLoginFail(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void OnAdminLoginSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivityAdmin.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void OnAdminLoginFail(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            Log.d(TAG, "onStart: ");
+//        } else {
+//            // No user is signed in
+//        }
+//    }
 }

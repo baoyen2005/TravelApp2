@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_bottom_navi_admin"
+        android:icon="@drawable/change_iconhome_bottom_navi"
+        android:title=""
+        />
+    <item
+        android:id="@+id/chat_bottom_navi_admin"
+        android:title=""
+        android:icon="@drawable/change_iconchat_bottom_navi"
+        />
+    <item
+        android:id="@+id/profile_bottom_navi_admin"
+        android:title=""
+        android:icon="@drawable/change_iconprofile_bottom_navi"
+        />
+</menu>

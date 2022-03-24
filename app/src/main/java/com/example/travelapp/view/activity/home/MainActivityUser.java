@@ -1,10 +1,8 @@
 package com.example.travelapp.view.activity.home;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -13,22 +11,22 @@ import android.view.MenuItem;
 
 import com.example.travelapp.R;
 import com.example.travelapp.view.adapter.ViewPagerAdapterBottomNavi;
-import com.example.travelapp.view.fragment.ChatFragment;
-import com.example.travelapp.view.fragment.FavoriteFragment;
-import com.example.travelapp.view.fragment.HomeFragment;
-import com.example.travelapp.view.fragment.ProfileFragment;
-import com.example.travelapp.view.fragment.SearchFragment;
+import com.example.travelapp.view.fragment.ChatFragmentUser;
+import com.example.travelapp.view.fragment.FavoriteFragmentUser;
+import com.example.travelapp.view.fragment.HomeFragmentUser;
+import com.example.travelapp.view.fragment.ProfileFragmentUser;
+import com.example.travelapp.view.fragment.SearchFragmentUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityUser extends AppCompatActivity {
     private ViewPagerAdapterBottomNavi adapterBottomNavi;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
-    private SearchFragment searchFragment;
-    private FavoriteFragment favoriteFragment;
-    private HomeFragment homeFragment;
-    private ChatFragment chatFragment;
-    private ProfileFragment profileFragment;
+    private SearchFragmentUser searchFragmentUser;
+    private FavoriteFragmentUser favoriteFragmentUser;
+    private HomeFragmentUser homeFragmentUser;
+    private ChatFragmentUser chatFragmentUser;
+    private ProfileFragmentUser profileFragmentUser;
     private Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        searchFragment = new SearchFragment();
-        favoriteFragment= new FavoriteFragment();
-        homeFragment = new HomeFragment();
-        chatFragment = new ChatFragment();
-        profileFragment = new ProfileFragment();
+        searchFragmentUser = new SearchFragmentUser();
+        favoriteFragmentUser = new FavoriteFragmentUser();
+        homeFragmentUser = new HomeFragmentUser();
+        chatFragmentUser = new ChatFragmentUser();
+        profileFragmentUser = new ProfileFragmentUser();
     }
     private void setBottomNavigation(){
-        adapterBottomNavi.addFragment(searchFragment);
-        adapterBottomNavi.addFragment(favoriteFragment);
-        adapterBottomNavi.addFragment(homeFragment);
-        adapterBottomNavi.addFragment(chatFragment);
-        adapterBottomNavi.addFragment(profileFragment);
+        adapterBottomNavi.addFragment(searchFragmentUser);
+        adapterBottomNavi.addFragment(favoriteFragmentUser);
+        adapterBottomNavi.addFragment(homeFragmentUser);
+        adapterBottomNavi.addFragment(chatFragmentUser);
+        adapterBottomNavi.addFragment(profileFragmentUser);
         viewPager.setAdapter( adapterBottomNavi);
          //menu = bottomNavigationView.getMenu();
     }
