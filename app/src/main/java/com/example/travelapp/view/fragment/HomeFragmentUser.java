@@ -20,7 +20,6 @@ import com.example.travelapp.model.User;
 import com.example.travelapp.view.interfacefragment.InterfaceHomeFmView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -37,7 +36,6 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     private RecyclerView recycleViewCategories, recycleViewRecommended, recycleViewKnowYourWorld;
     private HomeFMController homeFMController;
     private FirebaseAuth firebaseAuth;
-    private User currentUser;
     private UserHomeConstant userHomeConstant;
 
     public HomeFragmentUser() {
@@ -73,7 +71,6 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     @Override
     public void initData() {
         firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = new User();
         userHomeConstant = new UserHomeConstant();
         getCurrentUser();
     }
@@ -89,13 +86,15 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
                         for (int i = 0; i < listUser.size(); i++) {
                             if (listUser.get(i) != null) {
                                 User user = listUser.get(i);
-                                currentUser.setUid(user.getUid());
-                                currentUser.setUsername(user.getUsername());
-                                currentUser.setFilePath(user.getFilePath());
-                                currentUser.setEmail(user.getEmail());
-                                currentUser.setAddress(user.getAddress());
-                                currentUser.setPassword(user.getPassword());
-                                currentUser.setPhone(user.getPhone());
+
+                                User currentUser = setCurrentUser(user);
+                                tvUserNameHomeFm.setText(currentUser.getUsername());
+                                if(currentUser.getFilePath()==null){
+                                    avatarHomeFragment.setImageResource(R.drawable.useravatar);
+                                }
+                                else{
+                                    avatarHomeFragment.setImageURI(Uri.parse(currentUser.getFilePath()));
+                                }
                                 Log.d(TAG_USER_HOME, "onSuccess: current user " + currentUser.getUsername());
                             } else {
                                 Log.d(TAG_USER_HOME, "on null: current user null");
@@ -108,6 +107,18 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
 
     }
 
+    private User setCurrentUser(User user ) {
+        User currentUser = new User();
+        currentUser.setUid(user.getUid());
+        currentUser.setUsername(user.getUsername());
+        currentUser.setFilePath(user.getFilePath());
+        currentUser.setEmail(user.getEmail());
+        currentUser.setAddress(user.getAddress());
+        currentUser.setPassword(user.getPassword());
+        currentUser.setPhone(user.getPhone());
+        return currentUser;
+    }
+
     private void setTextForWelcome() {
         String text = "Khám phá một\nthế giới mới.";
         tvWelcomeHomeFr.setText(text);
@@ -115,14 +126,14 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
 
     @Override
     public void initEvent() {
-//        setTextForWelcome();
-//        if (currentUser != null) {
-//            setUserAvatar(currentUser);
-//            setTextForTVGoodmorning_Name(currentUser);
-//        }
+        setTextForWelcome();
+       // if (currentUser != null) {
+
+            setTextForTVGoodmorning();
+      //  }
     }
 
-    private void setTextForTVGoodmorning_Name(User currentUser) {
+    private void setTextForTVGoodmorning() {
         Date currentTime = Calendar.getInstance().getTime();
         if (6 <= currentTime.getHours() && currentTime.getHours() < 12) {
             tvGoodMorningHomeFm.setText("Good morning");
@@ -133,12 +144,10 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
         } else {
             tvGoodMorningHomeFm.setText("Good night");
         }
-        tvUserNameHomeFm.setText(currentUser.getUsername());
+
     }
 
-    private void setUserAvatar(User currentUser) {
-        avatarHomeFragment.setImageURI(Uri.parse(currentUser.getFilePath()));
-    }
+
 
     @Override
     public void onLoadDataFail(String message) {

@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelapp.R;
+import com.example.travelapp.constant.Data;
 import com.example.travelapp.model.Message;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class MessageApdapter extends RecyclerView.Adapter {
     String senderAvatar, receiverAvatar;
     FirebaseAuth mAuth;
     FirebaseDatabase db;
+    FirebaseFirestore fs;
     final int ITEM_SENT = 1;
     final int ITEM_RECEIVE = 2;
 
@@ -36,12 +40,15 @@ public class MessageApdapter extends RecyclerView.Adapter {
         this.messages = messages;
         this.receiverAvatar = receiverAvatar;
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://messenger-9715a-default-rtdb.asia-southeast1.firebasedatabase.app");
+
         String currentId = mAuth.getUid();
-        db.getReference().child("Users").child(currentId).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+        fs = FirebaseFirestore.getInstance();
+        fs.collection("users").document(FirebaseAuth.getInstance().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                senderAvatar = dataSnapshot.child("profileImage").getValue(String.class);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.getData() != null) {
+                    senderAvatar = (String) documentSnapshot.get("imageURL");
+                }
             }
         });
 
@@ -86,7 +93,11 @@ public class MessageApdapter extends RecyclerView.Adapter {
             }
 
             sentViewHolder.tvSentMessage.setText(message.getMessage());
-            Glide.with(context).load(senderAvatar).placeholder(R.drawable.user_default).into(sentViewHolder.avatar_sender);
+            if (FirebaseAuth.getInstance().getUid().equals(Data.adminUid)){
+                Glide.with(context).load(senderAvatar).placeholder(R.drawable.customer_service).into(sentViewHolder.avatar_sender);
+            }else {
+                Glide.with(context).load(senderAvatar).placeholder(R.drawable.user_default).into(sentViewHolder.avatar_sender);
+            }
         } else {
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
 
@@ -100,7 +111,14 @@ public class MessageApdapter extends RecyclerView.Adapter {
             }
 
             receiverViewHolder.tvReceiveMessage.setText(message.getMessage());
-            Glide.with(context).load(senderAvatar).placeholder(R.drawable.user_default).into(receiverViewHolder.avatar_receiver);
+            if (FirebaseAuth.getInstance().getUid().equals(Data.adminUid)){
+                Glide.with(context)
+                        .load(senderAvatar)
+                        .placeholder(R.drawable.user_default)
+                        .into(receiverViewHolder.avatar_receiver);
+            }else {
+                Glide.with(context).load(receiverAvatar).placeholder(R.drawable.user_default).into(receiverViewHolder.avatar_receiver);
+            }
         }
     }
 
