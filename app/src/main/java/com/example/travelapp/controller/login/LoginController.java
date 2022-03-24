@@ -57,7 +57,8 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
             iLoginView.OnUserLoginFail("Please enter your username...");
         } else if (TextUtils.isEmpty(password)) {
             iLoginView.OnUserLoginFail("Please enter your password...");
-        } else if (email.equals("admin@gmail.com")) {
+        }
+        else if (email.equals("admin123@gmail.com")) {
 
             loadingBar.show();
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
