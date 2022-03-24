@@ -8,12 +8,13 @@ public class User {
     private String filePath;
     private String username, phone, address, password;
     private String key;
-    private String uid;
+    private String uid, email;
 
     public User() {
     }
 
-    public User(String filePath, String username, String phone, String address, String password, String key, String uid) {
+    public User(String filePath, String username, String phone, String address, String password,
+                String key, String uid, String email) {
         this.filePath = filePath;
         this.username = username;
         this.phone = phone;
@@ -21,6 +22,7 @@ public class User {
         this.password = password;
         this.key = key;
         this.uid = uid;
+        this.email = email;
     }
 
     @Exclude
@@ -78,6 +80,14 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

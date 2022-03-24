@@ -1,5 +1,6 @@
 package com.example.travelapp.view.fragment;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.example.travelapp.R;
@@ -36,12 +37,12 @@ public class FavoriteFragmentUser extends BaseFragment {
 
     @Override
     public void initEvent() {
-        item_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                startActivity(intent);
-            }
-        });
+//        item_chat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), ChatActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

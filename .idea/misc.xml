@@ -69,9 +69,17 @@
         <entry key="app/src/main/res/drawable/ic_send_drawer.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/item_reciver.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/send_drawer.xml" value="0.1655" />
+        <entry key="app/src/main/res/layout/activity_add_post_by_admin.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/activity_main_admin.xml" value="0.182518115942029" />
+        <entry key="app/src/main/res/layout/dialog_forgot_password.xml" value="0.16614583333333333" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/layout/fragment_chat_admin.xml" value="0.16614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_chat_user.xml" value="0.16614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_profile_admin.xml" value="0.16614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_profile_user.xml" value="0.16614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_search_user.xml" value="0.16614583333333333" />
         <entry key="app/src/main/res/layout/item_receive.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/item_send.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/menu/bottom_navi_menu.xml" value="0.35104166666666664" />
