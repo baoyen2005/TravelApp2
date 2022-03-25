@@ -77,9 +77,7 @@ public class CreateAccController implements ICreateAccController {
                         public void onSuccess(AuthResult authResult) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
-
                             createAccount(username,phone,address,password,email,url,uid,loadingBar);
-                            iLoginView.OnUserLoginSuccess("Create account success!");
                         }
                     }
             ).addOnFailureListener(new OnFailureListener() {
@@ -111,6 +109,7 @@ public class CreateAccController implements ICreateAccController {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (activity.isDestroyed() || activity.isFinishing()) {
+                    Log.d("destroyed","activity destoyed");
                     return;
                 }
                 if (task.isSuccessful()) {
@@ -140,7 +139,7 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateInfo(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
-                iLoginView.OnUserLoginSuccess("Create account successfully");
+                //iLoginView.OnUserLoginSuccess("Create account successfully");
             });
         });
         uploadTask.addOnFailureListener(e -> {
