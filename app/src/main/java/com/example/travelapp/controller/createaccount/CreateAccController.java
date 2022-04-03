@@ -1,15 +1,21 @@
 package com.example.travelapp.controller.createaccount;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
+import com.example.travelapp.function_util.GetCurrentLocation;
 import com.example.travelapp.model.User;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
+import com.example.travelapp.view.interfacefragment.InterfaceGetLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,9 +38,15 @@ public class CreateAccController implements ICreateAccController {
     private InterfaceLoginView iLoginView;
     private Activity activity;
     private FirebaseAuth firebaseAuth;
+    private GetCurrentLocation getCurrentLocation;
+    private  LocationManager locationManager;
+    private static final int REQUEST_LOCATION = 1;
     public CreateAccController(InterfaceLoginView iLoginView, Activity activity) {
         this.iLoginView = iLoginView;
         this.activity = activity;
+        getCurrentLocation = new GetCurrentLocation(activity);
+        ActivityCompat.requestPermissions( activity,
+                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
     }
 
@@ -59,7 +71,7 @@ public class CreateAccController implements ICreateAccController {
         else if (TextUtils.isEmpty(email)) {
             iLoginView.OnUserLoginFail("Please enter your email again");
         }
-        else if(password.length() <8){
+        else if(password.length() <6){
             iLoginView.OnUserLoginFail("Password must be at least 6 characters");
         }
         else if (url == null) {
@@ -79,12 +91,14 @@ public class CreateAccController implements ICreateAccController {
                             String uid = user.getUid();
                             createAccount(username,phone,address,password,email,url,uid,loadingBar);
                             loadingBar.dismiss();
+                            iLoginView.OnUserLoginSuccess("Create acc successfull");
                         }
                     }
             ).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     iLoginView.OnUserLoginFail("Create account fail. Try again");
+                    Log.d("bugg", "onFailure: "+e.getMessage());
                     loadingBar.dismiss();
                 }
             });
@@ -97,28 +111,51 @@ public class CreateAccController implements ICreateAccController {
                                String email, Uri url, String uid, ProgressDialog loadingBar) {
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users")
                 .document(uid);
-
         Map<String, Object> values = new HashMap<>();
-        values.put("username", username);
-        values.put("phone", phone);
-        values.put("address", address);
-        values.put("password", password);
-        values.put("email",email);
-        values.put("imageURL", "null");
-        values.put("uid", uid);
-        documentReference.set(values, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            getCurrentLocation.OnGPS();
+        } else {
 
-            @Override
-            public void onSuccess(Void unused) {
-                if (activity.isDestroyed() || activity.isFinishing()) {
-                    Log.d("destroyed","activity destoyed");
-                    return;
+            getCurrentLocation.getLocation(locationManager, new InterfaceGetLocation() {
+                @Override
+                public void getLocationSuccess(String longitude, String latitude) {
+                    values.put("username", username);
+                    values.put("phone", phone);
+                    values.put("address", address);
+                    values.put("password", password);
+                    values.put("email",email);
+                    values.put("imageURL", "null");
+                    values.put("uid", uid);
+                    values.put("longitude",longitude);
+                    values.put("latitude",latitude);
+                    documentReference.set(values, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (activity.isDestroyed() || activity.isFinishing()) {
+                                Log.d("destroyed","activity destoyed");
+                                return;
+                            }
+                           if(task.isSuccessful()){
+                               upLoadPhoto(url, uid, loadingBar);
+                               Log.d("user", "createAccount: thanh cong");
+                           }
+                           else{
+                               Log.d("user", "onComplete: task.fail ");
+                           }
+                        }
+                    });
+
                 }
-                upLoadPhoto(url, uid, loadingBar);
-                //   iLoginView.OnUserLoginSuccess("Create account success!");
-                  Log.d("user", "createAccount: thanh cong");
-            }
-        });
+
+                @Override
+                public void getLocationFailed(String mes) {
+                    values.put("address","null");
+                }
+            });
+
+
+        }
 
 
     }
@@ -136,7 +173,6 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateInfo(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
-                //iLoginView.OnUserLoginSuccess("Create account successfully");
             });
         });
         uploadTask.addOnFailureListener(e -> {

@@ -135,7 +135,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                             Log.d("FacebookLogin", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user)
-                            createAccount(user);
+                            updateAccountToFirebase(user);
                             iLoginView.OnUserLoginSuccess("Authentication Succeeded.");
                             progressDialog.dismiss();
                         } else {
@@ -148,63 +148,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                 });
     }
 
-    private void createAccount(FirebaseUser user){
 
-        Log.d("user11", "imgpath by gg "+ user.getPhotoUrl().getPath());
-
-        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users")
-                .document(user.getUid());
-        Map<String, Object> values = new HashMap<>();
-
-        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            getCurrentLocation.OnGPS();
-        } else {
-            getCurrentLocation.getLocation(locationManager, new InterfaceGetLocation() {
-                @Override
-                public void getLocationSuccess(String longitude, String latitude) {
-                    values.put("username", user.getDisplayName());
-                    values.put("phone", user.getPhoneNumber());
-                    values.put("password", "null");
-                    values.put("email",user.getEmail());
-                    values.put("imageURL", "null");
-                    values.put("uid", user.getUid());
-                    values.put("address", longitude +"/" +latitude);
-
-                    documentReference.set(values, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (activity.isDestroyed() || activity.isFinishing()) {
-                                return;
-                            }
-                            if (task.isSuccessful()) {
-                                Log.d("user121", "imgpath by gg "+ user.getPhotoUrl().getPath());
-                                upLoadPhoto(Uri.parse(user.getPhotoUrl().getPath()), user.getUid());
-                                //   iLoginView.OnUserLoginSuccess("Create account success!");
-                                Log.d("user122", "imgpath by gg "+ user.getPhotoUrl().getPath());
-                            } else {
-//                    iLoginView.OnUserLoginFail("Create account fail. Try again");
-                                Log.d("user", "createAccount:  loi");
-                            }
-                        }
-                    });
-
-                }
-
-                @Override
-                public void getLocationFailed(String mes) {
-                    values.put("address","null");
-                }
-            });
-
-
-        }
-
-
-
-
-
-    }
 
 
     private void upLoadPhoto(Uri uri, String uid) {
@@ -272,8 +216,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential: success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // updateUI(user) ;
-                            createAccount(user);
+                            updateAccountToFirebase(user);
                             iLoginView.OnUserLoginSuccess("Authentication successfully");
                             progressDialog.dismiss();
                         } else {
@@ -338,6 +281,65 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+    private void updateAccountToFirebase(FirebaseUser user){
+
+        Log.d("user11", "imgpath by gg "+ user.getPhotoUrl().getPath());
+
+        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users")
+                .document(user.getUid());
+        Map<String, Object> values = new HashMap<>();
+
+        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            getCurrentLocation.OnGPS();
+        } else {
+            getCurrentLocation.getLocation(locationManager, new InterfaceGetLocation() {
+                @Override
+                public void getLocationSuccess(String longitude, String latitude) {
+                    values.put("username", user.getDisplayName());
+                    values.put("phone", user.getPhoneNumber());
+                    values.put("password", "null");
+                    values.put("email",user.getEmail());
+                    values.put("imageURL", "null");
+                    values.put("uid", user.getUid());
+                    values.put("address", "null");
+                    values.put("latitude",latitude);
+                    values.put("longitude",longitude);
+
+                    documentReference.set(values, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (activity.isDestroyed() || activity.isFinishing()) {
+                                return;
+                            }
+                            if (task.isSuccessful()) {
+                                Log.d("user121", "imgpath by gg "+ user.getPhotoUrl().getPath());
+                                upLoadPhoto(Uri.parse(user.getPhotoUrl().getPath()), user.getUid());
+                                //   iLoginView.OnUserLoginSuccess("Create account success!");
+                                Log.d("user122", "imgpath by gg "+ user.getPhotoUrl().getPath());
+                            } else {
+//                    iLoginView.OnUserLoginFail("Create account fail. Try again");
+                                Log.d("user", "createAccount:  loi");
+                            }
+                        }
+                    });
+
+                }
+
+                @Override
+                public void getLocationFailed(String mes) {
+                    values.put("address","null");
+                }
+            });
+
+
+        }
+
+
+
+
 
     }
 }

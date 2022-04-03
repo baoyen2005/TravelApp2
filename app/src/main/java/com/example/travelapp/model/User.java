@@ -6,7 +6,7 @@ public class User {
     private String imageURL;
     private String username, phone, address, password;
     private String key;
-    private String uid, email;
+    private String uid, email, longitude, latitude;
 
     public User() {
     }
@@ -21,6 +21,20 @@ public class User {
         this.key = key;
         this.uid = uid;
         this.email = email;
+    }
+
+    public User(String imageURL, String username, String phone, String address, String password,
+                String key, String uid, String email, String longitude, String latitude) {
+        this.imageURL = imageURL;
+        this.username = username;
+        this.phone = phone;
+        this.address = address;
+        this.password = password;
+        this.key = key;
+        this.uid = uid;
+        this.email = email;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     @Exclude
@@ -86,6 +100,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }
 
