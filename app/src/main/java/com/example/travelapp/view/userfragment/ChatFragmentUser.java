@@ -1,4 +1,4 @@
-package com.example.travelapp.view.fragment;
+package com.example.travelapp.view.userfragment;
 
 import android.content.Intent;
 import android.view.View;

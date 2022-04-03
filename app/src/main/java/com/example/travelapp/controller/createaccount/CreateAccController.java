@@ -78,6 +78,7 @@ public class CreateAccController implements ICreateAccController {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             createAccount(username,phone,address,password,email,url,uid,loadingBar);
+                            loadingBar.dismiss();
                         }
                     }
             ).addOnFailureListener(new OnFailureListener() {
@@ -105,21 +106,17 @@ public class CreateAccController implements ICreateAccController {
         values.put("email",email);
         values.put("imageURL", "null");
         values.put("uid", uid);
-        documentReference.set(values, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        documentReference.set(values, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onSuccess(Void unused) {
                 if (activity.isDestroyed() || activity.isFinishing()) {
                     Log.d("destroyed","activity destoyed");
                     return;
                 }
-                if (task.isSuccessful()) {
-                    upLoadPhoto(url, documentReference.getId(), loadingBar);
-                 //   iLoginView.OnUserLoginSuccess("Create account success!");
-                    Log.d("user", "createAccount: thanh cong");
-                } else {
-//                    iLoginView.OnUserLoginFail("Create account fail. Try again");
-                    Log.d("user", "createAccount:  loi");
-                }
+                upLoadPhoto(url, uid, loadingBar);
+                //   iLoginView.OnUserLoginSuccess("Create account success!");
+                  Log.d("user", "createAccount: thanh cong");
             }
         });
 
@@ -149,7 +146,7 @@ public class CreateAccController implements ICreateAccController {
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
                 Log.d("user", "upLoadPhoto: lỗi");
-                iLoginView.OnUserLoginFail("Create account fail. Try again");
+
             }
         });
         uploadTask.addOnCanceledListener(() -> {
@@ -158,7 +155,7 @@ public class CreateAccController implements ICreateAccController {
             }
             if (loadingBar != null && loadingBar.isShowing()) {
                 loadingBar.dismiss();
-                iLoginView.OnUserLoginFail("Create account fail. Try again");
+
             }
         });
 
@@ -179,10 +176,10 @@ public class CreateAccController implements ICreateAccController {
                         }
                         if (task.isSuccessful()) {
                             Log.d("user", "update thanh cong info");
-                            iLoginView.OnUserLoginSuccess("Create account fail successfully");
+
                         } else {
                             Log.d("user", "looixupdate info");
-                            iLoginView.OnUserLoginFail("Create account fail. Try again");
+
                         }
                     }
                 });

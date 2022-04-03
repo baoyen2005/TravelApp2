@@ -1,29 +1,19 @@
 package com.example.travelapp.view.admin;
 
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
 import com.example.travelapp.model.User;
 import com.example.travelapp.view.adapter.chatAdapter.UsersAdapter;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -80,7 +70,7 @@ public class ChatAdminFragment extends BaseFragment {
                        user.setUsername((String) doc.get("username"));
                        user.setAddress((String) doc.get("address"));
                        user.setEmail((String) doc.get("email"));
-                       user.setFilePath((String) doc.get("imageURL"));
+                       user.setImageURL((String) doc.get("imageURL"));
                        user.setPhone((String) doc.get("phone"));
                        user.setUid((String) doc.getId());
                        users.add(user);

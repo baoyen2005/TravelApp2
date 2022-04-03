@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     private static final String TAG = "FacebookLogin";
     private static final int RC_SIGN_IN = 12345;
 
-
     public LoginActivity() {
         super();
     }

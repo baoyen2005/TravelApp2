@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavi"
         />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavi"
@@ -20,7 +21,8 @@
         android:layout_height="70dp"
         app:menu="@menu/bottom_navi_menu_user"
         android:background="@drawable/bg_dialog"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
         app:itemIconSize="45dp"
         app:labelVisibilityMode="unlabeled"
         app:elevation="0dp"

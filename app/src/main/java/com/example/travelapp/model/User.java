@@ -1,11 +1,9 @@
 package com.example.travelapp.model;
 
-import android.net.Uri;
-
 import com.google.firebase.database.Exclude;
 
 public class User {
-    private String filePath;
+    private String imageURL;
     private String username, phone, address, password;
     private String key;
     private String uid, email;
@@ -13,9 +11,9 @@ public class User {
     public User() {
     }
 
-    public User(String filePath, String username, String phone, String address, String password,
+    public User(String imageURL, String username, String phone, String address, String password,
                 String key, String uid, String email) {
-        this.filePath = filePath;
+        this.imageURL = imageURL;
         this.username = username;
         this.phone = phone;
         this.address = address;
@@ -30,12 +28,12 @@ public class User {
         this.key = key;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getUsername() {

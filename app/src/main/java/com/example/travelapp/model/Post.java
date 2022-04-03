@@ -1,18 +1,25 @@
 package com.example.travelapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
     private String postId;
-    private String touristSpotName, address, content,type;
+    private String touristName,
+            touristDetailAddress,
+            content,type;
     private List<String> urlImgReview;
-    private float latitude , longitude;
+    private String image0, image1, image2,image3, imag4;
+    private String latitude , longitude;
 
-    public Post(String postId,String touristSpotName, String address, String content, List<String> urlImgReview,
-                float latitude, float longitude,String type) {
+    public Post() {
+    }
+
+    public Post(String postId, String touristName, String touristDetailAddress, String content, List<String> urlImgReview,
+                String latitude, String longitude, String type) {
         this.postId = postId;
-        this.touristSpotName = touristSpotName;
-        this.address = address;
+        this.touristName = touristName;
+        this.touristDetailAddress = touristDetailAddress;
         this.content = content;
         this.urlImgReview = urlImgReview;
         this.latitude = latitude;
@@ -20,6 +27,20 @@ public class Post {
         this.type = type;
     }
 
+    public Post(String postId, String touristName, String touristDetailAddress, String content, String type, String image0, String image1, String image2, String image3, String imag4, String latitude, String longitude) {
+        this.postId = postId;
+        this.touristName = touristName;
+        this.touristDetailAddress = touristDetailAddress;
+        this.content = content;
+        this.type = type;
+        this.image0 = image0;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.imag4 = imag4;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public String getPostId() {
         return postId;
@@ -29,20 +50,20 @@ public class Post {
         this.postId = postId;
     }
 
-    public String getTouristSpotName() {
-        return touristSpotName;
+    public String getTouristName() {
+        return touristName;
     }
 
-    public void setTouristSpotName(String touristSpotName) {
-        this.touristSpotName = touristSpotName;
+    public void setTouristName(String touristName) {
+        this.touristName = touristName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getTouristDetailAddress() {
+        return touristDetailAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setTouristDetailAddress(String touristDetailAddress) {
+        this.touristDetailAddress = touristDetailAddress;
     }
 
     public String getContent() {
@@ -61,19 +82,59 @@ public class Post {
         this.urlImgReview = urlImgReview;
     }
 
-    public float getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public String getImage0() {
+        return image0;
+    }
+
+    public void setImage0(String image0) {
+        this.image0 = image0;
+    }
+
+    public String getImage1() {
+        return image1;
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getImag4() {
+        return imag4;
+    }
+
+    public void setImag4(String imag4) {
+        this.imag4 = imag4;
+    }
+
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
@@ -84,4 +145,7 @@ public class Post {
     public void setType(String type) {
         this.type = type;
     }
+
+
+
 }

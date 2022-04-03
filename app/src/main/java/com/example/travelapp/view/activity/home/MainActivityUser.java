@@ -11,11 +11,11 @@ import android.view.MenuItem;
 
 import com.example.travelapp.R;
 import com.example.travelapp.view.adapter.ViewPagerAdapterBottomNavi;
-import com.example.travelapp.view.fragment.ChatFragmentUser;
-import com.example.travelapp.view.fragment.FavoriteFragmentUser;
-import com.example.travelapp.view.fragment.HomeFragmentUser;
-import com.example.travelapp.view.fragment.ProfileFragmentUser;
-import com.example.travelapp.view.fragment.SearchFragmentUser;
+import com.example.travelapp.view.userfragment.ChatFragmentUser;
+import com.example.travelapp.view.userfragment.FavoriteFragmentUser;
+import com.example.travelapp.view.userfragment.RootHomeFragment;
+import com.example.travelapp.view.userfragment.ProfileFragmentUser;
+import com.example.travelapp.view.userfragment.SearchFragmentUser;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivityUser extends AppCompatActivity {
@@ -24,7 +24,7 @@ public class MainActivityUser extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private SearchFragmentUser searchFragmentUser;
     private FavoriteFragmentUser favoriteFragmentUser;
-    private HomeFragmentUser homeFragmentUser;
+    private RootHomeFragment rootOfHomeFragmentUser ;
     private ChatFragmentUser chatFragmentUser;
     private ProfileFragmentUser profileFragmentUser;
     private Menu menu;
@@ -51,14 +51,14 @@ public class MainActivityUser extends AppCompatActivity {
     private void initFragment() {
         searchFragmentUser = new SearchFragmentUser();
         favoriteFragmentUser = new FavoriteFragmentUser();
-        homeFragmentUser = new HomeFragmentUser();
+        rootOfHomeFragmentUser = new RootHomeFragment();
         chatFragmentUser = new ChatFragmentUser();
         profileFragmentUser = new ProfileFragmentUser();
     }
     private void setBottomNavigation(){
         adapterBottomNavi.addFragment(searchFragmentUser);
         adapterBottomNavi.addFragment(favoriteFragmentUser);
-        adapterBottomNavi.addFragment(homeFragmentUser);
+        adapterBottomNavi.addFragment(rootOfHomeFragmentUser);
         adapterBottomNavi.addFragment(chatFragmentUser);
         adapterBottomNavi.addFragment(profileFragmentUser);
         viewPager.setAdapter( adapterBottomNavi);
@@ -140,4 +140,17 @@ public class MainActivityUser extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+      //  super.onBackPressed();
+      //  viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
 }

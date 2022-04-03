@@ -78,7 +78,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                     }
                 });
         holder.tvName.setText(user.getUsername());
-        Glide.with(context).load(user.getFilePath())
+        Glide.with(context).load(user.getImageURL())
                 .placeholder(R.drawable.user_default)
                 .into(holder.avatar);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("name", user.getUsername());
                 intent.putExtra("uid", user.getUid());
-                intent.putExtra("avatar", user.getFilePath());
+                intent.putExtra("avatar", user.getImageURL());
                 context.startActivity(intent);
             }
         });

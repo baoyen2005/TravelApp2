@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.userfragment.DetailFragmentHomeUser">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgTourist1InUserHome"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@drawable/custom_image_tourist_first"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="25dp"
+                android:background="@drawable/custom_icon_in_image_in_user_home_fragment"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/imgTourist1InUserHome"
+                app:layout_constraintLeft_toLeftOf="@+id/imgTourist1InUserHome"
+                >
+                <ImageView
+                    android:id="@+id/imgIconBackInUserHome"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/custom_icon_in_image_in_user_home_fragment"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/imgTourist1InUserHome"
+                app:layout_constraintRight_toRightOf="@+id/imgTourist1InUserHome"
+                >
+                <ImageView
+                    android:id="@+id/imgIconFavorInUserHome"
+                    android:src="@drawable/ic_baseline_favorite_24"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/imgTourist2InUserHome"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_image_tourists_after"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgTourist1InUserHome"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/imgTourist3InUserHome"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_image_tourists_after"
+                app:layout_constraintLeft_toRightOf="@id/imgTourist2InUserHome"
+                app:layout_constraintTop_toBottomOf="@id/imgTourist1InUserHome"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/imgTourist4InUserHome"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_image_tourists_after"
+                app:layout_constraintLeft_toRightOf="@id/imgTourist3InUserHome"
+                app:layout_constraintTop_toBottomOf="@id/imgTourist1InUserHome"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/imgTourist5InUserHome"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:background="@drawable/custom_image_tourists_after"
+                app:layout_constraintLeft_toRightOf="@id/imgTourist4InUserHome"
+                app:layout_constraintTop_toBottomOf="@id/imgTourist1InUserHome"
+                app:layout_constraintWidth_percent="0.2" />
+
+            <TextView
+                android:id="@+id/txtTouristDestinationNameInUserHome"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/background"
+                android:fontFamily="@font/merriweatherbold"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgTourist2InUserHome" />
+
+            <ImageView
+                android:id="@+id/iconLocationInUserHome"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/iconlocation"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTouristDestinationNameInUserHome" />
+
+            <TextView
+                android:id="@+id/txtTouristPlaceInUserHome"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/background"
+                android:fontFamily="@font/poppinsregular"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/iconLocationInUserHome"
+                app:layout_constraintTop_toBottomOf="@id/txtTouristDestinationNameInUserHome" />
+
+            <RatingBar
+                android:id="@+id/ratingBarInUserHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+
+                android:layout_marginTop="20dp"
+                android:progressTint="#FDD835"
+                android:numStars="5"
+                android:rating="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTouristPlaceInUserHome" />
+
+            <View
+                android:id="@+id/rectangle_3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toRightOf="@id/ratingBarInUserHome"
+                app:layout_constraintTop_toBottomOf="@+id/txtTouristPlaceInUserHome"
+                android:background="@drawable/custom_retangle_vote"
+                />
+            <TextView
+                android:id="@+id/txtVoteStarInUserHome"
+                android:text="Vote"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toRightOf="@id/rectangle_3"
+                app:layout_constraintRight_toLeftOf="@id/rectangle_4"
+                app:layout_constraintTop_toBottomOf="@+id/txtTouristPlaceInUserHome"
+                android:layout_width="0dp"
+                android:layout_height="40dp"/>
+            <View
+                android:id="@+id/rectangle_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/txtTouristPlaceInUserHome"
+                android:background="@drawable/custom_retangle_vote"
+                />
+            <TextView
+                android:id="@+id/tvAboutInUserHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="40dp"
+                android:text="About"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingBarInUserHome" />
+
+            <TextView
+                android:id="@+id/txtContentInUserHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/background"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutInUserHome" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

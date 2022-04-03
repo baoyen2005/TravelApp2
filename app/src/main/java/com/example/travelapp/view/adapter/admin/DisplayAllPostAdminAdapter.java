@@ -43,7 +43,7 @@ public class DisplayAllPostAdminAdapter extends RecyclerView.Adapter<DisplayAllP
     @Override
     public void onBindViewHolder(@NonNull DisplayPostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Post currentPost = listPost.get(position);
-        holder.tvAddressItem.setText( currentPost.getAddress());
+        holder.tvAddressItem.setText( currentPost.getTouristDetailAddress());
         Uri uri =  Uri.parse(currentPost.getUrlImgReview().get(0));
         holder.imgTravelReviewItem.setImageURI(uri);
         holder.tvAddressItem.setOnClickListener(new View.OnClickListener() {

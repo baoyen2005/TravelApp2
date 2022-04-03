@@ -1,11 +1,9 @@
-package com.example.travelapp.view.fragment;
+package com.example.travelapp.view.userfragment;
 
-import android.content.Intent;
 import android.view.View;
 
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
-import com.example.travelapp.view.activity.chat.ChatActivity;
 
 
 public class FavoriteFragmentUser extends BaseFragment {
