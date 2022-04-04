@@ -136,8 +136,8 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user)
                             updateAccountToFirebase(user);
-                            iLoginView.OnUserLoginSuccess("Authentication Succeeded.");
-                            progressDialog.dismiss();
+                          //  iLoginView.OnUserLoginSuccess("Authentication Succeeded.");
+                          //  progressDialog.dismiss();
                         } else {
                             progressDialog.dismiss();
                             Log.d("FacebookLogin", "signInWithCredential:failure", task.getException());

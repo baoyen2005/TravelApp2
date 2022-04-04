@@ -90,11 +90,12 @@ public class CreateAccController implements ICreateAccController {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             createAccount(username,phone,address,password,email,url,uid,loadingBar);
-                            loadingBar.dismiss();
-                            iLoginView.OnUserLoginSuccess("Create acc successfull");
+                           // loadingBar.dismiss();
+                         //   iLoginView.OnUserLoginSuccess("Create acc successfull");
                         }
                     }
-            ).addOnFailureListener(new OnFailureListener() {
+            )
+                    .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     iLoginView.OnUserLoginFail("Create account fail. Try again");
@@ -115,7 +116,8 @@ public class CreateAccController implements ICreateAccController {
         locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             getCurrentLocation.OnGPS();
-        } else {
+        }
+        else {
 
             getCurrentLocation.getLocation(locationManager, new InterfaceGetLocation() {
                 @Override
@@ -150,7 +152,8 @@ public class CreateAccController implements ICreateAccController {
 
                 @Override
                 public void getLocationFailed(String mes) {
-                    values.put("address","null");
+                    values.put("longitude","null");
+                    values.put("latitude","null");
                 }
             });
 
@@ -173,6 +176,8 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateInfo(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
+                iLoginView.OnUserLoginSuccess("Create acc successfull");
+                loadingBar.dismiss();
             });
         });
         uploadTask.addOnFailureListener(e -> {
