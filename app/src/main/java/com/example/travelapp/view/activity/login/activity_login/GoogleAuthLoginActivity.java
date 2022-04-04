@@ -33,7 +33,7 @@ public class GoogleAuthLoginActivity extends LoginActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
         Intent sigInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(sigInIntent, RC_SIGN_IN);
+        startActivityForResult(sigInIntent, RC_SIGN_IN);//bi deprecated rồi--okkk
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GoogleAuthLoginActivity extends LoginActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle: "+ account.getId());
-                loginController.handleGoogleLoginFirebase(account.getIdToken(), mAuth);
+                loginController.handleGoogleLoginFirebase(account.getIdToken(), mAuth,account);
 
             } catch (ApiException e) {
                 e.printStackTrace();

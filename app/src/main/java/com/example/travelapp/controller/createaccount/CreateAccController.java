@@ -90,8 +90,7 @@ public class CreateAccController implements ICreateAccController {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             createAccount(username,phone,address,password,email,url,uid,loadingBar);
-                           // loadingBar.dismiss();
-                         //   iLoginView.OnUserLoginSuccess("Create acc successfull");
+
                         }
                     }
             )

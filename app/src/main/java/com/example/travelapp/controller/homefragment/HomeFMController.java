@@ -4,6 +4,7 @@ import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME;
 import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME_POST;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class HomeFMController implements InterfaceHomeFMController{
                     }
                     else{
                         Glide.with(context)
-                                .load(currentUser.getImageURL())
+                                .load(Uri.parse(currentUser.getImageURL()))
                                 .into(avatarHomeFragment);
                         Log.d(TAG_USER_HOME, "onSuccess: current user " + currentUser.getImageURL());
 
