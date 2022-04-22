@@ -76,6 +76,12 @@
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/bottom_sheet_dialog_create_account.xml" value="0.2" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/dialog_create_account.xml" value="0.1921875" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/drawable/custom_btn_saveprofile.xml" value="0.3465" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changeemail.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changepaddress.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changepassword.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changephone.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/fragment_profile_user.xml" value="0.34479166666666666" />
         <entry key="app/src/main/res/drawable/bg_icon_chat.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.1655" />
