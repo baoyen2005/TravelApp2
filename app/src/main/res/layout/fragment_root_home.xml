@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/root_home_frame"
-    tools:context=".view.userfragment.RootHomeFragment">
+    tools:context=".view.userfragment.rootfragment.RootHomeFragment">
 
 
 </FrameLayout>

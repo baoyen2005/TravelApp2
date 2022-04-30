@@ -16,7 +16,7 @@ import com.example.travelapp.model.Post;
 
 import java.util.List;
 
-public class KnowYourWorldUserHomeAdapter extends RecyclerView.Adapter<KnowYourWorldUserHomeAdapter.RecommendUserHomeViewHolder>{
+public class KnowYourWorldUserHomeAdapter extends RecyclerView.Adapter<KnowYourWorldUserHomeAdapter.RecommendUserHomeViewHolder> {
     private List<Post> postList;
     private Context context;
 
@@ -30,7 +30,7 @@ public class KnowYourWorldUserHomeAdapter extends RecyclerView.Adapter<KnowYourW
     public RecommendUserHomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context mcontext = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(mcontext);
-        View view = layoutInflater.inflate(R.layout.item_know_your_world_layout_user_home,parent, false);
+        View view = layoutInflater.inflate(R.layout.item_know_your_world_layout_user_home, parent, false);
         RecommendUserHomeViewHolder viewHolder = new RecommendUserHomeViewHolder(view);
         return viewHolder;
     }
@@ -39,7 +39,7 @@ public class KnowYourWorldUserHomeAdapter extends RecyclerView.Adapter<KnowYourW
     public void onBindViewHolder(@NonNull RecommendUserHomeViewHolder holder, int position) {
         Post post = postList.get(position);
         Glide.with(context)
-                .load(post.getImage2())
+                .load(post.getList_photos().get(2).getUrl())
                 .into(holder.itemImageViewKnowWorld);
         holder.itemNameofLocationKnowWorld.setText(post.getTouristName());
         holder.itemAddressOfLocationKnowWorld.setText(post.getTouristDetailAddress());
@@ -51,10 +51,11 @@ public class KnowYourWorldUserHomeAdapter extends RecyclerView.Adapter<KnowYourW
     }
 
 
-    protected class RecommendUserHomeViewHolder extends RecyclerView.ViewHolder{
+    protected class RecommendUserHomeViewHolder extends RecyclerView.ViewHolder {
         public ImageView itemImageViewKnowWorld;
         public TextView itemNameofLocationKnowWorld;
-        public  TextView itemAddressOfLocationKnowWorld;
+        public TextView itemAddressOfLocationKnowWorld;
+
         public RecommendUserHomeViewHolder(@NonNull View itemView) {
             super(itemView);
             itemImageViewKnowWorld = itemView.findViewById(R.id.item_image_know_world_user_home);

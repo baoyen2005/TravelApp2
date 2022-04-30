@@ -1,168 +1,152 @@
 package com.example.travelapp.view.admin;
 
-import static com.example.travelapp.constant.AddPostByAdminConstant.PICK_FROM_GALLERY;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
-import com.example.travelapp.controller.admin.AddNewHomeController;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.travelapp.function_util.GetPostFromFirebaseStorage;
+import com.example.travelapp.function_util.ReplaceFragment;
+import com.example.travelapp.function_util.SetAdapter;
+import com.example.travelapp.model.Post;
+import com.example.travelapp.view.adapter.admin.DisplayAllPostAdminAdapter;
+import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AdminHomeFragment extends BaseFragment implements AdminHomeFragmentViewInterface {
-    private ArrayList<String> listFilePath = new ArrayList<>() ;
-    private ArrayList<Uri> listUri = new ArrayList<>();
-    private ImageView img_tourist_1, img_tourist_2,img_tourist_3, img_tourist_4, img_tourist_5, iconCamera;
-    private EditText edt_touristDestinationName_addNewPost, edtTouristPlaceNewPost,
-            edtLatitude_AddNewPost, edtLongitude_AddNewPost, edtContent_newAdd,edtType;
-    private Button btnSaveNewPost;
-    private AddNewHomeController addNewHomeController;
-    private     ProgressDialog loadingBar;
 
+public class AdminHomeFragment extends BaseFragment implements
+        DisplayAllPostAdminAdapter.ClickListenerItemDisplayPost{
+    private ImageView imgAddInHomeFmAdmin;
+    private GetPostFromFirebaseStorage getPostFromFirebaseStorage;
+    private RecyclerView recycleViewListPostInHomeAdmin;
+    private DisplayAllPostAdminAdapter displayAllPostAdminAdapter;
+    private final List<Post> lisPostInAdmin = new ArrayList<>();
+    private final String TAG ="AdminHomeFragment";
+    private SetAdapter  setAdapter;
+    private FirebaseFirestore db;
+    public AdminHomeFragment() {
+
+    }
     @Override
     public int getLayoutResId() {
-         return R.layout.activity_add_post_by_admin;
+        return R.layout.fragment_admin_home;
     }
 
     @Override
     public void initController() {
-        addNewHomeController = new AddNewHomeController(this);
-
+        Log.d(TAG, "initController: ");
     }
 
     @Override
     public void initView(View view) {
-        iconCamera = view.findViewById(R.id.iconCamera);
-        img_tourist_1 = view.findViewById(R.id.img_tourist_1);
-        img_tourist_2 = view.findViewById(R.id.img_tourist_2);
-        img_tourist_3 = view.findViewById(R.id.img_tourist_3);
-        img_tourist_4 = view.findViewById(R.id.img_tourist_4);
-        img_tourist_5 = view.findViewById(R.id.img_tourist_5);
-        edt_touristDestinationName_addNewPost = view.findViewById(R.id.edt_touristDestinationName_addNewPost);
-        edtTouristPlaceNewPost = view.findViewById(R.id. edtTouristPlaceNewPost);
-        edtLatitude_AddNewPost = view.findViewById(R.id.edtLatitude_AddNewPost);
-        edtLongitude_AddNewPost = view.findViewById(R.id.edtLongitude_AddNewPost);
-        edtContent_newAdd = view.findViewById(R.id.edtContent_newAdd);
-        edtType = view.findViewById(R.id.edtType);
-        btnSaveNewPost = view.findViewById(R.id.btnSaveNewPost);
+        imgAddInHomeFmAdmin = view.findViewById(R.id.imgAddInHomeFmAdmin);
+        recycleViewListPostInHomeAdmin = view.findViewById(R.id.recycleViewListPostInHomeAdmin);
+
     }
 
     @Override
     public void initData() {
-        loadingBar = new ProgressDialog(requireContext());
+        db = FirebaseFirestore.getInstance();
+        getPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
+
+        setAdapter = new SetAdapter(requireActivity());
+        displayAllPostAdminAdapter = new DisplayAllPostAdminAdapter(lisPostInAdmin,requireContext(),this);
+        setRecycleView();
+    }
+
+    private void setRecycleView() {
+        getPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
+            @Override
+            public void getAllPostSuccess(List<Post> postList) {
+                displayAllPostAdminAdapter.setListPost(postList);
+                setAdapter.setAdapterRecycleViewHolderLinearlayout(
+                        displayAllPostAdminAdapter,
+                        recycleViewListPostInHomeAdmin,
+                        LinearLayoutManager.VERTICAL);
+            }
+
+            @Override
+            public void getPostsFail(String isFail) {
+                Log.d(TAG, "getPostsFail: in setRecycleViewAdminHome");
+            }
+        });
     }
 
     @Override
     public void initEvent() {
-        setImageView();
-        saveInfor();
+        setOnClickAddButton();
+
     }
 
-    private void saveInfor() {
 
-        btnSaveNewPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              //  Log.d("listpath", "saveInfor: listUri "+ listUri.get(0).getPath());
-
-                addNewHomeController.addPostToFirebase(listUri,
-                        edt_touristDestinationName_addNewPost.getText().toString(),
-                        edtTouristPlaceNewPost.getText().toString(),
-                        edtLatitude_AddNewPost.getText().toString(),
-                        edtLongitude_AddNewPost.getText().toString(),
-                        edtContent_newAdd.getText().toString(),edtType.getText().toString() , loadingBar);
-            }
+    private void setOnClickAddButton() {
+        imgAddInHomeFmAdmin.setOnClickListener(view -> {
+            ReplaceFragment replaceFragmentInit = new ReplaceFragment();
+            replaceFragmentInit.replaceFragment(R.id.fragmentRootAdminHome, new AdminAddPostFragment(),requireActivity());
         });
     }
 
-    private void setImageView() {
-        iconCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFolder();
-
-
-            }
-        });
-    }
-
-    public void openFolder() {
-
-        Uri uri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
-        Intent intent = new Intent();
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_STREAM,uri);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_FROM_GALLERY);
-    }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
-
-            if (data.getClipData() != null) {
-                int count = data.getClipData().getItemCount();
-
-                int CurrentImageSelect = 0;
-
-                while (CurrentImageSelect < count) {
-                    Uri imageuri = data.getClipData().getItemAt(CurrentImageSelect).getUri();
-                    listUri.add(imageuri);
-                    listFilePath.add(imageuri.getPath());
-                    CurrentImageSelect = CurrentImageSelect + 1;
-                }
-            }
-            Log.d("listpath", "onActivityResult: listUri "+ listUri.get(0).getPath());
-            iconCamera.setVisibility(View.GONE);
-            img_tourist_1.setImageURI(listUri.get(0));
-            img_tourist_2.setImageURI(listUri.get(1));
-            img_tourist_3.setImageURI(listUri.get(2));
-            img_tourist_4.setImageURI(listUri.get(3));
-            img_tourist_5.setImageURI(listUri.get(4));
-        }
-
+    public void onClickShowDetailPost(Post post, int position) {
 
     }
 
     @Override
-    public void addNewPostSuccess(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        resetData();
+    public void onOptionsMenuClicked(View view, Post post, int position) {
+        PopupMenu pm = new PopupMenu(requireContext(), view);
+                pm.getMenuInflater().inflate(R.menu.menu_delete_edit_post, pm.getMenu());
+                pm.setOnMenuItemClickListener(item -> {
+                    Log.d(TAG, "onOptionsMenuClicked: ");
+                    switch (item.getItemId()){
+                        case R.id.menuItem_delete_post: {
+                            Log.d(TAG, "onOptionsMenuClicked: case0");
+                            lisPostInAdmin.remove(post);
+                            displayAllPostAdminAdapter.setListPost(lisPostInAdmin);
+                            deletePostInFirebase(post);
+                            setRecycleView();
+                            break;
+                        }
+                        case R.id.menuItem_Edit_post:
+                        {
+                            Log.d(TAG, "onOptionsMenuClicked: case1");
+                            replaceToEditFragment(post);
+                            setRecycleView();
+                            break;
+                        }
+                    }
+                    return false;
+                });
+                pm.show();
     }
 
-    private void resetData() {
-        edt_touristDestinationName_addNewPost.setText("");
-        edtType.setText("");
-        edtContent_newAdd.setText("");
-        edtLatitude_AddNewPost.setText("");
-        edtLongitude_AddNewPost.setText("");
-        edtTouristPlaceNewPost.setText("");
-        img_tourist_1.setImageURI(null);
-        img_tourist_2.setImageURI(null);
-        img_tourist_3.setImageURI(null);
-        img_tourist_4.setImageURI(null);
-        img_tourist_5.setImageURI(null);
-        iconCamera.setVisibility(View.VISIBLE);
+    private void replaceToEditFragment(Post post) {
+        ReplaceFragment replaceFragmentInit = new ReplaceFragment();
+
+        AdminEditPostFragment adminEditPostFragment = AdminEditPostFragment.newInstance(post.getPostId());
+        replaceFragmentInit.replaceFragment(R.id.fragmentRootAdminHome,adminEditPostFragment ,requireActivity());
+
 
     }
 
-    @Override
-    public void addNewPostFailed(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-
+    private void deletePostInFirebase(Post post) {
+        db.collection("posts").
+                        document(post.getPostId()).
+                        delete().
+                        addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(requireContext(), "Post has been deleted from Database.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(requireContext(), "Fail to delete the post. ", Toast.LENGTH_SHORT).show();
+                            }
+                        });
     }
 }

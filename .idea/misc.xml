@@ -8,6 +8,7 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/change_iconhome_bottom_navi.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/change_iconprofile_bottom_navi.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/custom_btn_create.xml" value="0.1235" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/custom_edt_in_editProfileScreen.xml" value="0.117" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/custom_icon_in_image_in_user_home_fragment.xml" value="0.138" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/custom_image_avatar_fragment.xml" value="0.148" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable-v24/custom_image_avtar_fragment.xml" value="0.125" />
@@ -18,10 +19,14 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_btn_create.xml" value="0.125" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_btn_login.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_circle_add_new_post.xml" value="0.1225" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_circle_button.xml" value="0.163" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_dialog_create.xml" value="0.1" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_edt_in_editprofilescreen.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_edtext.xml" value="0.12" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_edtext_inprofile_user.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_icon_changed.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_image_avat_fragment.xml" value="0.125" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_image_avatar_fragment.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_image_avtar_fragment.xml" value="0.125" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_image_item_detail.xml" value="0.116" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_image_notifi_fragment.xml" value="0.125" />
@@ -30,37 +35,58 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_login_edittext.xml" value="0.12" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_recommend_item_layout.xml" value="0.13" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_recomment_item_layout.xml" value="0.125" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/custom_search_view.xml" value="0.156" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/dialog_positive_round.xml" value="0.12" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1225" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.138" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1225" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.163" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.156" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.163" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/iconsearch.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/fragment_admin_home.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/fragment_edit_post_by_admin.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/item_post_in_searchview.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_add_post_by_admin.xml" value="0.21" />
-        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_create_acc.xml" value="0.17979610750695088" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_chat.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_create_acc.xml" value="0.2" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_google_auth_login.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_login.xml" value="0.21" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_main_admin.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialo_forgot_password.xml" value="0.2" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialog_forgot_password.xml" value="0.18704710144927536" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_add_post_by_admin.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_admin_home.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_chat_admin.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_chat_user.xml" value="0.33" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_detail_home_user.xml" value="0.22" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_favorite_user.xml" value="0.25" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_home_user.xml" value="0.18425925925925926" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_profile_admin.xml" value="0.178125" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_profile_user.xml" value="0.25" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_root_admin_home.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_root_favorite.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_root_home.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_root_search.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_search_user.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_categories_user_layout.xml" value="0.16" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_know_your_world_layout_user_home.xml" value="0.18" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_post.xml" value="0.25" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_post_in_admin_home.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_receive.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_recomment_layout_ho.xml" value="0.2" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_recomment_layout_user_home.xml" value="0.15" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/item_user_favorite_layout.xml" value="0.19166666666666668" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/test.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/bottom_navi_menu.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/bottom_navi_menu_admin.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/bottom_navi_menu_user.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/menu_delete_edit_post.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/xml/searchable_user.xml" value="0.1921875" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/drawable-v24/custom_btn_create.xml" value="0.1" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/drawable/custom_btn_login.xml" value="0.1" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/drawable/custom_circle_image.xml" value="0.1" />
@@ -76,12 +102,6 @@
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/bottom_sheet_dialog_create_account.xml" value="0.2" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/dialog_create_account.xml" value="0.1921875" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/drawable/custom_btn_saveprofile.xml" value="0.3465" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changeemail.xml" value="0.34479166666666666" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changepaddress.xml" value="0.34479166666666666" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changepassword.xml" value="0.34479166666666666" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/dialog_changephone.xml" value="0.34479166666666666" />
-        <entry key="..\:/Users/Quan Bui/Desktop/TravelApp2/app/src/main/res/layout/fragment_profile_user.xml" value="0.34479166666666666" />
         <entry key="app/src/main/res/drawable/bg_icon_chat.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.1655" />

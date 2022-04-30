@@ -10,45 +10,46 @@
        android:layout_height="wrap_content"
        android:orientation="vertical">
        <androidx.constraintlayout.widget.ConstraintLayout
-           android:padding="12dp"
+           android:id="@+id/constraintItemFragmentSearch"
+           android:padding="8dp"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
 
            <ImageView
-               android:id="@+id/img_travel_review_item"
-               android:layout_width="131.5dp"
+               android:id="@+id/img_travel_searchView_item"
+               android:layout_width="120dp"
                android:layout_height="86dp"
-               android:layout_marginStart="16dp"
                android:layout_marginTop="18dp"
+               android:scaleType="centerCrop"
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintTop_toTopOf="parent" />
 
            <TextView
-               android:id="@+id/tvAddressTravelItem"
+               android:id="@+id/tvAddressTravelInSearchViewItem"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_marginTop="8dp"
                android:gravity="center"
                android:layout_marginStart="20dp"
                android:fontFamily="@font/nunito"
-               android:textSize="24sp"
+               android:textSize="22sp"
                android:textStyle="bold"
-               app:layout_constraintLeft_toRightOf="@id/img_travel_review_item"
+               app:layout_constraintLeft_toRightOf="@id/img_travel_searchView_item"
                app:layout_constraintTop_toTopOf="parent" />
 
            <TextView
 
-               android:layout_width="155dp"
+               android:layout_width="200dp"
                android:layout_height="wrap_content"
                android:layout_marginStart="20dp"
                android:fontFamily="@font/nunitoregular"
                android:layout_marginTop="15dp"
-               android:text="Khám phá một thế giới và những chuyến đi"
-               android:maxLines="2"
+               android:maxLines="3"
+               android:text="Khám phá những chuyến đi, tận hưởng cuộc sống"
                android:textSize="16sp"
                android:textStyle="bold"
-               app:layout_constraintLeft_toRightOf="@id/img_travel_review_item"
-               app:layout_constraintTop_toBottomOf="@id/tvAddressTravelItem" />
+               app:layout_constraintLeft_toRightOf="@id/img_travel_searchView_item"
+               app:layout_constraintTop_toBottomOf="@id/tvAddressTravelInSearchViewItem" />
        </androidx.constraintlayout.widget.ConstraintLayout>
 
        <View

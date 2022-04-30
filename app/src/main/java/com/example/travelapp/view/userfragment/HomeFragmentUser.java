@@ -1,25 +1,24 @@
 package com.example.travelapp.view.userfragment;
 
-import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME;
 import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME_POST;
 
-import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
-import com.example.travelapp.constant.UserHomeConstant;
 import com.example.travelapp.controller.homefragment.HomeFMController;
-import com.example.travelapp.function_util.GetAllPostFromFirebaseStorage;
+import com.example.travelapp.function_util.ClickitemShowDetail;
+import com.example.travelapp.function_util.GetPostFromFirebaseStorage;
+import com.example.travelapp.function_util.SetAdapter;
+import com.example.travelapp.function_util.SetCategoryListUtil;
 import com.example.travelapp.model.Category;
 import com.example.travelapp.model.Post;
 import com.example.travelapp.view.adapter.user.CategoryUserHomeAdapter;
@@ -35,23 +34,16 @@ import java.util.List;
 
 
 public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmView , RecommendUserHomeAdapter.OnItemRecommendClickListener{
-    private ImageView avatarHomeFragment, imgNotificationHomeFm;
-    private TextView tvGoodMorningHomeFm, tvUserNameHomeFm, tvWelcomeHomeFr, tvSeeMoreHomeFm;
-    private TextView tvDiscoverHomeFM;
+    private ImageView avatarHomeFragment;
+    private TextView tvGoodMorningHomeFm, tvUserNameHomeFm, tvWelcomeHomeFr;
     private SearchView searchViewHomeFr;
     private RecyclerView recycleViewCategories, recycleViewRecommended, recycleViewKnowYourWorld;
     private HomeFMController homeFMController;
     private FirebaseAuth firebaseAuth;
-    private UserHomeConstant userHomeConstant;
-
-    private CategoryUserHomeAdapter categoryUserHomeAdapter;
-    private RecommendUserHomeAdapter recommendUserHomeAdapter;
-    private List<Category> categoryList = new ArrayList<>();
-    private List<Post> postList = new ArrayList<>();
-    private GetAllPostFromFirebaseStorage getAllPostFromFirebaseStorage;
-    private KnowYourWorldUserHomeAdapter knowYourWorldUserHomeAdapter;
+    private SetAdapter setAdapter;
+    private final List<Post> postList = new ArrayList<>();
+    private SetCategoryListUtil setCategoryListUtil;
     public HomeFragmentUser() {
-        // Required empty public constructor
     }
 
 
@@ -68,12 +60,9 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     @Override
     public void initView(View view) {
         avatarHomeFragment = view.findViewById(R.id.avatar_home_fragment);
-        imgNotificationHomeFm = view.findViewById(R.id.img_notification_homefm);
         tvGoodMorningHomeFm = view.findViewById(R.id.tvGoodMorning_HomeFm);
-        tvUserNameHomeFm = view.findViewById(R.id.tvUserName_HomeFm);
+        tvUserNameHomeFm = view.findViewById(R.id.tvCurrentUserNameInEditScreen);
         tvWelcomeHomeFr = view.findViewById(R.id.tvWelcomeHomeFr);
-        tvSeeMoreHomeFm = view.findViewById(R.id.tv_seeMore_HomeFm);
-        tvDiscoverHomeFM = view.findViewById(R.id.tv_discover_HomeFM);
         searchViewHomeFr = view.findViewById(R.id.searchViewHomeFr);
         recycleViewCategories = view.findViewById(R.id.recycleViewCategories);
         recycleViewRecommended = view.findViewById(R.id.recycleViewRecommended);
@@ -83,21 +72,20 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     @Override
     public void initData() {
         firebaseAuth = FirebaseAuth.getInstance();
-        userHomeConstant = new UserHomeConstant();
-
+        setCategoryListUtil = new SetCategoryListUtil();
+        setAdapter = new SetAdapter(requireActivity());
         getCurrentUser();
         setCategoryRecycleView();
-        setPostListForRecycleview();
+        setPostListForRecyclerview();
     }
 
-    private void setPostListForRecycleview() {
-        getAllPostFromFirebaseStorage = new GetAllPostFromFirebaseStorage();
-        getAllPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
+    private void setPostListForRecyclerview() {
+        GetPostFromFirebaseStorage getPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
+        getPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
             @Override
             public void getAllPostSuccess(List<Post> postListIn) {
                 postList.clear();
                 postList.addAll(postListIn);
-
                 setCommendedRecycleview(postList);
                 setKnowWorldRecycleView(postList);
 
@@ -113,54 +101,27 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     }
 
     private void setKnowWorldRecycleView(List<Post> list) {
-        knowYourWorldUserHomeAdapter = new KnowYourWorldUserHomeAdapter(list,requireContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(),
-                LinearLayoutManager.HORIZONTAL, false);
-        recycleViewKnowYourWorld.setLayoutManager(linearLayoutManager);
-        recycleViewKnowYourWorld.setAdapter(knowYourWorldUserHomeAdapter);
+        KnowYourWorldUserHomeAdapter knowYourWorldUserHomeAdapter = new KnowYourWorldUserHomeAdapter(list, requireContext());
+        setAdapter.setAdapterRecycleViewHolderLinearlayout(knowYourWorldUserHomeAdapter,recycleViewKnowYourWorld, LinearLayoutManager.HORIZONTAL);
     }
 
     private void setCommendedRecycleview(List<Post> list) {
-        recommendUserHomeAdapter = new RecommendUserHomeAdapter(list,requireContext(), this);
-        Log.d(TAG_USER_HOME_POST, "setRecommendRecycleView: size postlist = "+ list.size());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(),
-                LinearLayoutManager.HORIZONTAL, false);
-        recycleViewRecommended.setLayoutManager(linearLayoutManager);
-        recycleViewRecommended.setAdapter(recommendUserHomeAdapter);
-        Log.d(TAG_USER_HOME_POST, "getPostsSuccess: homefmcontroller"+list.get(0).getTouristName());
+        RecommendUserHomeAdapter recommendUserHomeAdapter = new RecommendUserHomeAdapter(list, requireContext(), this);
+        setAdapter.setAdapterRecycleViewHolderLinearlayout(recommendUserHomeAdapter,recycleViewRecommended, LinearLayoutManager.HORIZONTAL);
     }
 
     private void setCategoryRecycleView() {
-        categoryList = setCategoryList();
-        categoryUserHomeAdapter = new CategoryUserHomeAdapter( categoryList, requireActivity());
-        Log.d(TAG_USER_HOME, "setCategoryAdapter: categoryList = "+categoryList.size());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireActivity(),
-                LinearLayoutManager.HORIZONTAL, false);
-        recycleViewCategories.setLayoutManager(linearLayoutManager);
-        recycleViewCategories.setAdapter(categoryUserHomeAdapter);
+        List<Category> categoryList = setCategoryList();
+        CategoryUserHomeAdapter categoryUserHomeAdapter = new CategoryUserHomeAdapter(categoryList, requireActivity());
+        setAdapter.setAdapterRecycleViewHolderLinearlayout(categoryUserHomeAdapter,recycleViewCategories, LinearLayoutManager.HORIZONTAL);
     }
-
+    
     private List<Category> setCategoryList() {
         List<Category> list = new ArrayList<>();
-        Category category1 = new Category();
-        category1.setTitleCate("Núi");
-        category1.setDrawableImage(R.drawable.img_moutain);
-        list.add(category1);
-
-        Category category2 = new Category();
-        category2.setDrawableImage(R.drawable.img_camping);
-        category2.setTitleCate("Cắm trại");
-        list.add(category2);
-
-        Category category3 = new Category();
-        category3.setTitleCate("biển");
-        category3.setDrawableImage(R.drawable.img_beach);
-        list.add(category3);
-
-        Category category4 = new Category();
-        category4.setDrawableImage(R.drawable.img_temple);
-        category4.setTitleCate("Đền chùa");
-        list.add(category4);
+        list.add(setCategoryListUtil.setCategoryList("Núi",R.drawable.img_moutain));
+        list.add(setCategoryListUtil.setCategoryList("Cắm trại",R.drawable.img_camping));
+        list.add(setCategoryListUtil.setCategoryList("Biển",R.drawable.img_beach));
+        list.add(setCategoryListUtil.setCategoryList("Đền chùa",R.drawable.img_temple));
         return list;
     }
 
@@ -205,16 +166,10 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     @Override
     public void onItemClick(Post post, int position) {
 
-        DetailFragmentHomeUser detailFragmentHomeUser = DetailFragmentHomeUser.newInstance(post.getPostId());
+        String tag = "HomeFragment";
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
-        FragmentTransaction trans = getFragmentManager()
-                .beginTransaction();
-        trans.replace(R.id.root_home_frame,detailFragmentHomeUser);
-
-
-        trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        trans.addToBackStack(null);
-
-        trans.commit();
+        ClickitemShowDetail clickitemShowDetail = new ClickitemShowDetail();
+        clickitemShowDetail.ClickItemShowDetailInfor(post.getPostId(),R.id.root_home_frame,fragmentManager, tag);
     }
 }

@@ -12,6 +12,6 @@ public interface ILoginController {
     public void onLoginByEmail(String email, String password, ProgressDialog loadingBar);
     public void handleFacebookAccessToken(AccessToken token, FirebaseAuth mAuth);
     public void handleGoogleLoginFirebase(String idToken, FirebaseAuth mAuth, GoogleSignInAccount googleSignInAccount);
-    public void checkConfirmUserName(String userName, IOnLoadInfoListenerLogin IOnLoadInfoListenerLogin);
+    public void checkConfirmUserEmail(String userName, IOnLoadInfoListenerLogin IOnLoadInfoListenerLogin);
     public void updateNewPassword(String username, String newPassword, String userid, IOnLoadUpdateInfoLogin iOnLoadUpdateInfoLogin);
 }

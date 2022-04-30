@@ -21,15 +21,15 @@ import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.base.ILog;
 import com.example.travelapp.controller.login.LoginController;
 import com.example.travelapp.view.activity.home.MainActivityUser;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
-import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.activity.signup.CreateAccActivity;
 import com.example.travelapp.view.admin.MainActivityAdmin;
 
 
 public class LoginActivity extends BaseActivity implements InterfaceLoginView {
-    private EditText edtUserNameEmailLogin, edtPassword, edtUserNameResetPass, edtNewPassword;
+    private EditText edtUserNameEmailLogin, edtPassword, edtUserEmailRecoverPassword, edtNewPassword;
     private Button btnLogin, btnConfirmUserName, btnCancelDialogResetPass;
     private ProgressDialog loadingBar;
     public LoginController loginController;
@@ -37,7 +37,6 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     private TextView createAccountTv, tvLoginByGoogle;
     private TextView tvLoginByFacebook, tvRecoverPassLogin;
     private static final String TAG = "FacebookLogin";
-    private static final int RC_SIGN_IN = 12345;
 
     public LoginActivity() {
         super();
@@ -88,134 +87,106 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     }
 
     private void forgotPassword() {
-        tvRecoverPassLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        tvRecoverPassLogin.setOnClickListener(view -> {
 
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-                View layoutView = getLayoutInflater().inflate(R.layout.dialog_forgot_password, null);
-                dialogBuilder.setView(layoutView);
-                Dialog alertDialog = dialogBuilder.create();
-                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-                alertDialog.show();
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+            View layoutView = getLayoutInflater().inflate(R.layout.dialog_forgot_password, null);
+            dialogBuilder.setView(layoutView);
+            Dialog alertDialog = dialogBuilder.create();
+            alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+            alertDialog.show();
 
-                edtUserNameResetPass = layoutView.findViewById(R.id.edtUserNameResetPass);
-                edtNewPassword = layoutView.findViewById(R.id.edtNewPassword);
-                btnConfirmUserName = layoutView.findViewById(R.id.btnConfirmUserName);
-                btnCancelDialogResetPass = layoutView.findViewById(R.id.btnCancel_DialogResetPass);
+            edtUserEmailRecoverPassword = layoutView.findViewById(R.id.edtUserEmailRecoverPassword);
+            edtNewPassword = layoutView.findViewById(R.id.edtNewPassword);
+            btnConfirmUserName = layoutView.findViewById(R.id.btnConfirmUserName);
+            btnCancelDialogResetPass = layoutView.findViewById(R.id.btnCancel_DialogResetPass);
 
-                btnConfirmUserName.setOnClickListener(new View.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(View view) {
-                        loginController.checkConfirmUserName(edtUserNameResetPass.getText().toString(), new IOnLoadInfoListenerLogin() {
-                            @Override
-                            public void onSuccess(boolean isCheck, String userid) {
-                                if (!isCheck || userid == null) {
-                                    Toast.makeText(LoginActivity.this, "User is wrong or not exits. Please check again", Toast.LENGTH_SHORT).show();
-                                    alertDialog.dismiss();
-                                }
-                                else {
-
-                                    edtNewPassword.setVisibility(View.VISIBLE);
-                                    btnConfirmUserName.setText("Update");
-                                    if (edtNewPassword != null && edtNewPassword.length()>6) {
-                                        loginController.updateNewPassword(edtUserNameResetPass.getText().toString(),
-                                                edtNewPassword.getText().toString(), userid,
-                                                new IOnLoadUpdateInfoLogin() {
-                                                    @Override
-                                                    public void onSuccess(boolean isCheck) {
-                                                        if (isCheck) {
-                                                            alertDialog.dismiss();
-                                                            Toast.makeText(alertDialog.getContext(), "Update password successfully, please login", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            alertDialog.dismiss();
-                                                            Toast.makeText(alertDialog.getContext(), "Update password fail, please try again", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure() {
-                                                        alertDialog.dismiss();
-
-                                                        Toast.makeText(alertDialog.getContext(), "Update password fail, please try again", Toast.LENGTH_SHORT).show();
-
-                                                    }
-                                                });
-                                    }
-                                    else{
-                                        Toast.makeText(LoginActivity.this, "Password is invalid", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-                            @Override
-                            public void onFailure() {
-                                Toast.makeText(LoginActivity.this, "Confirm failed, please try again!!!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        });
-
-                    }
-                });
-                btnCancelDialogResetPass.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            btnConfirmUserName.setOnClickListener(view1 ->
+                    loginController.checkConfirmUserEmail(edtUserEmailRecoverPassword.getText().toString(), new IOnLoadInfoListenerLogin() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onSuccess(boolean isCheck, String userid) {
+                    if (!isCheck || userid == null) {
+                        Toast.makeText(LoginActivity.this, "User is wrong or not exits. Please check again", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                     }
-                });
-            }
+                    else {
+
+                        edtNewPassword.setVisibility(View.VISIBLE);
+                        btnConfirmUserName.setText("Update");
+                        if (edtNewPassword != null && edtNewPassword.length()>6) {
+                            loginController.updateNewPassword(edtUserEmailRecoverPassword.getText().toString(),
+                                    edtNewPassword.getText().toString(), userid,
+                                    new IOnLoadUpdateInfoLogin() {
+                                        @Override
+                                        public void onSuccess(boolean isCheck) {
+                                            if (isCheck) {
+                                                alertDialog.dismiss();
+                                                Toast.makeText(alertDialog.getContext(), "Update password successfully, please login", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                alertDialog.dismiss();
+                                                Toast.makeText(alertDialog.getContext(), "Update password fail, please try again", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure() {
+                                            alertDialog.dismiss();
+
+                                            Toast.makeText(alertDialog.getContext(), "Update password fail, please try again", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, "Password is invalid", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+                @Override
+                public void onFailure() {
+                    Toast.makeText(LoginActivity.this, "Confirm failed, please try again!!!", Toast.LENGTH_SHORT).show();
+                }
+
+            }));
+            btnCancelDialogResetPass.setOnClickListener(view12 -> alertDialog.dismiss());
         });
     }
 
     private void loginByGoogle() {
-        tvLoginByGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, GoogleAuthLoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        tvLoginByGoogle.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, GoogleAuthLoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         });
     }
 
     private void loginByFacebook() {
-        tvLoginByFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, FacebookAuthenficationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
-            }
+        tvLoginByFacebook.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, FacebookAuthenficationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         });
 
     }
 
 
     private void createAccountOnClick() {
-        createAccountTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentAc = new Intent(LoginActivity.this, CreateAccActivity.class);
-                startActivity(intentAc);
-                finish();
+        createAccountTv.setOnClickListener(view -> {
+            Intent intentAc = new Intent(LoginActivity.this, CreateAccActivity.class);
+            startActivity(intentAc);
+            finish();
 
-            }
         });
     }
 
 
     private void buttonLoginCLick() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginController.onLoginByEmail(edtUserNameEmailLogin.getText().toString(), edtPassword.getText().toString(), loadingBar);
-                iLog.setTag("login");
-                iLog.setMes("success");
-                iLog.log();
-            }
+        btnLogin.setOnClickListener(view -> {
+            loginController.onLoginByEmail(edtUserNameEmailLogin.getText().toString(), edtPassword.getText().toString(), loadingBar);
         });
     }
 
@@ -246,15 +217,4 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
     public void OnAdminLoginFail(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            Log.d(TAG, "onStart: ");
-//        } else {
-//            // No user is signed in
-//        }
-//    }
 }

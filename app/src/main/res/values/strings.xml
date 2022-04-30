@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">TravelApp</string>
     <string name="login_with"><font color='#656F77'>Login with</font> </string>
-    <string name="forget_password"><font color='#656F77'>Quên mật khẩu</font></string>
-    <string name="create_acc"><font color='#656F77'>Bạn chưa có tài khoản</font> </string>
+    <string name="forget_password"><font color='#656F77'>Forget password</font></string>
+    <string name="create_acc"><font color='#656F77'>You don't have account?</font> </string>
     <string name="facebook_app_id">507083160975898</string>
     <string name="fb_login_protocol_scheme">fb507083160975898</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="see_more">See more</string>
+    <string name="new_york">new york</string>
+    <string name="inTheWorld">In the world</string>
+    <string name="admin_home">Admin\'s Home</string>
+    <string name="list_posts">List posts</string>
 
 </resources>

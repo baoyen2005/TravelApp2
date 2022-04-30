@@ -1,5 +1,6 @@
 package com.example.travelapp.view.adapter.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,10 +40,10 @@ public class RecommendUserHomeAdapter extends RecyclerView.Adapter<RecommendUser
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommendUserHomeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecommendUserHomeViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Post post = postList.get(position);
         Glide.with(context)
-                .load(post.getImage0())
+                .load(post.getList_photos().get(0).getUrl())
                 .into(holder.itemImageViewRecommend);
         holder.itemNameofLocation.setText(post.getTouristName());
         holder.itemAddressOfLocation.setText(post.getTouristDetailAddress());

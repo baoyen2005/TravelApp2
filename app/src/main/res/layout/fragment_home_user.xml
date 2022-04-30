@@ -12,15 +12,23 @@
         android:layout_height="wrap_content"
         android:overScrollMode="always">
 
-        <ImageView
-            android:id="@+id/avatar_home_fragment"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="36dp"
-            android:background="@drawable/custom_image_avat_fragment"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:cardCornerRadius="16dp"
+            >
+            <ImageView
+                android:id="@+id/avatar_home_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tvGoodMorning_HomeFm"
@@ -35,11 +43,11 @@
             android:textFontWeight="@integer/material_motion_duration_medium_1"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_home_fragment"
+            app:layout_constraintLeft_toRightOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvUserName_HomeFm"
+            android:id="@+id/tvCurrentUserNameInEditScreen"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginLeft="50dp"
@@ -51,13 +59,13 @@
             android:textFontWeight="@integer/material_motion_duration_medium_1"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/avatar_home_fragment"
+            app:layout_constraintLeft_toRightOf="@+id/cardView"
             app:layout_constraintTop_toBottomOf="@id/tvGoodMorning_HomeFm" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintNoti"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="25dp"
             android:background="@drawable/custom_image_notifi_fragment"
@@ -81,7 +89,7 @@
             android:layout_width="214dp"
             android:layout_height="70dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/merriweathe"
             android:lineHeight="35.2dp"
             android:maxLines="2"
@@ -137,6 +145,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_seeMore_HomeFm" />
 
@@ -162,17 +171,19 @@
             android:layout_marginTop="32dp"
             android:layout_marginRight="40dp"
             android:fontFamily="@font/merriweathe"
-            android:text="Khám phá"
+            android:text="Explore"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycleViewCategories" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewRecommended"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
+            app:layout_constraintRight_toRightOf="parent"
+
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvRecommended_Home_Fm" />
 
@@ -205,11 +216,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewKnowYourWorld"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
+            app:layout_constraintRight_toRightOf="parent"
+
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_gnow" />
 

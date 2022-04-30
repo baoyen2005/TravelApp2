@@ -1,6 +1,7 @@
 package com.example.travelapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Post implements Serializable {
@@ -9,7 +10,7 @@ public class Post implements Serializable {
             touristDetailAddress,
             content,type;
     private List<String> urlImgReview;
-    private String image0, image1, image2,image3, imag4;
+    private List<Photo> list_photos = new ArrayList<>();
     private String latitude , longitude;
 
     public Post() {
@@ -27,19 +28,24 @@ public class Post implements Serializable {
         this.type = type;
     }
 
-    public Post(String postId, String touristName, String touristDetailAddress, String content, String type, String image0, String image1, String image2, String image3, String imag4, String latitude, String longitude) {
+    public Post(String postId, String touristName, String touristDetailAddress, String content, String type, List<String> urlImgReview, List<Photo> list_photos, String latitude, String longitude) {
         this.postId = postId;
         this.touristName = touristName;
         this.touristDetailAddress = touristDetailAddress;
         this.content = content;
         this.type = type;
-        this.image0 = image0;
-        this.image1 = image1;
-        this.image2 = image2;
-        this.image3 = image3;
-        this.imag4 = imag4;
+        this.urlImgReview = urlImgReview;
+        this.list_photos = list_photos;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public List<Photo> getList_photos() {
+        return list_photos;
+    }
+
+    public void setList_photos(List<Photo> list_photos) {
+        this.list_photos = list_photos;
     }
 
     public String getPostId() {
@@ -88,46 +94,6 @@ public class Post implements Serializable {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-    }
-
-    public String getImage0() {
-        return image0;
-    }
-
-    public void setImage0(String image0) {
-        this.image0 = image0;
-    }
-
-    public String getImage1() {
-        return image1;
-    }
-
-    public void setImage1(String image1) {
-        this.image1 = image1;
-    }
-
-    public String getImage2() {
-        return image2;
-    }
-
-    public void setImage2(String image2) {
-        this.image2 = image2;
-    }
-
-    public String getImage3() {
-        return image3;
-    }
-
-    public void setImage3(String image3) {
-        this.image3 = image3;
-    }
-
-    public String getImag4() {
-        return imag4;
-    }
-
-    public void setImag4(String imag4) {
-        this.imag4 = imag4;
     }
 
     public String getLongitude() {

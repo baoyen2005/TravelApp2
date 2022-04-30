@@ -98,7 +98,6 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
         }
     }
 
-    // bạn ơi bỏ đoạn này đi, nó đang lỗi kệ nó
     @Override
     public void handleFacebookAccessToken(@NonNull AccessToken token, FirebaseAuth mAuth) {
         Log.d("FacebookLogin", "handleFacebookAccessToken:" + token);
@@ -132,12 +131,11 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
                         Log.d(TAG, "signInWithCredential: success");
                         String url = Objects.requireNonNull(account.getPhotoUrl()).toString();
                         Log.d("__url", "onComplete: "+url);
-                        // add cai link nay vao cho nay
+
                         FirebaseUser user = mAuth.getCurrentUser();
                         assert user != null;
-                        updateAccountToFirebase(user, account,progressDialog);
-                        //iLoginView.OnUserLoginSuccess("Authentication successfully");
-                        // progressDialog.dismiss();
+                        updateImageAvtFromGoogleSignInToFirebase(user, account,progressDialog);
+
 
 
                     } else {
@@ -150,13 +148,16 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
 
     @Override
-    public void checkConfirmUserName(String userName, IOnLoadInfoListenerLogin listener) {
-        FirebaseFirestore.getInstance().collection("users")
-                .whereEqualTo("username", userName)
+    public void checkConfirmUserEmail(String email, IOnLoadInfoListenerLogin listener) {
+        FirebaseFirestore.getInstance().collection("email")
+                .whereEqualTo("email", email)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     ArrayList<User> listUser = (ArrayList<User>) queryDocumentSnapshots.toObjects(User.class);
-                    listener.onSuccess(listUser.size() > 0 && listUser.get(0) != null && listUser.get(0).getUsername().equals(userName)
+                    listener.onSuccess(
+                            listUser.size() > 0
+                                    && listUser.get(0) != null
+                                    && listUser.get(0).getUsername().equals(email)
                             , listUser.get(0).getUid());
 
                 }).addOnFailureListener(e -> listener.onFailure());
@@ -164,11 +165,11 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
     }
 
     @Override
-    public void updateNewPassword(String username, String newPassword, String userid, IOnLoadUpdateInfoLogin loadUpdateInfoLogin) {
+    public void updateNewPassword(String email, String newPassword, String userid, IOnLoadUpdateInfoLogin loadUpdateInfoLogin) {
 
         Map<String, Object> map = new HashMap<>();
         map.put("password", newPassword);
-        FirebaseFirestore.getInstance().collection("users")
+        FirebaseFirestore.getInstance().collection("email")
                 .document(userid)
                 .set(map, SetOptions.merge())
                 .addOnCompleteListener(task -> {
@@ -193,7 +194,7 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
     }
 
-    private void updateAccountToFirebase(FirebaseUser user, GoogleSignInAccount account, ProgressDialog progressDialog) {
+    private void updateImageAvtFromGoogleSignInToFirebase(FirebaseUser user, GoogleSignInAccount account, ProgressDialog progressDialog) {
 
         Log.d("user11", "imgpath by gg " + Objects.requireNonNull(user.getPhotoUrl()).getPath());
 

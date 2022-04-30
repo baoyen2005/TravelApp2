@@ -25,7 +25,7 @@
             android:name=".view.activity.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".view.admin.AdminHomeFragment"
+            android:name=".view.admin.AdminAddPostFragment"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
@@ -44,7 +44,20 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.home.MainActivityUser"
-            android:exported="false" />
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable_user" />
+        </activity>
+        <provider android:name=".function_util.MySuggestionProvider"
+            android:authorities="com.example.travelapp.function_util.MySuggestionProvider"
+            android:exported="false"
+            android:enabled="true"/>
         <activity
             android:name=".view.activity.login.activity_login.LoginActivity"
             android:exported="true"

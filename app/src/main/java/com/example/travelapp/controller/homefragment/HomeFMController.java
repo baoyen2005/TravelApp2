@@ -1,7 +1,6 @@
 package com.example.travelapp.controller.homefragment;
 
 import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME;
-import static com.example.travelapp.constant.UserHomeConstant.TAG_USER_HOME_POST;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,15 +11,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.travelapp.R;
-import com.example.travelapp.function_util.GetAllPostFromFirebaseStorage;
 import com.example.travelapp.function_util.GetUserFromFireStorage;
 import com.example.travelapp.model.Post;
 import com.example.travelapp.model.User;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetCurrentUserListener;
-import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostListener;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +65,7 @@ public class HomeFMController implements InterfaceHomeFMController{
     @Override
     public List<Post> onLoadFullPostToRecommend() {
 //        List<Post> postList = new ArrayList<>();
-//        getAllPostFromFirebaseStorage = new GetAllPostFromFirebaseStorage();
+//        getAllPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
 //        getAllPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
 //            @Override
 //            public void getPostsSuccess(List<Post> postList) {

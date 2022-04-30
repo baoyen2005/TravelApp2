@@ -1,5 +1,6 @@
 package com.example.travelapp.view.userfragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
 import com.example.travelapp.constant.Data;
@@ -64,6 +64,7 @@ public class ChatFragmentUser extends BaseFragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             String lastMsg = snapshot.child("lastMsg").getValue(String.class);
+                            @SuppressLint("SimpleDateFormat")
                             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
                             Long time = snapshot.child("lastMsgTime").getValue(Long.class);
                             if (time != null) {
@@ -87,12 +88,9 @@ public class ChatFragmentUser extends BaseFragment {
 
     @Override
     public void initEvent() {
-        item_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ChatActivity.class);
-                startActivity(intent);
-            }
+        item_chat.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            startActivity(intent);
         });
     }
 }

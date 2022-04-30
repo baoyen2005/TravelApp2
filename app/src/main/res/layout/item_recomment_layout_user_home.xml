@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="140dp"
-    android:layout_height="180dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:layout_height="220dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     android:id="@+id/cardViewRecommendItem"
@@ -14,6 +15,7 @@
             android:id="@+id/item_image_recommend_user_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +24,7 @@
             />
         <LinearLayout
             android:layout_width="121dp"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -36,12 +38,12 @@
                 android:id="@+id/item_name_of_location_recommend_home_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="new york"
+                android:text="@string/new_york"
                 android:textSize="14sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppinsregular"
                 android:padding="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,13 +58,14 @@
                     android:src="@drawable/iconlocation"/>
                 <TextView
                     android:id="@+id/item_address_of_location_recommend_home_user"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:textSize="10sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/poppinsregular"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:ignore="SmallSp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

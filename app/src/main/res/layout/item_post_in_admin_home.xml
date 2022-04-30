@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="16dp">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:padding="12dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <ImageView
+               android:id="@+id/img_travel_review_item"
+               android:layout_width="0dp"
+               app:layout_constraintWidth_percent="0.3"
+               android:layout_height="86dp"
+               android:layout_marginStart="10dp"
+
+               android:layout_marginTop="18dp"
+               android:scaleType="centerCrop"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <TextView
+               android:id="@+id/tvAddressTravelItem"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               app:layout_constraintWidth_percent="0.5"
+               android:gravity="center"
+               android:fontFamily="@font/nunito"
+               android:textSize="22sp"
+               android:textStyle="bold"
+               android:layout_marginStart="5dp"
+               app:layout_constraintLeft_toRightOf="@id/img_travel_review_item"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <TextView
+               android:id="@+id/tv11"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               app:layout_constraintWidth_percent="0.5"
+               android:fontFamily="@font/nunitoregular"
+               android:layout_marginTop="15dp"
+               android:layout_marginStart="5dp"
+               android:text="Khám phá một thế giới và những chuyến đi"
+               android:maxLines="3"
+               android:textSize="12sp"
+               android:textStyle="bold"
+               app:layout_constraintLeft_toRightOf="@id/img_travel_review_item"
+               app:layout_constraintTop_toBottomOf="@id/tvAddressTravelItem" />
+            <ImageView
+                android:id="@+id/imgMoreInAdminHomeFM"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv11"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_more_vert_24"/>
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="8dp"
+           android:background="#EFEFEF"/>
+   </LinearLayout>
+</androidx.cardview.widget.CardView>

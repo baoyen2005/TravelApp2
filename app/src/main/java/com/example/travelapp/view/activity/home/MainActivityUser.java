@@ -1,29 +1,29 @@
 package com.example.travelapp.view.activity.home;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import com.example.travelapp.R;
 import com.example.travelapp.view.adapter.ViewPagerAdapterBottomNavi;
 import com.example.travelapp.view.userfragment.ChatFragmentUser;
-import com.example.travelapp.view.userfragment.FavoriteFragmentUser;
-import com.example.travelapp.view.userfragment.RootHomeFragment;
 import com.example.travelapp.view.userfragment.ProfileFragmentUser;
-import com.example.travelapp.view.userfragment.SearchFragmentUser;
+import com.example.travelapp.view.userfragment.rootfragment.RootFavoriteFragment;
+import com.example.travelapp.view.userfragment.rootfragment.RootHomeFragment;
+import com.example.travelapp.view.userfragment.rootfragment.RootSearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivityUser extends AppCompatActivity {
+public class MainActivityUser extends AppCompatActivity  {
     private ViewPagerAdapterBottomNavi adapterBottomNavi;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
-    private SearchFragmentUser searchFragmentUser;
-    private FavoriteFragmentUser favoriteFragmentUser;
+    private RootSearchFragment rootSearchFragment;
+    private RootFavoriteFragment rootFavoriteFragment;
     private RootHomeFragment rootOfHomeFragmentUser ;
     private ChatFragmentUser chatFragmentUser;
     private ProfileFragmentUser profileFragmentUser;
@@ -33,7 +33,6 @@ public class MainActivityUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initview();
         bottomNavigationView.setItemIconTintList(null);
         initFragment();
@@ -49,20 +48,19 @@ public class MainActivityUser extends AppCompatActivity {
     }
 
     private void initFragment() {
-        searchFragmentUser = new SearchFragmentUser();
-        favoriteFragmentUser = new FavoriteFragmentUser();
+        rootSearchFragment = new RootSearchFragment();
+        rootFavoriteFragment = new RootFavoriteFragment();
         rootOfHomeFragmentUser = new RootHomeFragment();
         chatFragmentUser = new ChatFragmentUser();
         profileFragmentUser = new ProfileFragmentUser();
     }
     private void setBottomNavigation(){
-        adapterBottomNavi.addFragment(searchFragmentUser);
-        adapterBottomNavi.addFragment(favoriteFragmentUser);
+        adapterBottomNavi.addFragment(rootSearchFragment);
+        adapterBottomNavi.addFragment(rootFavoriteFragment);
         adapterBottomNavi.addFragment(rootOfHomeFragmentUser);
         adapterBottomNavi.addFragment(chatFragmentUser);
         adapterBottomNavi.addFragment(profileFragmentUser);
-        viewPager.setAdapter( adapterBottomNavi);
-         //menu = bottomNavigationView.getMenu();
+        viewPager.setAdapter(adapterBottomNavi);
     }
     private  void setFragmentForNavigation(){
 
@@ -76,9 +74,8 @@ public class MainActivityUser extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0: {
-                     //   bottomNavigationView.getMenu().findItem(R.id.search_bottom_navi);
                         bottomNavigationView.getMenu().findItem(R.id.search_bottom_navi).setChecked(true);
-                      //  bottomNavigationView.getMenu().findItem(R.id.search_bottom_navi).getIcon().set
+
                         break;
                     }
                     case 1: {
@@ -142,8 +139,7 @@ public class MainActivityUser extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-      //  super.onBackPressed();
-      //  viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+
         int count = getSupportFragmentManager().getBackStackEntryCount();
 
         if (count == 0) {
@@ -152,5 +148,12 @@ public class MainActivityUser extends AppCompatActivity {
         } else {
             getSupportFragmentManager().popBackStack();
         }
+//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.root_home_frame);
+//        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+//            super.onBackPressed();
+//        }
     }
+
+
+
 }
