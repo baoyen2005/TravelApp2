@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TravelApp</string>
-    <string name="login_with"><font color='#656F77'>Login with</font> </string>
-    <string name="forget_password"><font color='#656F77'>Forget password</font></string>
-    <string name="create_acc"><font color='#656F77'>You don't have account?</font> </string>
+    <string name="login_with"><font color="#656F77">Login with</font> </string>
+    <string name="forget_password"><font color="#656F77">Forget password</font></string>
+    <string name="create_acc"><font color="#656F77">You don\'t have account?</font> </string>
     <string name="facebook_app_id">507083160975898</string>
     <string name="fb_login_protocol_scheme">fb507083160975898</string>
     <!-- TODO: Remove or change this placeholder text -->
