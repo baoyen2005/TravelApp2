@@ -144,7 +144,7 @@ public class DetailFMController implements InterfaceDetailFMController {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        getUserFromFireStorage.getUserFromFirebase(firebaseUser.getUid(), new InterfaceEventGetCurrentUserListener() {
+        getUserFromFireStorage.getCurrentUser(firebaseUser.getUid(), new InterfaceEventGetCurrentUserListener() {
             @Override
             public void getCurrentUserSuccess(User user) {
                 Location location1 = new Location("");

@@ -157,7 +157,6 @@ public class CreateAccController implements ICreateAccController {
             storageRef.getDownloadUrl().addOnSuccessListener(url -> {
                 updateUserImageToFireStorage(url.toString(), uid);
                 Log.d("user", "upLoadPhoto: thanh cong");
-                iLoginView.OnUserLoginSuccess("Create acc successfully");
                 loadingBar.dismiss();
             });
         });
@@ -196,6 +195,8 @@ public class CreateAccController implements ICreateAccController {
                     }
                     if (task.isSuccessful()) {
                         Log.d("user", "update thanh cong info");
+                        iLoginView.OnUserLoginSuccess("Create acc successfully");
+
 
                     } else {
                         Log.d("user", "looixupdate info");

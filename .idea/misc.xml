@@ -45,6 +45,7 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.156" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.163" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/drawable/iconsearch.xml" value="0.1" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/dialog_changeusername.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/fragment_admin_home.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/fragment_edit_post_by_admin.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout-v28/item_post_in_searchview.xml" value="0.1921875" />
@@ -56,6 +57,8 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/activity_main_admin.xml" value="0.1" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialo_forgot_password.xml" value="0.2" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialog_changeemail.xml" value="0.1" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialog_changepassword.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/dialog_forgot_password.xml" value="0.18704710144927536" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_add_post_by_admin.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/layout/fragment_admin_home.xml" value="0.1921875" />
@@ -86,6 +89,7 @@
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/bottom_navi_menu_admin.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/bottom_navi_menu_user.xml" value="0.1921875" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/menu_delete_edit_post.xml" value="0.1921875" />
+        <entry key="..\:/A_Test/TravelApp2/app/src/main/res/menu/menu_search.xml" value="0.13148148148148148" />
         <entry key="..\:/A_Test/TravelApp2/app/src/main/res/xml/searchable_user.xml" value="0.1921875" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/drawable-v24/custom_btn_create.xml" value="0.1" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/drawable/custom_btn_login.xml" value="0.1" />
@@ -102,6 +106,7 @@
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/bottom_sheet_dialog_create_account.xml" value="0.2" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/dialog_create_account.xml" value="0.1921875" />
+        <entry key="..\:/FileDownload/FacebookSignInAuthentication/caches/transforms-3/3385b7259ff8b64acf6ed09c628fd679/transformed/facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_icon_chat.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.1655" />

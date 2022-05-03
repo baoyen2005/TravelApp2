@@ -4,8 +4,14 @@ import android.app.SearchManager;
 import android.database.Cursor;
 import android.provider.SearchRecentSuggestions;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +37,9 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
     private SearchRecentSuggestions suggestions;
     private UserSearchListPostAdapter userSearchListPostAdapter;
     private RecyclerView recycleViewUserSearchViewFM;
-    private List<Post> listPostInSearchFM = new ArrayList<>();
+    private final List<Post> listPostInSearchFM = new ArrayList<>();
     private final String TAG = "SearchFragmentUser";
+    private ImageView imgSearchViewInUserSearch;
     private SetAdapter setAdapter;
     public SearchFragmentUser() {
         // Required empty public constructor
@@ -52,23 +59,15 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
 
     @Override
     public void initView(View view) {
+        imgSearchViewInUserSearch = view.findViewById(R.id.imgSearchViewInUserSearch);
         recycleViewUserSearchViewFM= view.findViewById(R.id.recycleViewUserSearchViewFM);
-        searchViewInSearchFragment = view.findViewById(R.id.searchViewInSearchFragment);
-        searchViewInSearchFragment.setIconifiedByDefault(false);
-        searchViewInSearchFragment.setQueryRefinementEnabled(true);
-        searchViewInSearchFragment.requestFocus(1);
+     //   searchViewInSearchFragment = view.findViewById(R.id.searchViewInSearchFragment);
     }
 
     @Override
     public void initData() {
         setAdapter = new SetAdapter(requireActivity());
         userSearchListPostAdapter = new UserSearchListPostAdapter(listPostInSearchFM,requireContext(),this);
-//        searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
-//        suggestions = new SearchRecentSuggestions(requireContext(), MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
-//        if (searchManager != null) {
-//            searchViewInSearchFragment.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-//        }
-
 
     }
 
@@ -77,7 +76,7 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
     @Override
     public void initEvent() {
         initRecycleViewListPost();
-        searchViewByKey();
+     ///   searchViewByKey(searchView);
       //  searchViewSuggestion();
     }
     private void initRecycleViewListPost() {
@@ -99,8 +98,8 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
         });
     }
 
-    private void searchViewByKey() {
-        searchViewInSearchFragment.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private void searchViewByKey(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if(s == null || s.isEmpty()){
@@ -133,13 +132,26 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
             }
         });
 
-        searchViewInSearchFragment.setOnCloseListener(() -> {
-            searchViewInSearchFragment.setIconified(false);
-            searchViewInSearchFragment.setVisibility( View.INVISIBLE);
+        searchView.setOnCloseListener(() -> {
+            searchView.setIconified(false);
+            searchView.setVisibility( View.INVISIBLE);
             userSearchListPostAdapter.updateData(listPostInSearchFM);
             Log.d(TAG, "searchViewByName:close favoritePostList.size()"+ listPostInSearchFM.size());
             return false;
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchViewByKey(searchView);
     }
 
     private void searchViewSuggestion() {
