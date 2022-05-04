@@ -108,9 +108,13 @@
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/bottom_sheet_dialog_create_account.xml" value="0.2" />
         <entry key="..\:/Code/Android/TravelApp/app/src/main/res/layout/dialog_create_account.xml" value="0.1921875" />
         <entry key="..\:/FileDownload/FacebookSignInAuthentication/caches/transforms-3/3385b7259ff8b64acf6ed09c628fd679/transformed/facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1365" />
         <entry key="app/src/main/res/drawable/bg_icon_chat.xml" value="0.1655" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1365" />
         <entry key="app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.1655" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1365" />
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.1655" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1365" />
         <entry key="app/src/main/res/drawable/ic_send_drawer.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/item_reciver.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/send_drawer.xml" value="0.1655" />
@@ -130,6 +134,8 @@
         <entry key="app/src/main/res/layout/item_send.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout/row_conversations.xml" value="0.37025641025641026" />
         <entry key="app/src/main/res/menu/bottom_navi_menu.xml" value="0.35104166666666664" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1365" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1365" />
       </map>
     </option>
   </component>
