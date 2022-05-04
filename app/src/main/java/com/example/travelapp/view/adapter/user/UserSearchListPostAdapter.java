@@ -61,7 +61,7 @@ public class UserSearchListPostAdapter extends
         return postList.size();
     }
 
-
+//du
     @SuppressLint("NotifyDataSetChanged")
     public void updateData(List<Post> newListPost) {
         postList.clear();
@@ -104,7 +104,7 @@ public class UserSearchListPostAdapter extends
                   //  notifyDataSetChanged();
                     postListCopy.clear();
                     postListCopy.addAll(postList);
-                    notifyDataSetChanged();
+                    updateData(postListCopy);
                 }
                 else {
                     List<Post> res = new ArrayList<>();

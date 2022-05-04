@@ -48,6 +48,7 @@ public class ProfileFragmentUser extends BaseFragment {
     private User currentUserUpp;
     private final String TAG ="ProfileFragmentUser";
     private Uri mainAvatarUri;
+    private  boolean isChooseImage = false;
     public ProfileFragmentUser() {
         // Required empty public constructor
     }
@@ -104,6 +105,7 @@ public class ProfileFragmentUser extends BaseFragment {
                 txtAddressInUserProfile.setText(currentUser.getAddress());
                 txtPhoneInUserProfile.setText(currentUser.getPhone());
                 txtUserEmailInUserProfileScreen.setText(currentUser.getEmail());
+                mainAvatarUri = Uri.parse(currentUser.getImageURL());
                 if(currentUser.getImageURL()==null){
                     mainavatar.setImageResource(R.drawable.useravatar);
                 }
@@ -143,6 +145,7 @@ public class ProfileFragmentUser extends BaseFragment {
     }
     public void changeProfile(){
         mainavatar.setOnClickListener(view -> {
+            isChooseImage = true;
             chooseImage();
         });
 
@@ -240,14 +243,22 @@ public class ProfileFragmentUser extends BaseFragment {
     }
 
     private void chooseImage() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-        galleryIntent.setType("image/*");
-        imagePickerActivityResult.launch(galleryIntent);
+       if(isChooseImage){
+           Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+           galleryIntent.setType("image/*");
+           imagePickerActivityResult.launch(galleryIntent);
+       }
+       else{
+           Log.d(TAG, "chooseImage: ");
+       }
     }
 
     ActivityResultLauncher<Intent> imagePickerActivityResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result != null) {
+                    if (result.getData()==null){
+                        Log.d(TAG, "result.getdata=null: ");
+                    }
                     Uri imageUri = result.getData().getData();
                     Log.d("___Yenlb", "imagePickerActivityResult: imageUri " + imageUri);
                     if (imageUri == null) {
@@ -256,6 +267,9 @@ public class ProfileFragmentUser extends BaseFragment {
                         mainavatar.setImageURI(imageUri);
                         mainAvatarUri = imageUri;
                     }
+                }
+                else{
+                    Log.d(TAG, "resul ==null: ");
                 }
             }
     );
