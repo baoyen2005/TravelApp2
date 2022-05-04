@@ -90,22 +90,25 @@ public class UserFavoriteListPostAdapter extends
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 List<FavoritePost> newList = new ArrayList<>();
+                newList.clear();
                 newList.addAll((ArrayList<FavoritePost>) results.values);
                 updateData(newList);
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charSearch = constraint.toString();
 
-                if (charSearch.isEmpty()) {
+                if (charSearch== null ||charSearch.isEmpty()) {
                     favoriteListCopy.clear();
                     favoriteListCopy.addAll(favoritePostList);
+                    notifyDataSetChanged();
                 }
                 else {
                     List<FavoritePost> res = new ArrayList<>();
                     for (int i = 0; i < favoritePostList.size(); i++) {
-                        String data = favoritePostList.get(i).getTouristName();
+                        String data = favoritePostList.get(i).getTouristName().trim();
                         if (data.toLowerCase().contains(charSearch.toLowerCase()))  {
                             res.add(favoritePostList.get(i));
                         }

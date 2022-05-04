@@ -61,7 +61,7 @@ public class HomeFragmentUser extends BaseFragment implements InterfaceHomeFmVie
     public void initView(View view) {
         avatarHomeFragment = view.findViewById(R.id.avatar_home_fragment);
         tvGoodMorningHomeFm = view.findViewById(R.id.tvGoodMorning_HomeFm);
-        tvUserNameHomeFm = view.findViewById(R.id.tvCurrentUserNameInEditScreen);
+        tvUserNameHomeFm = view.findViewById(R.id.tvCurrentUserNameInUserHomeScreen);
         tvWelcomeHomeFr = view.findViewById(R.id.tvWelcomeHomeFr);
         searchViewHomeFr = view.findViewById(R.id.searchViewHomeFr);
         recycleViewCategories = view.findViewById(R.id.recycleViewCategories);

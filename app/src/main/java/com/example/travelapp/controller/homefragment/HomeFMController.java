@@ -30,7 +30,7 @@ public class HomeFMController implements InterfaceHomeFMController{
 
 
         getUserFromFireStorage = new GetUserFromFireStorage();
-        getUserFromFireStorage.getUserFromFirebase(firebaseUser.getUid(), new InterfaceEventGetCurrentUserListener() {
+        getUserFromFireStorage.getCurrentUser(firebaseUser.getUid(), new InterfaceEventGetCurrentUserListener() {
             @Override
             public void getCurrentUserSuccess(User user) {
                 if(user!=null){

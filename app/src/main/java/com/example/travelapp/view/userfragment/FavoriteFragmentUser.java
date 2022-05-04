@@ -35,7 +35,6 @@ public class FavoriteFragmentUser extends BaseFragment implements
     private RecyclerView recycleViewUserFavoriteFM;
     private final String TAG = "FavoriteFragmentUser";
     private List<FavoritePost> favoritePostList;
-    private FirebaseAuth firebaseAuth;
     private String uid;
     public FavoriteFragmentUser() {
         // Required empty public constructor
@@ -67,7 +66,7 @@ public class FavoriteFragmentUser extends BaseFragment implements
     @Override
     public void initData() {
         favoritePostList = new ArrayList<>();
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         uid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         setAdapter = new SetAdapter(requireActivity());
     }

@@ -16,7 +16,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class GetUserFromFireStorage {
-    public void getUserFromFirebase(String uid, InterfaceEventGetCurrentUserListener listener){
+    public void getCurrentUser(String uid, InterfaceEventGetCurrentUserListener listener){
 
         FirebaseFirestore.getInstance().collection("users")
                 .whereEqualTo("uid", uid)

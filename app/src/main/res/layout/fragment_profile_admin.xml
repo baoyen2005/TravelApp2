@@ -1,14 +1,332 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.admin.ProfileAdminFragment">
+    tools:context=".view.userfragment.ProfileFragmentUser">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtAdminTittleProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/nunito"
+            android:padding="10dp"
+            android:text="Profile"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSaveInfoWhenEditAdminProfile"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_btn_saveprofile"
+            android:text="Save"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearmainAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="16dp"
+            android:background=" #E9EFF3"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/txtAdminTittleProfile">
+
+            <ImageView
+                android:id="@+id/avatar_profile_fragment_admin"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/custom_image_avatar_fragment" />
+
+            <LinearLayout
+                android:id="@+id/lnchagneprfAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvchangethisprfAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/poppinsregular"
+                    android:lineSpacingExtra="0dp"
+                    android:text="Change this profile"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCurrentUserNameInUserProfileScreenAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppinsblack"
+                    android:text="Admin"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearuserAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="16dp"
+            android:background="#E9EFF3"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearmainAdmin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Username"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtUserNameInUserProfileScreenAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_edtext_inprofile_user"
+                android:text="Admin"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEditUsernameInUserProfileAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_login_edittext"
+            android:src="@drawable/iconedit"
+            app:layout_constraintBottom_toBottomOf="@+id/linearuserAdmin"
+            app:layout_constraintRight_toRightOf="@+id/linearuserAdmin"
+            app:layout_constraintTop_toTopOf="@+id/linearuserAdmin" />
+
+
+        <LinearLayout
+            android:id="@+id/linearpasswordAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background=" #E9EFF3"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearuserAdmin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Password"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtUserPasswordInUserProfileAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:hint="Password"
+                android:background="@drawable/custom_edtext_inprofile_user"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:text="anh quan"
+                android:textSize="20sp"
+                tools:ignore="TextViewEdits" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEditPasswordInUserProfileAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_login_edittext"
+            android:src="@drawable/iconedit"
+            app:layout_constraintBottom_toBottomOf="@+id/linearpasswordAdmin"
+            app:layout_constraintRight_toRightOf="@+id/linearpasswordAdmin"
+            app:layout_constraintTop_toTopOf="@+id/linearpasswordAdmin" />
+
+        <LinearLayout
+            android:id="@+id/linearaddressAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background=" #E9EFF3"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearpasswordAdmin">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Address"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtAddressInUserProfileAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/custom_edtext_inprofile_user"
+                android:layout_marginTop="5dp"
+                android:text="Ha Noi"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEditAddressInUserProfileAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_login_edittext"
+            android:hint="Password"
+            android:src="@drawable/iconedit"
+            app:layout_constraintBottom_toBottomOf="@+id/linearaddressAdmin"
+            app:layout_constraintRight_toRightOf="@+id/linearaddressAdmin"
+            app:layout_constraintTop_toTopOf="@+id/linearaddressAdmin" />
+
+        <LinearLayout
+            android:id="@+id/linearphoneAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background=" #E9EFF3"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearaddressAdmin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Phone"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtPhoneInUserProfileAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_edtext_inprofile_user"
+                android:inputType="phone"
+                android:text="0987654321"
+                android:textSize="20sp"
+                tools:ignore="TextViewEdits" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEditPhoneInProfileScreenAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_login_edittext"
+            android:hint="Password"
+            android:src="@drawable/iconedit"
+            app:layout_constraintBottom_toBottomOf="@+id/linearphoneAdmin"
+            app:layout_constraintRight_toRightOf="@+id/linearphoneAdmin"
+            app:layout_constraintTop_toTopOf="@+id/linearphoneAdmin" />
+
+        <LinearLayout
+            android:id="@+id/linearEmailAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background=" #E9EFF3"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearphoneAdmin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Email"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtUserEmailInUserProfileScreenAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_edtext_inprofile_user"
+                android:inputType="textEmailAddress"
+                android:text="admin123@gmail.com"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgEditEmailInUserProfileAdmin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/custom_login_edittext"
+            android:hint="Password"
+            android:src="@drawable/iconedit"
+            app:layout_constraintBottom_toBottomOf="@+id/linearEmailAdmin"
+            app:layout_constraintRight_toRightOf="@+id/linearEmailAdmin"
+            app:layout_constraintTop_toTopOf="@+id/linearEmailAdmin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background=" #FFFFFF"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/linearEmailAdmin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

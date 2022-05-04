@@ -90,10 +90,12 @@ public class UserSearchListPostAdapter extends
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 List<Post> newList = new ArrayList<>();
+                newList.clear();
                 newList.addAll((ArrayList<FavoritePost>)results.values);
                 updateData(newList);
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charSearch = constraint.toString();
@@ -102,6 +104,7 @@ public class UserSearchListPostAdapter extends
                   //  notifyDataSetChanged();
                     postListCopy.clear();
                     postListCopy.addAll(postList);
+                    notifyDataSetChanged();
                 }
                 else {
                     List<Post> res = new ArrayList<>();
