@@ -1,45 +1,47 @@
 package com.example.travelapp.view.userfragment;
 
-import android.app.SearchManager;
-import android.database.Cursor;
-import android.provider.SearchRecentSuggestions;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
 import com.example.travelapp.controller.user_search_post.UserSearchController;
+import com.example.travelapp.function_util.ClickitemShowDetail;
 import com.example.travelapp.function_util.GetPostFromFirebaseStorage;
 import com.example.travelapp.function_util.SetAdapter;
 import com.example.travelapp.model.Post;
 import com.example.travelapp.view.adapter.user.UserSearchListPostAdapter;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragmentUser extends BaseFragment implements UserSearchListPostAdapter.OnItemPostClickListenerInSearchFragment{
 
-    private SearchManager searchManager;
     private SearchView searchViewInSearchFragment;
-    private UserSearchController userSearchController;
-    private SearchRecentSuggestions suggestions;
     private UserSearchListPostAdapter userSearchListPostAdapter;
     private RecyclerView recycleViewUserSearchViewFM;
     private final List<Post> listPostInSearchFM = new ArrayList<>();
+    private final List<Post> listPostInSearchCopy = new ArrayList<>();
     private final String TAG = "SearchFragmentUser";
-    private ImageView imgSearchViewInUserSearch;
+    private ImageView imgSearchInUserSearch,imgCloseInUserSearch;
+    private EditText edtSearchInSearchFM;
+
+    private DocumentSnapshot lastVisible;
+    private boolean isLastItemReached;
+    private boolean isLoading;
+
+    List<String> listName;
     private SetAdapter setAdapter;
     public SearchFragmentUser() {
         // Required empty public constructor
@@ -53,21 +55,25 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
 
     @Override
     public void initController() {
-        userSearchController = new UserSearchController();
+        UserSearchController userSearchController = new UserSearchController();
 
     }
 
     @Override
     public void initView(View view) {
-        imgSearchViewInUserSearch = view.findViewById(R.id.imgSearchViewInUserSearch);
         recycleViewUserSearchViewFM= view.findViewById(R.id.recycleViewUserSearchViewFM);
-     //   searchViewInSearchFragment = view.findViewById(R.id.searchViewInSearchFragment);
+        imgSearchInUserSearch = view.findViewById(R.id.imgSearchInUserSearch);
+        imgCloseInUserSearch = view.findViewById(R.id.imgCloseInUserSearch);
+        edtSearchInSearchFM= view.findViewById(R.id.edtSearchInSearchFM);
     }
 
     @Override
     public void initData() {
+
+
         setAdapter = new SetAdapter(requireActivity());
         userSearchListPostAdapter = new UserSearchListPostAdapter(listPostInSearchFM,requireContext(),this);
+//nut search dau
 
     }
 
@@ -76,10 +82,12 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
     @Override
     public void initEvent() {
         initRecycleViewListPost();
-     ///   searchViewByKey(searchView);
-      //  searchViewSuggestion();
+        searchViewByKey();
     }
     private void initRecycleViewListPost() {
+
+
+
         GetPostFromFirebaseStorage getPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
         getPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
             @Override
@@ -98,82 +106,74 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
         });
     }
 
-    private void searchViewByKey(SearchView searchView) {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                if(s == null || s.isEmpty()){
-                    Log.d(TAG, "onQueryTextSubmit: if null s = " +s);
-                    Log.d(TAG, "onQueryTextSubmit: if null listPostInSearchFM =  "+listPostInSearchFM.size());
-                    userSearchListPostAdapter.updateData(listPostInSearchFM);
-                }
-                else{
-                    Log.d(TAG, "onQueryTextSubmit: else !=null listPostInSearchFM =  "+listPostInSearchFM.size());
+    private void searchViewByKey() {
+        imgSearchInUserSearch.setOnClickListener(view -> {
+            lastVisible=null;
+            isLastItemReached=false;
+            List<String> listName = new ArrayList<>();
+            String key = edtSearchInSearchFM.getText().toString().trim();
+            listName.add(key);
+            listName.add(key.toLowerCase());
+            listName.add(key.toUpperCase());
+            if (!key.isEmpty() && listName.size() > 0) {
 
-                    Log.d(TAG, "onQueryTextSubmit: else !=null "+ s);
-                    userSearchListPostAdapter.getFilter().filter(s);
-                }
-                return false;
-            }
+//                    progress_circular.setVisibility(View.VISIBLE);
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if(s == null || s.isEmpty()){
-                    Log.d(TAG, "onQueryTextChange: if s null "+s);
-                    Log.d(TAG, "onQueryTextChange: if null favoritePostList =  "+listPostInSearchFM.size());
-                    userSearchListPostAdapter.updateData(listPostInSearchFM);
-                }
-                else{
-                    Log.d(TAG, "onQueryTextChange: else !=null null favoritePostList =  "+listPostInSearchFM.size());
-                    Log.d(TAG, "onQueryTextChange: else !=null "+ s);
-                    userSearchListPostAdapter.getFilter().filter(s);
-                }
-                return false;
+                recycleViewUserSearchViewFM.setVisibility(View.GONE);
+                loadPosts(false, listName);
             }
         });
 
-        searchView.setOnCloseListener(() -> {
-            searchView.setIconified(false);
-            searchView.setVisibility( View.INVISIBLE);
-            userSearchListPostAdapter.updateData(listPostInSearchFM);
-            Log.d(TAG, "searchViewByName:close favoritePostList.size()"+ listPostInSearchFM.size());
-            return false;
-        });
+
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater = requireActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+    private void loadPosts(boolean isLoadMore, List<String> listName) {
+        Query query = FirebaseFirestore.getInstance().collection("posts")
+                .whereIn("touristName", listName)
+                .limit(10);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
 
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchViewByKey(searchView);
+        query.get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (getActivity().isDestroyed()||getActivity().isFinishing()) {
+                        return;
+                    }
+
+                    List<Post> list = new ArrayList<>();
+                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                        Post post = documentSnapshot.toObject(Post.class);
+                        list.add(post);
+                    }
+                    userSearchListPostAdapter.updateData(list);
+                    imgSearchInUserSearch.setVisibility(View.VISIBLE);
+                    recycleViewUserSearchViewFM.setVisibility(View.VISIBLE);
+               //     progress_circular.setVisibility(View.GONE);
+                    int size = querySnapshot.size();
+                    if (size > 0) {
+                        lastVisible = querySnapshot.getDocuments().get(querySnapshot.size() - 1);
+                    }
+                    if (size < 10) {
+                        isLastItemReached = true;
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    if (getActivity().isDestroyed()||getActivity().isFinishing()) {
+                        return;
+                    }
+                    imgSearchInUserSearch.setVisibility(View.VISIBLE);
+                    isLoading = false;
+                    Log.d("__index", "loadPosts: "+e.getMessage().toString());
+
+                });
+
     }
 
-    private void searchViewSuggestion() {
-        searchViewInSearchFragment.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return true;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                CursorAdapter selectedView = searchViewInSearchFragment.getSuggestionsAdapter();
-                Cursor cursor = (Cursor) selectedView.getItem(position);
-                int index = cursor.getColumnIndexOrThrow(SearchManager.SUGGEST_COLUMN_TEXT_1);
-                searchViewInSearchFragment.setQuery(cursor.getString(index), true);
-                return true;
-            }
-        });
-    }
     @Override
     public void onItemFavoritePostClick(Post post, int position) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
+        ClickitemShowDetail clickitemShowDetail = new ClickitemShowDetail();
+        clickitemShowDetail.ClickItemShowDetailInfor(post.getPostId(),R.id.root_search_fragment,fragmentManager, TAG);
     }
 
 }

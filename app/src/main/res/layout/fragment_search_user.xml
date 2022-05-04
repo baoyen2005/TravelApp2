@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.userfragment.SearchFragmentUser">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/tvTittleSearch"
             android:layout_width="wrap_content"
@@ -26,39 +28,42 @@
             android:id="@+id/constraintSearchview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
             android:background="@drawable/custom_search_view"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTittleSearch"
-            >
-<!--            <androidx.appcompat.widget.SearchView-->
-<!--                android:id="@+id/searchViewInSearchFragment"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:imeOptions="actionSearch|actionNone"-->
-<!--                android:queryHint="Search by name"-->
-<!--                app:defaultQueryHint="Search by name or address,..."-->
-<!--                app:iconifiedByDefault="false"-->
-<!--                app:searchHintIcon="@drawable/ic_baseline_search_24"-->
-<!--                android:background="@drawable/custom_search_view"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTittleSearch">
 
-<!--                />-->
-                <ImageView
-                    android:id="@+id/imgSearchViewInUserSearch"
-                    android:src="@drawable/ic_baseline_search_24"
-                    android:layout_marginEnd="25dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+            <EditText
+                android:id="@+id/edtSearchInSearchFM"
+                android:hint="@string/search_by_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/custom_search_view"
+                app:layout_constraintRight_toLeftOf="@id/imgSearchInUserSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/imgSearchInUserSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_search_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imgCloseInUserSearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/tvInWorld"
             android:layout_width="wrap_content"
@@ -85,7 +90,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvInWorld" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </ScrollView>

@@ -12,5 +12,6 @@
     <string name="inTheWorld">In the world</string>
     <string name="admin_home">Admin\'s Home</string>
     <string name="list_posts">List posts</string>
+    <string name="search_by_name">Search by name</string>
 
 </resources>
