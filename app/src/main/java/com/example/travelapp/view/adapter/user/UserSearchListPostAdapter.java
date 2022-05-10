@@ -5,8 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,14 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelapp.R;
-import com.example.travelapp.model.FavoritePost;
 import com.example.travelapp.model.Post;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserSearchListPostAdapter extends
-        RecyclerView.Adapter<UserSearchListPostAdapter.UserSearchListPostViewHolder> implements Filterable {
+        RecyclerView.Adapter<UserSearchListPostAdapter.UserSearchListPostViewHolder> {
     private final List<Post> postList;
     private final Context context;
     List<Post> postListCopy = new ArrayList<>();
@@ -52,7 +49,7 @@ public class UserSearchListPostAdapter extends
                 .into(holder.img_travel_searchView_item);
         holder.tvAddressTravelInSearchViewItem.setText(post.getTouristName());
         holder.constraintItemFragmentSearch.setOnClickListener(view ->
-                onItemPostClickListenerInSearchFragment.onItemFavoritePostClick(post,position));
+                onItemPostClickListenerInSearchFragment.onItemPostInSearchClick(post,position));
 
     }
 
@@ -69,7 +66,7 @@ public class UserSearchListPostAdapter extends
         notifyDataSetChanged();
     }
     public interface OnItemPostClickListenerInSearchFragment {
-        void onItemFavoritePostClick(Post post, int position);
+        void onItemPostInSearchClick(Post post, int position);
     }
     protected static class UserSearchListPostViewHolder extends RecyclerView.ViewHolder{
         public ImageView img_travel_searchView_item;
@@ -82,45 +79,5 @@ public class UserSearchListPostAdapter extends
             constraintItemFragmentSearch = itemView.findViewById(R.id.constraintItemFragmentSearch);
         }
     }
-    @Override
-    public Filter getFilter() {
 
-        return new Filter() {
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                List<Post> newList = new ArrayList<>();
-                newList.clear();
-                newList.addAll((ArrayList<FavoritePost>)results.values);
-                updateData(newList);
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charSearch = constraint.toString();
-
-                if (charSearch.isEmpty()) {
-                  //  notifyDataSetChanged();
-                    postListCopy.clear();
-                    postListCopy.addAll(postList);
-                    updateData(postListCopy);
-                }
-                else {
-                    List<Post> res = new ArrayList<>();
-                    for (int i = 0; i < postList.size(); i++) {
-                        String data = postList.get(i).getTouristName();
-                        if (data.toLowerCase().contains(charSearch.toLowerCase()))  {
-                            res.add(postList.get(i));
-                        }
-                    }
-                    postListCopy.clear();
-                    postListCopy.addAll(res);
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = postListCopy;
-                return filterResults;
-            }
-        };
-    }
 }

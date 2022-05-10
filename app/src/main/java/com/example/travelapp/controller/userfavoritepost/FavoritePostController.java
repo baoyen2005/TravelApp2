@@ -3,6 +3,7 @@ package com.example.travelapp.controller.userfavoritepost;
 import android.content.Context;
 
 import com.example.travelapp.model.FavoritePost;
+import com.example.travelapp.view.adapter.user.UserFavoriteListPostAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -45,5 +46,16 @@ public class FavoritePostController implements InterfaceFavoritePostFMController
 
         });
 
+    }
+
+    @Override
+    public void filter(String s, List<FavoritePost> favoritePostList, UserFavoriteListPostAdapter userFavoriteListPostAdapter) {
+        List<FavoritePost> filteredList = new ArrayList<>();
+        for(FavoritePost post : favoritePostList){
+            if (post.getTouristName().toLowerCase().contains(s.toLowerCase())){
+                filteredList.add(post);
+            }
+        }
+        userFavoriteListPostAdapter.updateData(filteredList);
     }
 }

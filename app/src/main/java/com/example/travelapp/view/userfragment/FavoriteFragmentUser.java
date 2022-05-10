@@ -87,8 +87,8 @@ public class FavoriteFragmentUser extends BaseFragment implements
                         userFavoriteListPostAdapter.updateData(favoritePostList);
                     }
                     else{
-                        Log.d(TAG, "onQueryTextSubmit: else !=null "+ s);
-                        userFavoriteListPostAdapter.getFilter().filter(s);
+                       Log.d(TAG, "onQueryTextSubmit: else !=null "+ s);
+                        favoritePostController.filter(s,favoritePostList,userFavoriteListPostAdapter);
                     }
                     return false;
                 }
@@ -102,7 +102,7 @@ public class FavoriteFragmentUser extends BaseFragment implements
                     }
                     else{
                         Log.d(TAG, "onQueryTextChange: else !=null "+ s);
-                        userFavoriteListPostAdapter.getFilter().filter(s);
+                        favoritePostController.filter(s,favoritePostList,userFavoriteListPostAdapter);
                     }
                     return false;
                 }
@@ -118,7 +118,6 @@ public class FavoriteFragmentUser extends BaseFragment implements
             });
 
     }
-
     private void setPostListForRecyclerview() {
       favoritePostController.getAllFavoritePostFromFirebase(requireActivity(), uid, new FavoritePostController.OnLoadDataListener() {
           @Override

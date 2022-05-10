@@ -20,6 +20,7 @@ import com.example.travelapp.R;
 import com.example.travelapp.base.BaseActivity;
 import com.example.travelapp.base.ILog;
 import com.example.travelapp.controller.login.LoginController;
+import com.example.travelapp.function_util.LogOutFunction;
 import com.example.travelapp.view.activity.home.MainActivityUser;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
@@ -117,7 +118,7 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
                         edtNewPassword.setVisibility(View.VISIBLE);
                         btnConfirmUserName.setText("Update");
                         if (edtNewPassword != null && edtNewPassword.length()>6) {
-                            loginController.updateNewPassword(edtUserEmailRecoverPassword.getText().toString(),
+                            loginController.updateNewPassword(edtUserEmailRecoverPassword.getText().toString().trim(),
                                     edtNewPassword.getText().toString(), userid,
                                     new IOnLoadUpdateInfoLogin() {
                                         @Override
@@ -125,6 +126,8 @@ public class LoginActivity extends BaseActivity implements InterfaceLoginView {
                                             if (isCheck) {
                                                 alertDialog.dismiss();
                                                 Toast.makeText(alertDialog.getContext(), "Update password successfully, please login", Toast.LENGTH_SHORT).show();
+                                                LogOutFunction logOutFunction = new LogOutFunction(LoginActivity.this);
+                                                logOutFunction.logOut();
                                             } else {
                                                 alertDialog.dismiss();
                                                 Toast.makeText(alertDialog.getContext(), "Update password fail, please try again", Toast.LENGTH_SHORT).show();

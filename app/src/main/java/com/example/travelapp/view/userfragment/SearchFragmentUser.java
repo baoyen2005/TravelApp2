@@ -2,8 +2,6 @@ package com.example.travelapp.view.userfragment;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
@@ -19,30 +17,23 @@ import com.example.travelapp.function_util.SetAdapter;
 import com.example.travelapp.model.Post;
 import com.example.travelapp.view.adapter.user.UserSearchListPostAdapter;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class SearchFragmentUser extends BaseFragment implements UserSearchListPostAdapter.OnItemPostClickListenerInSearchFragment{
 
-    private SearchView searchViewInSearchFragment;
+public class SearchFragmentUser extends BaseFragment implements
+        UserSearchListPostAdapter.OnItemPostClickListenerInSearchFragment {
     private UserSearchListPostAdapter userSearchListPostAdapter;
-    private RecyclerView recycleViewUserSearchViewFM;
-    private final List<Post> listPostInSearchFM = new ArrayList<>();
-    private final List<Post> listPostInSearchCopy = new ArrayList<>();
-    private final String TAG = "SearchFragmentUser";
-    private ImageView imgSearchInUserSearch,imgCloseInUserSearch;
-    private EditText edtSearchInSearchFM;
-
-    private DocumentSnapshot lastVisible;
-    private boolean isLastItemReached;
-    private boolean isLoading;
-
-    List<String> listName;
+    private SearchView searchViewInSearchFragment;;
     private SetAdapter setAdapter;
+    private RecyclerView recycleViewUserSearchViewFM;
+    private List<Post> listPostInSearchFM;
+    private UserSearchController userSearchController;
+    private final String TAG = "SearchFragmentUser";
+    private String uid;
     public SearchFragmentUser() {
         // Required empty public constructor
     }
@@ -55,125 +46,103 @@ public class SearchFragmentUser extends BaseFragment implements UserSearchListPo
 
     @Override
     public void initController() {
-        UserSearchController userSearchController = new UserSearchController();
+        userSearchController = new UserSearchController();
 
     }
-
+    
     @Override
     public void initView(View view) {
-        recycleViewUserSearchViewFM= view.findViewById(R.id.recycleViewUserSearchViewFM);
-        imgSearchInUserSearch = view.findViewById(R.id.imgSearchInUserSearch);
-        imgCloseInUserSearch = view.findViewById(R.id.imgCloseInUserSearch);
-        edtSearchInSearchFM= view.findViewById(R.id.edtSearchInSearchFM);
+
+        recycleViewUserSearchViewFM = view.findViewById(R.id.recycleViewUserSearchViewFM);
+        searchViewInSearchFragment =view.findViewById(R.id.searchViewInUserSearch);
+
     }
+
+
 
     @Override
     public void initData() {
-
-
+        listPostInSearchFM = new ArrayList<>();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        uid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         setAdapter = new SetAdapter(requireActivity());
-        userSearchListPostAdapter = new UserSearchListPostAdapter(listPostInSearchFM,requireContext(),this);
-//nut search dau
-
     }
-
-
 
     @Override
     public void initEvent() {
-        initRecycleViewListPost();
-        searchViewByKey();
+        setPostListForRecyclerview();
+        searchViewByName();
     }
-    private void initRecycleViewListPost() {
 
+    private void searchViewByName() {
+            searchViewInSearchFragment.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    if(s == null || s.isEmpty()){
+                        Log.d(TAG, "onQueryTextSubmit: if null s = " +s);
+                        Log.d(TAG, "onQueryTextSubmit: if null favoritePostList =  "+listPostInSearchFM.size());
+                        userSearchListPostAdapter.updateData(listPostInSearchFM);
+                    }
+                    else{
+                       Log.d(TAG, "onQueryTextSubmit: else !=null "+ s);
+                        userSearchController.filter(s,listPostInSearchFM,userSearchListPostAdapter);
+                    }
+                    return false;
+                }
 
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    if(s == null || s.isEmpty()){
+                        Log.d(TAG, "onQueryTextChange: if s null "+s);
+                        Log.d(TAG, "onQueryTextChange: if null favoritePostList =  "+listPostInSearchFM.size());
+                        userSearchListPostAdapter.updateData(listPostInSearchFM);
+                    }
+                    else{
+                        Log.d(TAG, "onQueryTextChange: else !=null "+ s);
+                        userSearchController.filter(s,listPostInSearchFM,userSearchListPostAdapter);
+                    }
+                    return false;
+                }
+            });
 
+            searchViewInSearchFragment.setOnCloseListener(() -> {
+                searchViewInSearchFragment.setIconified(false);
+                searchViewInSearchFragment.setVisibility( View.INVISIBLE);
+                userSearchListPostAdapter.updateData(listPostInSearchFM);
+                Log.d(TAG, "searchViewByName:close favoritePostList.size()"+ listPostInSearchFM.size());
+                return false;
+            });
+
+    }
+    private void setPostListForRecyclerview() {
         GetPostFromFirebaseStorage getPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
         getPostFromFirebaseStorage.getAllPostFromFirebase(new InterfaceEventGetPostListener() {
             @Override
             public void getAllPostSuccess(List<Post> postList) {
                 listPostInSearchFM.clear();
+                setAllPostRecycleview(postList);
                 listPostInSearchFM.addAll(postList);
-                Log.d(TAG, "getAllPostSuccess: in SearchFragmentUser "+ listPostInSearchFM.size());
-                userSearchListPostAdapter.updateData(postList);
-                setAdapter.setAdapterRecycleViewHolderLinearlayout(userSearchListPostAdapter,recycleViewUserSearchViewFM, LinearLayoutManager.VERTICAL);
             }
 
             @Override
             public void getPostsFail(String isFail) {
-                Log.d(TAG, "getPostsFail: in SearchFragmentUser ");
-            }
-        });
-    }
-
-    private void searchViewByKey() {
-        imgSearchInUserSearch.setOnClickListener(view -> {
-            lastVisible=null;
-            isLastItemReached=false;
-            List<String> listName = new ArrayList<>();
-            String key = edtSearchInSearchFM.getText().toString().trim();
-            listName.add(key);
-            listName.add(key.toLowerCase());
-            listName.add(key.toUpperCase());
-            if (!key.isEmpty() && listName.size() > 0) {
-
-//                    progress_circular.setVisibility(View.VISIBLE);
-
-                recycleViewUserSearchViewFM.setVisibility(View.GONE);
-                loadPosts(false, listName);
+                Log.d(TAG, "getPostsFail: ");
             }
         });
 
 
     }
-
-    private void loadPosts(boolean isLoadMore, List<String> listName) {
-        Query query = FirebaseFirestore.getInstance().collection("posts")
-                .whereIn("touristName", listName)
-                .limit(10);
-
-
-        query.get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (getActivity().isDestroyed()||getActivity().isFinishing()) {
-                        return;
-                    }
-
-                    List<Post> list = new ArrayList<>();
-                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                        Post post = documentSnapshot.toObject(Post.class);
-                        list.add(post);
-                    }
-                    userSearchListPostAdapter.updateData(list);
-                    imgSearchInUserSearch.setVisibility(View.VISIBLE);
-                    recycleViewUserSearchViewFM.setVisibility(View.VISIBLE);
-               //     progress_circular.setVisibility(View.GONE);
-                    int size = querySnapshot.size();
-                    if (size > 0) {
-                        lastVisible = querySnapshot.getDocuments().get(querySnapshot.size() - 1);
-                    }
-                    if (size < 10) {
-                        isLastItemReached = true;
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    if (getActivity().isDestroyed()||getActivity().isFinishing()) {
-                        return;
-                    }
-                    imgSearchInUserSearch.setVisibility(View.VISIBLE);
-                    isLoading = false;
-                    Log.d("__index", "loadPosts: "+e.getMessage().toString());
-
-                });
-
+    private void setAllPostRecycleview(List<Post> list) {
+        userSearchListPostAdapter = new UserSearchListPostAdapter(list,requireContext(), this);
+        setAdapter.setAdapterRecycleViewHolderLinearlayout(userSearchListPostAdapter,recycleViewUserSearchViewFM, LinearLayoutManager.VERTICAL);
     }
+
 
     @Override
-    public void onItemFavoritePostClick(Post post, int position) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+    public void onItemPostInSearchClick(Post post, int position) {
 
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         ClickitemShowDetail clickitemShowDetail = new ClickitemShowDetail();
         clickitemShowDetail.ClickItemShowDetailInfor(post.getPostId(),R.id.root_search_fragment,fragmentManager, TAG);
     }
-
 }

@@ -17,10 +17,10 @@ public class GetRateStarFromFirebase {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     ArrayList<Star> listStar = (ArrayList<Star>) queryDocumentSnapshots.toObjects(Star.class);
-                    if(listStar==null){
+                    if(listStar!=null){
                         for (int i = 0; i < listStar.size(); i++) {
                             if (listStar.get(i) != null) {
-                                listener.isExist();
+                                listener.isExist(listStar.get(i).getRatingStar());
                                 Log.d(TAG, "isCheckedUserRateApp onSuccess list not null " );
                             } else {
                                 listener.notExist();

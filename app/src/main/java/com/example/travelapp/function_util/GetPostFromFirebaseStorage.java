@@ -8,7 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.travelapp.model.FavoritePost;
 import com.example.travelapp.model.Post;
+import com.example.travelapp.view.interfacefragment.InterfaceEventGetFavoritePostByIDListener;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostByIDListener;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,4 +73,32 @@ public class GetPostFromFirebaseStorage {
                     }
                 });
     }
+
+
+    public void getFavoritePostFromFirebaseByID(String postID,
+                                                InterfaceEventGetFavoritePostByIDListener listener) {
+        FirebaseFirestore.getInstance().collection("favorite")
+                .whereEqualTo("postId", postID)
+                .get()
+                .addOnSuccessListener(
+                        queryDocumentSnapshots -> {
+                            ArrayList<FavoritePost> listFavoritePost = (ArrayList<FavoritePost>) queryDocumentSnapshots.toObjects(FavoritePost.class);
+                            for (int i = 0; i < listFavoritePost.size(); i++) {
+                                if (listFavoritePost.get(i) != null) {
+                                    FavoritePost favoritePost = listFavoritePost.get(i);
+                                    listener.getFavoritePostByIDSuccess(favoritePost);
+                                } else {
+                                    listener.getFavoritePostsFail(" this post not exits");
+
+                                }
+                            }
+
+                        })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG_USER_DETAIL_POST, "onFailure: " + e);
+                    listener.getFavoritePostsFail("get post fail");
+
+                });
+    }
+
 }

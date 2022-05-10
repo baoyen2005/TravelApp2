@@ -18,6 +18,8 @@ import com.example.travelapp.R;
 import com.example.travelapp.base.BaseFragment;
 import com.example.travelapp.controller.review_detail_post.DetailFMController;
 import com.example.travelapp.function_util.GetRateStarFromFirebase;
+import com.example.travelapp.function_util.ReplaceFragment;
+import com.example.travelapp.view.interfacefragment.InterfaceDeletePostListener;
 import com.example.travelapp.view.interfacefragment.InterfaceEventCheckedRateStarListener;
 import com.example.travelapp.view.interfacefragment.InterfaceObserverListFavorPostID;
 import com.example.travelapp.view.interfacefragment.InterfaceRatingStarListener;
@@ -32,7 +34,7 @@ import java.util.Objects;
 public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRatingStarListener {
     private ImageView imgTourist1InUserHome, imgTourist2InUserHome, imgTourist3InUserHome, imgTourist4InUserHome,
             imgTourist5InUserHome;
-    private LinearLayout imgIconBackInUserHome,imgIconFavorInUserHome;
+    private LinearLayout imgIconBackInUserHome,imgIconFavorInUserHome, imgIconUnlikeInUserHome;
     private TextView txtTouristDestinationNameInUserHome, txtTouristPlaceInUserHome,
             txtContentInUserHome, txtVoteInUserHome;
     private InterfaceObserverListFavorPostID observerListFavorPostIDInterface;
@@ -76,6 +78,12 @@ public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRat
 
     @Override
     public void initView(View view) {
+        if (getArguments() != null) {
+            postID = getArguments().getString(ARG_VALUE);
+            fragmentTag = getArguments().getString(FRAGMENT_TAG);
+            Log.d("__postID", "initData in DetailFM: fragmentTag = " + fragmentTag);
+
+        }
         initFindViewById(view);
 
     }
@@ -96,23 +104,26 @@ public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRat
         txtContentInUserHome = view.findViewById(R.id.txtContentInUserHome);
         ratingBarInUserHome = view.findViewById(R.id.ratingBarInUserHome);
         txtVoteInUserHome = view.findViewById(R.id.txtVoteStarInUserHome);
-
+        imgIconUnlikeInUserHome  = view.findViewById(R.id.imgIconUnlikeInUserHome);
         constraintRatingbarDetailUser = view.findViewById(R.id.constraintRatingbarDetailUser);
+
 
 
     }
 
     @Override
     public void initData() {
-        if (getArguments() != null) {
-            postID = getArguments().getString(ARG_VALUE);
-            fragmentTag = getArguments().getString(FRAGMENT_TAG);
-            Log.d("__postID", "initData in DetailFM: fragmentTag = " + fragmentTag);
 
-        }
+        checkFavoritePost();
         setListImageView();
         setListTextView();
 
+
+    }
+    private void checkFavoritePost() {
+        Log.d("__postID", "checkFavoritePost in DetailFM: postID = " + postID);
+
+        detailFMController.setIconForFavorite(postID,imgIconFavorInUserHome,imgIconUnlikeInUserHome);
     }
 
     private void setListTextView() {
@@ -135,16 +146,47 @@ public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRat
         clickIconBack();
         setVisible();
         clickIconFavorite();
+        removeFavoritePost();
+        constraintRatingbarDetailUser.setVisibility(View.VISIBLE);
         ratingBarInUserHome.setOnRatingBarChangeListener((ratingBar, v, b) -> rateStar = v + "");
         txtVoteInUserHome.setOnClickListener(view -> ratingStar());
 
         getRateStarFromFirebase = new GetRateStarFromFirebase();
     }
 
+    private void removeFavoritePost() {
+       imgIconUnlikeInUserHome.setOnClickListener(view ->
+       {
+           detailFMController.removeFavoritePost(postID, new InterfaceDeletePostListener() {
+               @Override
+               public void deletePostSuccessfully() {
+                   if(fragmentTag.equals("favoriteFragment")){
+                       ReplaceFragment replaceFragment = new ReplaceFragment();
+                       replaceFragment.replaceFragment(R.id.root_favorite_frame,new FavoriteFragmentUser(),requireActivity());
+                   }
+                   else {
+                       imgIconBackInUserHome.setVisibility(View.VISIBLE);
+                       imgIconFavorInUserHome.setVisibility(View.VISIBLE);
+                       imgIconUnlikeInUserHome.setVisibility(View.GONE);
+                   }
+               }
+
+               @Override
+               public void deletePostFail(String mes) {
+
+               }
+           });
+       });
+
+    }
+
     private void clickIconFavorite() {
         imgIconFavorInUserHome.setOnClickListener(view -> {
             detailFMController.pushDataToFirebase(postID, observerListFavorPostIDInterface,
                     Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+            setVisible();
+            imgIconUnlikeInUserHome.setVisibility(View.VISIBLE);
+            imgIconFavorInUserHome.setVisibility(View.GONE);
         });
     }
 
@@ -158,12 +200,11 @@ public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRat
 
     private void setVisible() {
         if(fragmentTag.equals(favoriteFragmentTag)){
-            imgIconBackInUserHome.setVisibility(View.INVISIBLE);
-            imgIconFavorInUserHome.setVisibility(View.INVISIBLE);
+            imgIconBackInUserHome.setVisibility(View.GONE);
         }
         else{
             imgIconBackInUserHome.setVisibility(View.VISIBLE);
-            imgIconFavorInUserHome.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -184,15 +225,17 @@ public class DetailFragmentHomeUser extends BaseFragment implements InterfaceRat
         assert firebaseUser != null;
         getRateStarFromFirebase.isCheckedUserRateApp(firebaseUser.getUid(), new InterfaceEventCheckedRateStarListener() {
             @Override
-            public void isExist() {
-                ratingBarInUserHome.setVisibility(View.GONE);
+            public void isExist(String ratingStar) {
+                ratingBarInUserHome.setRating(Float.parseFloat(ratingStar));
+                detailFMController.rateStarForApp(rateStar, totalStar, postID, firebaseUser.getUid());
+                constraintRatingbarDetailUser.setVisibility(View.GONE);
             }
 
             @Override
             public void notExist() {
+                ratingBarInUserHome.setRating(0);
                 detailFMController.rateStarForApp(rateStar, totalStar, postID, firebaseUser.getUid());
-                Toast.makeText(requireContext(), "Thank you for rate us", Toast.LENGTH_SHORT).show();
-//                constraintRatingbarDetailUser.setVisibility(View.GONE);
+                constraintRatingbarDetailUser.setVisibility(View.GONE);
             }
         });
 

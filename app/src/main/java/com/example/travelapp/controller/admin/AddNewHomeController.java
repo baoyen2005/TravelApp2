@@ -68,8 +68,9 @@ public class AddNewHomeController implements AddNewHomeControllerInterface {
                 if (task.isSuccessful()) {
                     if (listFilePath.size() > 0) {
                         upLoadPhotos(listFilePath, documentReference.getId(), loadingBar);
+
                     } else {
-                        adNewPostViewInterface.addNewPostSuccess("Add new post successfully!");
+                        adNewPostViewInterface.addNewPostFailed("Add new post failed");
                         loadingBar.dismiss();
                         Log.d(TAGAdmin, "them bai moi : thanh cong");
                     }
@@ -131,10 +132,12 @@ public class AddNewHomeController implements AddNewHomeControllerInterface {
 
                         if (task.isSuccessful()) {
                             Log.d(TAGAdmin, "update thanh cong post");
-                            // adNewPostViewInterface.addNewPostSuccess("Create new post successfully");
+                            adNewPostViewInterface.addNewPostSuccess("Create post successfully");
+                            loadingBar.dismiss();
                         } else {
                             Log.d(TAGAdmin, "fail update imge info");
-                            ///  adNewPostViewInterface.addNewPostFailed("Create new post fail. Try again");
+                            loadingBar.dismiss();
+                            //adNewPostViewInterface.addNewPostFailed("Create new post fail. Try again");
                         }
                     });
         } else {

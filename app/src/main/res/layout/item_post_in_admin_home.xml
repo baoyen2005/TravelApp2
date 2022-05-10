@@ -48,7 +48,7 @@
                android:fontFamily="@font/nunitoregular"
                android:layout_marginTop="15dp"
                android:layout_marginStart="5dp"
-               android:text="Khám phá một thế giới và những chuyến đi"
+               android:text="@string/explore_trips_and_enjoy_life"
                android:maxLines="3"
                android:textSize="12sp"
                android:textStyle="bold"

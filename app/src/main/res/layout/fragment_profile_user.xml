@@ -18,7 +18,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/nunito"
             android:padding="10dp"
-            android:text="Profile"
+            android:text="@string/profile"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="normal"
@@ -30,14 +30,26 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_btn_saveprofile"
-            android:text="Save"
+            android:text="@string/save"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btnLogOutInUserProfile"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_btn_saveprofile"
+            android:text="@string/logout"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="25dp"
             android:padding="8dp"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:id="@+id/linearmain"
             android:layout_width="match_parent"
@@ -71,10 +83,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppinsregular"
                     android:lineSpacingExtra="0dp"
-                    android:text="Change this profile"
+                    android:text="@string/change_this_profile"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -85,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppinsblack"
-                    android:text="AQ"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -109,7 +120,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito"
-                android:text="Username"
+                android:text="@string/username"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -120,7 +131,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_edtext_inprofile_user"
-                android:text="anhquan"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -153,7 +163,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito"
-                android:text="Password"
+                android:text="@string/password"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -163,11 +173,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
-                android:hint="Password"
                 android:background="@drawable/custom_edtext_inprofile_user"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:text="anh quan"
                 android:textSize="20sp"
                 tools:ignore="TextViewEdits" />
         </LinearLayout>
@@ -201,7 +209,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito"
-                android:text="Address"
+                android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -212,7 +220,6 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/custom_edtext_inprofile_user"
                 android:layout_marginTop="5dp"
-                android:text="Việt Nam"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -222,7 +229,6 @@
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/custom_login_edittext"
-            android:hint="Password"
             android:src="@drawable/iconedit"
             app:layout_constraintBottom_toBottomOf="@+id/linearaddress"
             app:layout_constraintRight_toRightOf="@+id/linearaddress"
@@ -245,7 +251,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito"
-                android:text="Phone"
+                android:text="@string/phone"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -257,7 +263,6 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_edtext_inprofile_user"
                 android:inputType="phone"
-                android:text="000"
                 android:textSize="20sp"
                 tools:ignore="TextViewEdits" />
         </LinearLayout>
@@ -268,7 +273,6 @@
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/custom_login_edittext"
-            android:hint="Password"
             android:src="@drawable/iconedit"
             app:layout_constraintBottom_toBottomOf="@+id/linearphone"
             app:layout_constraintRight_toRightOf="@+id/linearphone"
@@ -291,7 +295,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/nunito"
-                android:text="Email"
+                android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -303,8 +307,8 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_edtext_inprofile_user"
                 android:inputType="textEmailAddress"
-                android:text="mrbuiquan84@gmail.com"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
         </LinearLayout>
 
         <ImageView
@@ -313,7 +317,6 @@
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/custom_login_edittext"
-            android:hint="Password"
             android:src="@drawable/iconedit"
             app:layout_constraintBottom_toBottomOf="@+id/linearEmail"
             app:layout_constraintRight_toRightOf="@+id/linearEmail"

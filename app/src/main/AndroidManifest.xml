@@ -46,19 +46,8 @@
         <activity
             android:name=".view.activity.home.MainActivityUser"
             android:exported="false" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.SEARCH" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--            </intent-filter>-->
-
-<!--            <meta-data-->
-<!--                android:name="android.app.searchable"-->
-<!--                android:resource="@xml/searchable_user" />-->
         </activity>
-<!--        <provider android:name=".function_util.MySuggestionProvider"-->
-<!--            android:authorities="com.example.travelapp.function_util.MySuggestionProvider"-->
-<!--            android:exported="false"-->
-<!--            android:enabled="true"/>-->
+        <receiver android:name=".broadcast.NotificationService"/>
         <activity
             android:name=".view.activity.login.activity_login.LoginActivity"
             android:exported="true"
@@ -69,13 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
-        <activity
-            android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity

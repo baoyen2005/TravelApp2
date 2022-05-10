@@ -45,7 +45,7 @@
                android:fontFamily="@font/nunitoregular"
                android:layout_marginTop="15dp"
                android:maxLines="3"
-               android:text="Khám phá những chuyến đi, tận hưởng cuộc sống"
+               android:text="@string/explore_trips_and_enjoy_life"
                android:textSize="16sp"
                android:textStyle="bold"
                app:layout_constraintLeft_toRightOf="@id/img_travel_searchView_item"

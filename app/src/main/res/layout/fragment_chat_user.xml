@@ -33,7 +33,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/nunito"
-            android:text="Chat with Admin"
+            android:text="@string/chat_with_admin"
             android:textColor="@color/black"
             android:textSize="32dp"
             android:textStyle="normal"
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="0"
-                    android:text="Admin"
+                    android:text="@string/admin_name"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="lorem default" />
+                    android:text="@string/lorem_default" />
             </LinearLayout>
 
             <TextView
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_weight="0"
-                android:text="6PM" />
+                android:text="@string/time_6pm" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

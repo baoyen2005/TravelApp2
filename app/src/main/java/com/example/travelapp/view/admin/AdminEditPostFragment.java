@@ -1,5 +1,6 @@
 package com.example.travelapp.view.admin;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -186,7 +187,13 @@ public class AdminEditPostFragment extends BaseFragment implements AdminEditPost
 
     ActivityResultLauncher<Intent> imagePickerActivityResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result != null) {
+                if (result == null || result.getResultCode() != Activity.RESULT_OK || result.getData() == null) {
+                    Log.d("__edit", "resul ==null: ");
+                    Toast.makeText(requireContext(), "Please choose image again", Toast.LENGTH_SHORT).show();
+
+
+                }
+                else {
                     Uri imageUri = result.getData().getData();
                     Log.d("___Yenlb", "imagePickerActivityResult: imageUri " + imageUri);
                     if (imageUri == null) {

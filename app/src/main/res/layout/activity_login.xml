@@ -35,9 +35,9 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/nunito"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textColor="@color/black"
-                    android:textSize="32dp"
+                    android:textSize="32sp"
                     android:textStyle="normal"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +50,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="24dp"
                     android:background="@drawable/custom_login_edittext"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:padding="12dp"
                     android:textColorHint="@color/black"
@@ -64,7 +64,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="24dp"
                     android:background="@drawable/custom_login_edittext"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:padding="12dp"
                     android:textColorHint="@color/black"
@@ -74,9 +74,8 @@
                     android:id="@+id/imgLock"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/custom_login_edittext"
-                    android:hint="Password"
                     android:src="@drawable/lock"
                     app:layout_constraintBottom_toBottomOf="@id/edtPasswordLogin"
                     app:layout_constraintRight_toRightOf="@id/edtPasswordLogin"
@@ -92,7 +91,7 @@
                     android:background="@drawable/custom_btn_login"
                     android:fontFamily="@font/nunitoregular"
                     android:padding="12dp"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="22sp"
@@ -122,7 +121,7 @@
                             android:background="@color/white"
                             android:fontFamily="@font/nunitoregular"
                             android:gravity="center"
-                            android:text="Login With "
+                            android:text="@string/login_with"
                             android:textSize="14sp" />
 
                         <TextView
@@ -132,6 +131,7 @@
                             android:fontFamily="@font/nunito"
                             android:gravity="center"
                             android:text=" Facebook "
+                            android:visibility="gone"
                             android:textColor="#C0201E"
                             android:textSize="14sp" />
 
@@ -141,6 +141,7 @@
                             android:background="@color/white"
                             android:fontFamily="@font/nunitoregular"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="or "
                             android:textSize="14sp" />
 
@@ -150,7 +151,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito"
                             android:gravity="center"
-                            android:text=" Google "
+                            android:text="@string/google"
                             android:textColor="#C0201E"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -205,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/nunito"
-                            android:text=" Create account"
+                            android:text="@string/create_account"
                             android:textColor="#191D21"
                             android:textSize="14sp" />
                     </LinearLayout>

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserFavoriteListPostAdapter extends
-        RecyclerView.Adapter<UserFavoriteListPostAdapter.UserFavoriteListPostViewHolder> implements Filterable {
+        RecyclerView.Adapter<UserFavoriteListPostAdapter.UserFavoriteListPostViewHolder> {
     private final List<FavoritePost> favoritePostList;
     private Context context;
     List<FavoritePost> favoriteListCopy = new ArrayList<>();
@@ -65,7 +63,6 @@ public class UserFavoriteListPostAdapter extends
     public void updateData(List<FavoritePost> newListPost) {
         favoritePostList.clear();
         favoritePostList.addAll(newListPost);
-         //       Log.d("aaa", "updateData: " + newList.size)
         notifyDataSetChanged();
     }
     public interface OnItemFavoritePostClickListener{
@@ -82,44 +79,5 @@ public class UserFavoriteListPostAdapter extends
             constraintFavoriteItem = itemView.findViewById(R.id.constraintFavoriteItem);
         }
     }
-    @Override
-    public Filter getFilter() {
 
-        return new Filter() {
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                List<FavoritePost> newList = new ArrayList<>();
-                newList.clear();
-                newList.addAll((ArrayList<FavoritePost>) results.values);
-                updateData(newList);
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charSearch = constraint.toString();
-
-                if (charSearch== null ||charSearch.isEmpty()) {
-                    favoriteListCopy.clear();
-                    favoriteListCopy.addAll(favoritePostList);
-                    notifyDataSetChanged();
-                }
-                else {
-                    List<FavoritePost> res = new ArrayList<>();
-                    for (int i = 0; i < favoritePostList.size(); i++) {
-                        String data = favoritePostList.get(i).getTouristName().trim();
-                        if (data.toLowerCase().contains(charSearch.toLowerCase()))  {
-                            res.add(favoritePostList.get(i));
-                        }
-                    }
-                    favoriteListCopy.clear();
-                    favoriteListCopy.addAll(res);
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = favoriteListCopy;
-                return filterResults;
-            }
-        };
-    }
 }

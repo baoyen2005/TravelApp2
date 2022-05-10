@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tvTittleFavor"
@@ -22,7 +22,7 @@
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/nunito"
                 android:lineSpacingExtra="0dp"
-                android:text="Favorites"
+                android:text="@string/favorites"
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -65,7 +65,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/nunito"
                 android:lineSpacingExtra="0dp"
-                android:text="In the world"
+                android:text="@string/inTheWorld"
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"

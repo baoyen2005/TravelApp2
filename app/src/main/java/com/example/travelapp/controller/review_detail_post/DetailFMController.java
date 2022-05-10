@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,9 +15,12 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.travelapp.function_util.GetPostFromFirebaseStorage;
 import com.example.travelapp.function_util.GetUserFromFireStorage;
+import com.example.travelapp.model.FavoritePost;
 import com.example.travelapp.model.Post;
 import com.example.travelapp.model.User;
+import com.example.travelapp.view.interfacefragment.InterfaceDeletePostListener;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetCurrentUserListener;
+import com.example.travelapp.view.interfacefragment.InterfaceEventGetFavoritePostByIDListener;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetPostByIDListener;
 import com.example.travelapp.view.interfacefragment.InterfaceObserverListFavorPostID;
 import com.example.travelapp.view.interfacefragment.InterfaceRatingStarListener;
@@ -37,10 +42,38 @@ public class DetailFMController implements InterfaceDetailFMController {
     private Context context;
     double distance = 0f;
     private InterfaceRatingStarListener interfaceRatingStarListener;
-
     public DetailFMController(Context context, InterfaceRatingStarListener interfaceRatingStarListener) {
         this.context = context;
         this.interfaceRatingStarListener = interfaceRatingStarListener;
+        getPostFromFirebaseStorage = new GetPostFromFirebaseStorage();
+    }
+
+    @Override
+    public void setIconForFavorite(String postId, LinearLayout imgIconFavorite, LinearLayout imgUnlike) {
+        getPostFromFirebaseStorage.getFavoritePostFromFirebaseByID(postId, new InterfaceEventGetFavoritePostByIDListener() {
+            @Override
+            public void getFavoritePostByIDSuccess(FavoritePost favoritePost) {
+                if(context == null ){
+                    return;
+                }
+                else {
+                    if(favoritePost!=null){
+                        imgUnlike.setVisibility(View.VISIBLE);
+                        imgIconFavorite.setVisibility(View.GONE);
+                    }
+                    else {
+                        imgUnlike.setVisibility(View.GONE);
+                        imgIconFavorite.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void getFavoritePostsFail(String isFail) {
+                Log.d("__favorite", "getFavoritePostsFail: ");
+
+            }
+        });
     }
 
     @Override
@@ -130,6 +163,27 @@ public class DetailFMController implements InterfaceDetailFMController {
 
             }
         });
+    }
+
+    @Override
+    public void removeFavoritePost(String postId, InterfaceDeletePostListener deletePostListener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("favorite").
+                document(postId).
+                delete().
+                addOnCompleteListener(task -> {
+                    if(context==null){
+                        return;
+                    }
+                    if (task.isSuccessful()) {
+                        Toast.makeText(context, "You removed favorite post!", Toast.LENGTH_SHORT).show();
+                        deletePostListener.deletePostSuccessfully();
+
+                    } else {
+                        deletePostListener.deletePostFail("delete post fail");
+                        Toast.makeText(context, "Fail to delete the post. ", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @SuppressLint("SetTextI18n")

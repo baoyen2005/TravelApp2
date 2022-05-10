@@ -1,5 +1,6 @@
 package com.example.travelapp.view.userfragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -24,33 +25,32 @@ import com.example.travelapp.controller.Profile.ChangeProfileController;
 import com.example.travelapp.controller.Profile.UpdateEmailToFirebase;
 import com.example.travelapp.controller.Profile.UpdatePasswordToFirebase;
 import com.example.travelapp.function_util.GetUserFromFireStorage;
+import com.example.travelapp.function_util.LogOutFunction;
 import com.example.travelapp.model.User;
 import com.example.travelapp.view.interfacefragment.InterfaceEventGetCurrentUserListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragmentUser extends BaseFragment {
     private String uid;
-    private TextView txtUserNameInUserProfileScreen, txtUserPasswordInUserProfile, txtUserEmailInUserProfileScreen, txtAddressInUserProfile, txtPhoneInUserProfile, tvCurrentUserNameInUserProfileScreen;
-    private EditText edtChangeUserName,edtchangepassword;
-    private Button btnSaveInfoWhenEditUserProfile;
-    private Button ConfirmPassword,CancelChangePassword,btnConfirmUpdateUsername, btnCancelUpdateUsername;
-    private EditText edtchangeaddress;
-    private Button ConfirmAddress,CancelChangeAddress;
-    private EditText edtchangepphone;
-    private Button ConfirmPhone,CancelChangePhone;
-    private EditText edtchangeemail;
-    private Button ConfirmEmail,CancelChangeEmail;
+    private TextView txtUserNameInUserProfileScreen, txtUserPasswordInUserProfile, txtUserEmailInUserProfileScreen,
+            txtAddressInUserProfile, txtPhoneInUserProfile,
+            tvCurrentUserNameInUserProfileScreen;
+    private Button ConfirmAddress, CancelChangeAddress, ConfirmPhone, CancelChangePhone, btnLogOutInUserProfile,
+            ConfirmEmail, CancelChangeEmail, btnSaveInfoWhenEditUserProfile, ConfirmPassword, CancelChangePassword,
+            btnConfirmUpdateUsername, btnCancelUpdateUsername;
+    private EditText edtChangeUserName, edtchangepphone, edtchangeemail, edtchangeaddress,
+            edtchangepassword;
     private ImageView imgEditUsernameInUserProfile,
             imgEditPasswordInUserProfile,
-            imgEditAddressInUserProfile, imgEditPhoneInProfileScreen, imgEditEmailInUserProfile,mainavatar;
+            imgEditAddressInUserProfile, imgEditPhoneInProfileScreen, imgEditEmailInUserProfile, mainavatar;
     private FirebaseAuth firebaseAuth;
     public ChangeProfileController changeProfileController;
     private User currentUserUpp;
-    private final String TAG ="ProfileFragmentUser";
+    private final String TAG = "ProfileFragmentUser";
     private Uri mainAvatarUri;
-    private  boolean isChooseImage = false;
+    private LogOutFunction logOutFunction;
     public ProfileFragmentUser() {
-        // Required empty public constructor
+
     }
 
 
@@ -69,36 +69,37 @@ public class ProfileFragmentUser extends BaseFragment {
     public void initView(View view) {
         tvCurrentUserNameInUserProfileScreen = view.findViewById(R.id.tvCurrentUserNameInUserProfileScreen);
         txtUserNameInUserProfileScreen = view.findViewById(R.id.txtUserNameInUserProfileScreen);
-        txtUserPasswordInUserProfile =view.findViewById(R.id.txtUserPasswordInUserProfile);
+        txtUserPasswordInUserProfile = view.findViewById(R.id.txtUserPasswordInUserProfile);
         txtAddressInUserProfile = view.findViewById(R.id.txtAddressInUserProfile);
         txtPhoneInUserProfile = view.findViewById(R.id.txtPhoneInUserProfile);
         txtUserEmailInUserProfileScreen = view.findViewById(R.id.txtUserEmailInUserProfileScreen);
-
-
         btnSaveInfoWhenEditUserProfile = view.findViewById(R.id.btnSaveInfoWhenEditUserProfile);
-
-        mainavatar=view.findViewById(R.id.avatar_profile_fragment);
-        imgEditPasswordInUserProfile =view.findViewById(R.id.imgEditPasswordInUserProfile);
+        mainavatar = view.findViewById(R.id.avatar_profile_fragment);
+        imgEditPasswordInUserProfile = view.findViewById(R.id.imgEditPasswordInUserProfile);
         imgEditAddressInUserProfile = view.findViewById(R.id.imgEditAddressInUserProfile);
         imgEditPhoneInProfileScreen = view.findViewById(R.id.imgEditPhoneInProfileScreen);
         imgEditEmailInUserProfile = view.findViewById(R.id.imgEditEmailInUserProfile);
         imgEditUsernameInUserProfile = view.findViewById(R.id.imgEditUsernameInUserProfile);
         btnSaveInfoWhenEditUserProfile.setVisibility(View.INVISIBLE);
+        btnLogOutInUserProfile = view.findViewById(R.id.btnLogOutInUserProfile);
+        btnLogOutInUserProfile.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void initData() {
         firebaseAuth = FirebaseAuth.getInstance();
         currentUserUpp = new User();
+        logOutFunction = new LogOutFunction(requireActivity());
         getCurrentUser();
     }
+
     private void getCurrentUser() {
         GetUserFromFireStorage getUserFromFireStorage = new GetUserFromFireStorage();
         getUserFromFireStorage.getCurrentUser(firebaseAuth.getUid(), new InterfaceEventGetCurrentUserListener() {
             @Override
             public void getCurrentUserSuccess(User currentUser) {
                 currentUserUpp = currentUser;
-                uid=currentUser.getUid();
+                uid = currentUser.getUid();
                 tvCurrentUserNameInUserProfileScreen.setText(currentUser.getUsername());
                 txtUserNameInUserProfileScreen.setText(currentUser.getUsername());
                 txtUserPasswordInUserProfile.setText(currentUser.getPassword());
@@ -106,10 +107,9 @@ public class ProfileFragmentUser extends BaseFragment {
                 txtPhoneInUserProfile.setText(currentUser.getPhone());
                 txtUserEmailInUserProfileScreen.setText(currentUser.getEmail());
                 mainAvatarUri = Uri.parse(currentUser.getImageURL());
-                if(currentUser.getImageURL()==null){
+                if (currentUser.getImageURL() == null) {
                     mainavatar.setImageResource(R.drawable.useravatar);
-                }
-                else{
+                } else {
                     Glide.with(requireContext())
                             .load(Uri.parse(currentUser.getImageURL()))
                             .into(mainavatar);
@@ -128,11 +128,14 @@ public class ProfileFragmentUser extends BaseFragment {
     @Override
     public void initEvent() {
         changeProfile();
+        logOut();
 
     }
+
     private View layoutView;
     private Dialog alertDialog;
-    private void getViewFromDialog(int IDLayout){
+
+    private void getViewFromDialog(int IDLayout) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(requireActivity());
         layoutView = getLayoutInflater().inflate(IDLayout, null);
         dialogBuilder.setView(layoutView);
@@ -141,26 +144,31 @@ public class ProfileFragmentUser extends BaseFragment {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         alertDialog.show();
-        //return layoutView;
+
     }
-    public void changeProfile(){
+
+    public void changeProfile() {
+
         mainavatar.setOnClickListener(view -> {
-            isChooseImage = true;
+            if (mainavatar.isInTouchMode() == false) {
+                Log.d(TAG, "changeProfile: ");
+            }
             chooseImage();
         });
 
+
         imgEditUsernameInUserProfile.setOnClickListener(v -> {
+            btnLogOutInUserProfile.setVisibility(View.GONE);
             btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
             getViewFromDialog(R.layout.dialog_changeusername);
-            edtChangeUserName=layoutView.findViewById(R.id.edtChangeUserName);
+            edtChangeUserName = layoutView.findViewById(R.id.edtChangeUserName);
             btnConfirmUpdateUsername = layoutView.findViewById(R.id.btnConfirmUpdateUsername);
             btnCancelUpdateUsername = layoutView.findViewById(R.id.btnCancelUpdateUsername);
             btnConfirmUpdateUsername.setOnClickListener(view -> {
-                if (edtChangeUserName != null && edtChangeUserName.length()>0) {
+                if (edtChangeUserName != null && edtChangeUserName.length() > 0) {
                     txtUserNameInUserProfileScreen.setText(edtChangeUserName.getText().toString());
                     alertDialog.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(alertDialog.getContext(), "Please check or enter your username", Toast.LENGTH_SHORT).show();
                 }
 
@@ -169,17 +177,17 @@ public class ProfileFragmentUser extends BaseFragment {
         });
 
         imgEditPasswordInUserProfile.setOnClickListener(v -> {
+            btnLogOutInUserProfile.setVisibility(View.GONE);
             btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
             getViewFromDialog(R.layout.dialog_changepassword);
-            edtchangepassword=layoutView.findViewById(R.id.edtchangepassword);
+            edtchangepassword = layoutView.findViewById(R.id.edtchangepassword);
             ConfirmPassword = layoutView.findViewById(R.id.btnConfirmPassword);
             CancelChangePassword = layoutView.findViewById(R.id.btnCancelChangePassword);
             ConfirmPassword.setOnClickListener(view -> {
-                if (edtchangepassword != null && edtchangepassword.length()>6) {
+                if (edtchangepassword != null && edtchangepassword.length() > 6) {
                     txtUserPasswordInUserProfile.setText(edtchangepassword.getText().toString());
                     alertDialog.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(alertDialog.getContext(), "Invalid Password", Toast.LENGTH_SHORT).show();
                 }
 
@@ -187,52 +195,52 @@ public class ProfileFragmentUser extends BaseFragment {
             CancelChangePassword.setOnClickListener(view -> alertDialog.dismiss());
         });
         imgEditAddressInUserProfile.setOnClickListener(v -> {
+            btnLogOutInUserProfile.setVisibility(View.GONE);
             btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
             getViewFromDialog(R.layout.dialog_changepaddress);
-            edtchangeaddress=layoutView.findViewById(R.id.edtchangeaddress);
+            edtchangeaddress = layoutView.findViewById(R.id.edtchangeaddress);
             ConfirmAddress = layoutView.findViewById(R.id.btnConfirmAddress);
             CancelChangeAddress = layoutView.findViewById(R.id.btnCancelChangeAddress);
             ConfirmAddress.setOnClickListener(view -> {
-                if (edtchangeaddress!=null && edtchangeaddress.length()>0) {
+                if (edtchangeaddress != null && edtchangeaddress.length() > 0) {
                     txtAddressInUserProfile.setText(edtchangeaddress.getText().toString());
                     alertDialog.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(alertDialog.getContext(), "Please enter your address", Toast.LENGTH_SHORT).show();
                 }
             });
             CancelChangeAddress.setOnClickListener(view -> alertDialog.dismiss());
         });
         imgEditPhoneInProfileScreen.setOnClickListener(v -> {
+            btnLogOutInUserProfile.setVisibility(View.GONE);
             btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
             getViewFromDialog(R.layout.dialog_changephone);
-            edtchangepphone=layoutView.findViewById(R.id.edtchangephone);
-            String a= txtPhoneInUserProfile.getText().toString();
+            edtchangepphone = layoutView.findViewById(R.id.edtchangephone);
+            String a = txtPhoneInUserProfile.getText().toString();
             ConfirmPhone = layoutView.findViewById(R.id.btnConfirmPhone);
             CancelChangePhone = layoutView.findViewById(R.id.btnCancelChangePhone);
             ConfirmPhone.setOnClickListener(view -> {
-                if (edtchangepphone != null && edtchangepphone.length()>=10) {
+                if (edtchangepphone != null && edtchangepphone.length() >= 10) {
                     txtPhoneInUserProfile.setText(edtchangepphone.getText().toString());
                     alertDialog.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(alertDialog.getContext(), "Please check or enter your phone", Toast.LENGTH_SHORT).show();
                 }
             });
             CancelChangePhone.setOnClickListener(view -> alertDialog.dismiss());
         });
         imgEditEmailInUserProfile.setOnClickListener(v -> {
+            btnLogOutInUserProfile.setVisibility(View.GONE);
             btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
             getViewFromDialog(R.layout.dialog_changeemail);
-            edtchangeemail=layoutView.findViewById(R.id.edtchangeemail);
+            edtchangeemail = layoutView.findViewById(R.id.edtchangeemail);
             ConfirmEmail = layoutView.findViewById(R.id.btnConfirmEmail);
             CancelChangeEmail = layoutView.findViewById(R.id.btnCancelChangeEmail);
             ConfirmEmail.setOnClickListener(view -> {
-                if (edtchangeemail!=null && edtchangeemail.length()>0) {
+                if (edtchangeemail != null && edtchangeemail.length() > 0) {
                     txtUserEmailInUserProfileScreen.setText(edtchangeemail.getText().toString());
                     alertDialog.dismiss();
-                }
-                else {
+                } else {
                     Toast.makeText(alertDialog.getContext(), "Please enter or check your email", Toast.LENGTH_SHORT).show();
                 }
 
@@ -243,22 +251,22 @@ public class ProfileFragmentUser extends BaseFragment {
     }
 
     private void chooseImage() {
-       if(isChooseImage){
-           Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-           galleryIntent.setType("image/*");
-           imagePickerActivityResult.launch(galleryIntent);
-       }
-       else{
-           Log.d(TAG, "chooseImage: ");
-       }
+        btnLogOutInUserProfile.setVisibility(View.GONE);
+        btnSaveInfoWhenEditUserProfile.setVisibility(View.VISIBLE);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        imagePickerActivityResult.launch(galleryIntent);
+
     }
 
     ActivityResultLauncher<Intent> imagePickerActivityResult = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result != null) {
-                    if (result.getData()==null){
-                        Log.d(TAG, "result.getdata=null: ");
-                    }
+                if (result == null || result.getResultCode() != Activity.RESULT_OK || result.getData() == null) {
+                    Log.d(TAG, "resul ==null: ");
+                    Toast.makeText(requireContext(), "Please choose image again", Toast.LENGTH_SHORT).show();
+
+                } else {
+
                     Uri imageUri = result.getData().getData();
                     Log.d("___Yenlb", "imagePickerActivityResult: imageUri " + imageUri);
                     if (imageUri == null) {
@@ -268,9 +276,7 @@ public class ProfileFragmentUser extends BaseFragment {
                         mainAvatarUri = imageUri;
                     }
                 }
-                else{
-                    Log.d(TAG, "resul ==null: ");
-                }
+
             }
     );
 
@@ -278,9 +284,8 @@ public class ProfileFragmentUser extends BaseFragment {
     private void saveProfile() {
         btnSaveInfoWhenEditUserProfile.setOnClickListener(v -> {
 
-            if(!txtUserEmailInUserProfileScreen.equals(currentUserUpp.getEmail()))
-            {
-                Log.d(TAG, "saveProfile: "+ currentUserUpp.getPassword()+ "\t"+currentUserUpp.getEmail());
+            if (!txtUserEmailInUserProfileScreen.equals(currentUserUpp.getEmail())) {
+                Log.d(TAG, "saveProfile: " + currentUserUpp.getPassword() + "\t" + currentUserUpp.getEmail());
                 changeProfileController.updateEmailToAuthen(firebaseAuth.getUid(),
                         txtUserEmailInUserProfileScreen.getText().toString(),
                         currentUserUpp.getEmail(),
@@ -289,6 +294,7 @@ public class ProfileFragmentUser extends BaseFragment {
                             @Override
                             public void updateEmailSuccess() {
                                 updateProfile();
+                                logOutFunction.logOut();
                             }
 
                             @Override
@@ -298,15 +304,14 @@ public class ProfileFragmentUser extends BaseFragment {
                             }
                         });
 
-            }
-            else if(!txtUserPasswordInUserProfile.equals(currentUserUpp.getPassword())){
+            } else if (!txtUserPasswordInUserProfile.equals(currentUserUpp.getPassword())) {
                 changeProfileController.updatePasswordToAuthen(txtUserPasswordInUserProfile.getText().toString(),
                         currentUserUpp.getEmail(),
                         new UpdatePasswordToFirebase() {
                             @Override
                             public void updatePasswordSuccess() {
-                               updateProfile();
-                                FirebaseAuth.getInstance().signOut();
+                                updateProfile();
+                                logOutFunction.logOut();
 
                             }
 
@@ -318,8 +323,7 @@ public class ProfileFragmentUser extends BaseFragment {
                             }
                         });
 
-            }
-            else{
+            } else {
                 updateProfile();
             }
         });
@@ -332,7 +336,15 @@ public class ProfileFragmentUser extends BaseFragment {
                 txtAddressInUserProfile.getText().toString(),
                 txtPhoneInUserProfile.getText().toString(),
                 txtUserEmailInUserProfileScreen.getText().toString(), mainAvatarUri);
+        btnSaveInfoWhenEditUserProfile.setVisibility(View.GONE);
+        btnLogOutInUserProfile.setVisibility(View.VISIBLE);
         Toast.makeText(requireContext(), "updateProfile successfully", Toast.LENGTH_SHORT).show();
     }
 
+    private void logOut() {
+        btnLogOutInUserProfile.setOnClickListener(view ->
+        {
+            logOutFunction.logOut();
+        });
+    }
 }

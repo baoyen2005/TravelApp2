@@ -13,9 +13,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.travelapp.function_util.GetCurrentLocation;
 import com.example.travelapp.model.User;
+import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.activity.login.interface_login.IOnLoadUpdateInfoLogin;
 import com.example.travelapp.view.activity.login.interface_login.InterfaceLoginView;
-import com.example.travelapp.view.activity.login.interface_login.IOnLoadInfoListenerLogin;
 import com.example.travelapp.view.interfacefragment.InterfaceGetLocation;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -149,6 +149,10 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
     @Override
     public void checkConfirmUserEmail(String email, IOnLoadInfoListenerLogin listener) {
+
+
+
+
         FirebaseFirestore.getInstance().collection("email")
                 .whereEqualTo("email", email)
                 .get()
@@ -164,8 +168,28 @@ public class LoginController implements ILoginController, GoogleApiClient.OnConn
 
     }
 
+    private boolean isChangePassword =false;
     @Override
     public void updateNewPassword(String email, String newPassword, String userid, IOnLoadUpdateInfoLogin loadUpdateInfoLogin) {
+        ProgressDialog loadingBar = new ProgressDialog(activity);
+        loadingBar.setTitle("Sending email and update password");
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
+
+        FirebaseAuth.getInstance().getCurrentUser().updatePassword(
+                newPassword).addOnCompleteListener(task -> {
+            if (activity.isDestroyed() || activity.isFinishing()) {
+                return;
+            }
+            if (task.isSuccessful()) {
+                Log.d("user", "update thanh cong info");
+                loadUpdateInfoLogin.onSuccess(true);
+            } else {
+                Log.d("user", "looixupdate info");
+                loadUpdateInfoLogin.onSuccess(false);
+            }
+                })
+                .addOnFailureListener(e -> loadUpdateInfoLogin.onFailure());;
 
         Map<String, Object> map = new HashMap<>();
         map.put("password", newPassword);
